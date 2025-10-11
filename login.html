@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELMA Water Technologies - Accès Sécurisé</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-overlay">
+            <div class="login-card">
+                <div class="login-form">
+                    <h2 class="form-title">Accès Sécurisé</h2>
+                    <p class="form-description">Veuillez entrer votre code de licence pour accéder à la plateforme</p>
+                    
+                    <form id="licenseForm">
+                        <div class="input-group">
+                            <label for="licenseCode" class="input-label">Code de Licence</label>
+                            <input 
+                                type="text" 
+                                id="licenseCode" 
+                                class="license-input" 
+                                placeholder="XXXXXXX-XXX-XXX-XXX-XX"
+                                maxlength="25"
+                                autocomplete="off"
+                                required
+                            >
+                        </div>
+                        
+                        <button type="submit" class="login-button">
+                            <span class="button-text">Accéder à la Plateforme</span>
+                            <div class="button-loader hidden">
+                                <div class="spinner"></div>
+                            </div>
+                        </button>
+                        
+                        <div class="error-message hidden" id="errorMessage">
+                            Code de licence invalide. Veuillez vérifier et réessayer.
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="footer-info">
+                    <p class="copyright">© 2025 ELMA Water Technologies</p>
+                    <p class="version">Version 2.1.0</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="login.js"></script>
+</body>
+</html>

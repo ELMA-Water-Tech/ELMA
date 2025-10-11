@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plateforme ELMA - Gestion des Ressources en Eau</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <h1 class="app-title">Plateforme ELMA</h1>
+                    <p class="app-subtitle">Détection & gestion des ressources en eau basée sur satellite</p>
+                </div>
+                <div class="header-info">
+                    <span class="date-display" id="currentDate"></span>
+                    <button class="logout-button" id="logoutButton" title="Déconnexion">
+                        <span class="logout-icon">🔓</span>
+                        <span class="logout-text">Déconnexion</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Grid -->
+        <main class="main-grid">
+            <!-- Left Sidebar - Region Selector & Controls -->
+            <aside class="left-sidebar">
+                <div class="sidebar-section">
+                    <h3>Sélection de région</h3>
+                    <select id="regionSelector" class="form-control">
+                        <option value="all_regions">Toutes les régions</option>
+                        <option value="berrechid_region">Région de Berrechid</option>
+                        <option value="demo_area">Zone de démonstration</option>
+                    </select>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Informations sur la région</h3>
+                    <div class="region-info">
+                        <div class="info-item">
+                            <span class="label">Surface :</span>
+                            <span class="value" id="regionArea">1,200 km²</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Population :</span>
+                            <span class="value" id="regionPopulation">168,687</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Coordonnées :</span>
+                            <span class="value" id="regionCoords">33.35°N, -7.58°W</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Résumé de détection</h3>
+                    <div class="summary-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" id="totalWells">3</span>
+                            <span class="stat-label">Puits détectés</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="totalBasins">1</span>
+                            <span class="stat-label">Bassin principal</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="totalWaterPoints">9</span>
+                            <span class="stat-label">Points d'eau</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="avgConfidence">88%</span>
+                            <span class="stat-label">Confiance moyenne</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Contrôle des couches</h3>
+                    <div class="layer-controls">
+                        <label class="toggle-control">
+                            <input type="checkbox" id="showWells" checked>
+                            <span class="toggle-label">
+                                <span class="toggle-icon wells-icon"></span>
+                                Afficher les puits
+                            </span>
+                        </label>
+                        <label class="toggle-control">
+                            <input type="checkbox" id="showBasins" checked>
+                            <span class="toggle-label">
+                                <span class="toggle-icon basins-icon"></span>
+                                Afficher le bassin
+                            </span>
+                        </label>
+                        <label class="toggle-control">
+                            <input type="checkbox" id="showWaterPoints" checked>
+                            <span class="toggle-label">
+                                <span class="toggle-icon water-points-icon"></span>
+                                Points d'eau
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Filtrer les sources d'eau</h3>
+                    <div class="filter-controls">
+                        <label class="form-label" for="waterSourceFilter">Type de source :</label>
+                        <select id="waterSourceFilter" class="form-control">
+                            <option value="all">Toutes les sources (13)</option>
+                            <option value="wells">Puits (3)</option>
+                            <option value="basins">Bassin principal (1)</option>
+                            <option value="retention_basins">Bassins de rétention (8)</option>
+                            <option value="washing_stations">Stations de lavage (1)</option>
+                        </select>
+                        <div class="filter-info">
+                            <span id="filterResult" class="filter-result-text">Affichage de 13 sources d'eau</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            
+            <!-- Splitter between left sidebar and map -->
+            <div class="splitter splitter-left" data-target="left"></div>
+
+            <!-- Center - Interactive Map -->
+            <section class="map-container">
+                <div class="map-header">
+                    <h3>Carte interactive</h3>
+                    <div class="map-controls">
+                        <button class="btn btn--sm btn--outline" id="resetMapView">Réinitialiser</button>
+                        <button class="btn btn--sm btn--outline" id="toggleLegend">Légende</button>
+                    </div>
+                </div>
+                <div id="map" class="map-view"></div>
+                <div class="map-legend" id="mapLegend">
+                    <h4>Légende</h4>
+                    <div class="legend-items">
+                        <div class="legend-item">
+                            <span class="legend-symbol wells-symbol"></span>
+                            <span>Puits</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-symbol basins-symbol"></span>
+                            <span>Bassin principal</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-symbol retention-basin-symbol"></span>
+                            <span>Bassin de rétention</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-symbol washing-station-symbol"></span>
+                            <span>Station de lavage</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-symbol region-symbol berrechid-symbol"></span>
+                            <span>Région de Berrechid</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-symbol region-symbol demo-symbol"></span>
+                            <span>Zone de démonstration</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Splitter between map and right sidebar -->
+            <div class="splitter splitter-right" data-target="right"></div>
+
+            <!-- Right Sidebar - Analytics Dashboard -->
+            <aside class="right-sidebar">
+                <div class="sidebar-section">
+                    <h3>Indicateurs clés</h3>
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <div class="kpi-value" id="kpiTotalWells">3</div>
+                            <div class="kpi-label">Total des puits</div>
+                            <div class="kpi-change positive">+1 ce mois</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-value" id="kpiActiveWells">2</div>
+                            <div class="kpi-label">Puits actifs</div>
+                            <div class="kpi-change neutral">Aucun changement</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-value" id="kpiTotalCapacity">1,200</div>
+                            <div class="kpi-label">Surface (km²)</div>
+                            <div class="kpi-change neutral">Superficie totale</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-value" id="kpiAvgLevel">88%</div>
+                            <div class="kpi-label">Confiance moyenne</div>
+                            <div class="kpi-change positive">Très fiable</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Analytics Charts</h3>
+                    <div class="chart-container">
+                        <h4>Répartition du statut des puits</h4>
+                        <canvas id="wellStatusChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="chart-container">
+                        <h4>Indicateurs du bassin</h4>
+                        <canvas id="basinLevelsChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="chart-container">
+                        <h4>Confiance de détection</h4>
+                        <canvas id="confidenceChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Activité récente</h3>
+                    <div class="activity-feed">
+                        <div class="activity-item">
+                            <div class="activity-dot wells-dot"></div>
+                            <div class="activity-content">
+                                <div class="activity-title">Nouveau puits détecté</div>
+                                <div class="activity-time">Il y a 2 heures</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-dot basins-dot"></div>
+                            <div class="activity-content">
+                                <div class="activity-title">Niveau du bassin mis à jour</div>
+                                <div class="activity-time">Il y a 4 heures</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-dot analysis-dot"></div>
+                            <div class="activity-content">
+                                <div class="activity-title">Analyse terminée</div>
+                                <div class="activity-time">Il y a 6 heures</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="modal-overlay hidden">
+        <div class="modal-container">
+            <div class="modal-body">
+                <p class="modal-text">Êtes-vous sûr de vouloir vous déconnecter?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelLogout" class="btn btn--secondary btn--sm">Annuler</button>
+                <button id="confirmLogout" class="btn btn--primary btn--sm">Se déconnecter</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
