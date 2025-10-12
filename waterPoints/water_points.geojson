@@ -1,0 +1,3359 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-7.562358, 33.313187]
+      },
+      "properties": {
+        "id": "wp_001",
+        "type": "retention_basin",
+        "name": "Bassin de rétention d'Eau",
+        "observation": "Bassin de rétention d'Eau",
+        "region": "Berrechid",
+        "coordinates": "33.313187°N, 7.562358°W",
+        "detection_confidence": 0.95,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-7.536927, 33.272681]
+      },
+      "properties": {
+        "id": "wp_002",
+        "type": "retention_basin",
+        "name": "Bassin de rétention",
+        "observation": "Bassin de rétention",
+        "region": "Berrechid",
+        "coordinates": "33.272681°N, 7.536927°W",
+        "detection_confidence": 0.88,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-7.536989, 33.272758]
+      },
+      "properties": {
+        "id": "wp_003",
+        "type": "retention_basin",
+        "name": "Bassin de rétention",
+        "observation": "Bassin de rétention",
+        "region": "Berrechid",
+        "coordinates": "33.272758°N, 7.536989°W",
+        "detection_confidence": 0.92,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-7.560149, 33.320525]
+      },
+      "properties": {
+        "id": "wp_004",
+        "type": "retention_basin",
+        "name": "Bassin de rétention d'Eau",
+        "observation": "Bassin de rétention d'Eau",
+        "region": "Berrechid",
+        "coordinates": "33.320525°N, 7.560149°W",
+        "detection_confidence": 0.94,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-7.558367, 33.3326433]
+      },
+      "properties": {
+        "id": "wp_005",
+        "type": "retention_basin",
+        "name": "Bassin de rétention d'Eau",
+        "observation": "Bassin de rétention d'Eau",
+        "region": "Berrechid",
+        "coordinates": "33.332643°N, 7.558367°W",
+        "detection_confidence": 0.96,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-7.552444, 33.305452]
+      },
+      "properties": {
+        "id": "wp_006",
+        "type": "retention_basin",
+        "name": "Bassin de rétention d'Eau",
+        "observation": "Bassin de rétention d'Eau",
+        "region": "Berrechid",
+        "coordinates": "33.305452°N, 7.552444°W",
+        "detection_confidence": 0.91,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-7.566754, 33.297586]
+      },
+      "properties": {
+        "id": "wp_007",
+        "type": "retention_basin",
+        "name": "Bassin de rétention d'Eau",
+        "observation": "Bassin de rétention d'Eau",
+        "region": "Berrechid",
+        "coordinates": "33.297586°N, 7.566754°W",
+        "detection_confidence": 0.93,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-7.568796, 33.315619]
+      },
+      "properties": {
+        "id": "wp_008",
+        "type": "retention_basin",
+        "name": "Bassin de rétention d'Eau",
+        "observation": "Bassin de rétention d'Eau",
+        "region": "Berrechid",
+        "coordinates": "33.315619°N, 7.568796°W",
+        "detection_confidence": 0.89,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-7.578509, 33.118222]
+      },
+      "properties": {
+        "id": "wp_009",
+        "type": "retention_basin",
+        "name": "Bassin de rétention",
+        "observation": "Bassin de rétention",
+        "region": "Berrechid",
+        "coordinates": "33.118222°N, 7.578509°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+      {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.484313790419004,
+          33.13382026664326
+        ]
+      },
+      "properties": {
+        "id": "wp_001",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.133820°N, 7.484314°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.492533373635347,
+          33.17550209501041
+        ]
+      },
+      "properties": {
+        "id": "wp_002",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.175502°N, 7.492533°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.497653772415828,
+          33.16584520485373
+        ]
+      },
+      "properties": {
+        "id": "wp_003",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.165845°N, 7.497654°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.499450402765746,
+          33.1879437596482
+        ]
+      },
+      "properties": {
+        "id": "wp_004",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.187944°N, 7.499450°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.501247031539301,
+          33.156323062222455
+        ]
+      },
+      "properties": {
+        "id": "wp_005",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.156323°N, 7.501247°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.505019956479427,
+          33.194726042232865
+        ]
+      },
+      "properties": {
+        "id": "wp_006",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.194726°N, 7.505020°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.512835299265351,
+          33.21740850270305
+        ]
+      },
+      "properties": {
+        "id": "wp_007",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.217409°N, 7.512835°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.513643784381939,
+          33.14136611377757
+        ]
+      },
+      "properties": {
+        "id": "wp_008",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.141366°N, 7.513644°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.525546462492998,
+          33.14230934277442
+        ]
+      },
+      "properties": {
+        "id": "wp_009",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.142309°N, 7.525546°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.525771039390568,
+          33.13988389200431
+        ]
+      },
+      "properties": {
+        "id": "wp_010",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.139884°N, 7.525771°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.52936429767048,
+          33.119177727101246
+        ]
+      },
+      "properties": {
+        "id": "wp_011",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.119178°N, 7.529364°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.533334853986599,
+          33.18564407606593
+        ]
+      },
+      "properties": {
+        "id": "wp_012",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.185644°N, 7.533335°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.537449140015799,
+          33.20487700392687
+        ]
+      },
+      "properties": {
+        "id": "wp_013",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.204877°N, 7.537449°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.538437285811744,
+          33.13678470657276
+        ]
+      },
+      "properties": {
+        "id": "wp_014",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.136785°N, 7.538437°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.539006218603959,
+          33.156053569922314
+        ]
+      },
+      "properties": {
+        "id": "wp_015",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.156054°N, 7.539006°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.539724872025361,
+          33.22875721987047
+        ]
+      },
+      "properties": {
+        "id": "wp_016",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.228757°N, 7.539725°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.540772910591001,
+          33.18479966029638
+        ]
+      },
+      "properties": {
+        "id": "wp_017",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.184800°N, 7.540773°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.540862731846609,
+          33.197915059863966
+        ]
+      },
+      "properties": {
+        "id": "wp_018",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.197915°N, 7.540863°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.541222061894158,
+          33.19418705441864
+        ]
+      },
+      "properties": {
+        "id": "wp_019",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.194187°N, 7.541222°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.543198356981244,
+          33.131484646661704
+        ]
+      },
+      "properties": {
+        "id": "wp_020",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.131485°N, 7.543198°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.543872093121665,
+          33.109251346282875
+        ]
+      },
+      "properties": {
+        "id": "wp_021",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.109251°N, 7.543872°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.544665605665624,
+          33.133745408298005
+        ]
+      },
+      "properties": {
+        "id": "wp_022",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.133745°N, 7.544666°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.546414327340227,
+          33.105065190745556
+        ]
+      },
+      "properties": {
+        "id": "wp_023",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.105065°N, 7.546414°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.547555185591412,
+          33.1846599203926
+        ]
+      },
+      "properties": {
+        "id": "wp_024",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.184660°N, 7.547555°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.547689936049289,
+          33.209503329582176
+        ]
+      },
+      "properties": {
+        "id": "wp_025",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.209503°N, 7.547690°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.547869595840539,
+          33.146037355665186
+        ]
+      },
+      "properties": {
+        "id": "wp_026",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.146037°N, 7.547870°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.548049258594244,
+          33.20653888823231
+        ]
+      },
+      "properties": {
+        "id": "wp_027",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.206539°N, 7.548049°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.549351814728959,
+          33.1077242028196
+        ]
+      },
+      "properties": {
+        "id": "wp_028",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.107724°N, 7.549352°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.551462858355611,
+          33.21251268395534
+        ]
+      },
+      "properties": {
+        "id": "wp_029",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.212513°N, 7.551463°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.552900162185637,
+          33.2066287184503
+        ]
+      },
+      "properties": {
+        "id": "wp_030",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.206629°N, 7.552900°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.55352898466105,
+          33.20433801605443
+        ]
+      },
+      "properties": {
+        "id": "wp_031",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.204338°N, 7.553529°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.554517126557325,
+          33.209548245690165
+        ]
+      },
+      "properties": {
+        "id": "wp_032",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.209548°N, 7.554517°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.558155304613935,
+          33.20514649878823
+        ]
+      },
+      "properties": {
+        "id": "wp_033",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.205146°N, 7.558155°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.558649374669688,
+          33.193423481464215
+        ]
+      },
+      "properties": {
+        "id": "wp_034",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.193423°N, 7.558649°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.558963788520151,
+          33.20739228679522
+        ]
+      },
+      "properties": {
+        "id": "wp_035",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.207392°N, 7.558964°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.560446009633202,
+          33.21642035820992
+        ]
+      },
+      "properties": {
+        "id": "wp_036",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.216420°N, 7.560446°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.56116466185739,
+          33.12730747898185
+        ]
+      },
+      "properties": {
+        "id": "wp_037",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.127307°N, 7.561165°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.563320621903792,
+          33.17815212629725
+        ]
+      },
+      "properties": {
+        "id": "wp_038",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.178152°N, 7.563321°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.564039271833574,
+          33.1610841334782
+        ]
+      },
+      "properties": {
+        "id": "wp_039",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.161084°N, 7.564039°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.565533740994717,
+          33.08843492672992
+        ]
+      },
+      "properties": {
+        "id": "wp_040",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.088435°N, 7.565534°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.566195224232965,
+          33.22459502689126
+        ]
+      },
+      "properties": {
+        "id": "wp_041",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.224595°N, 7.566195°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.567273207861097,
+          33.212961843357746
+        ]
+      },
+      "properties": {
+        "id": "wp_042",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.212962°N, 7.567273°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.569698657118322,
+          33.18201487849781
+        ]
+      },
+      "properties": {
+        "id": "wp_043",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.182015°N, 7.569699°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.570641889956925,
+          33.13934490127862
+        ]
+      },
+      "properties": {
+        "id": "wp_044",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.139345°N, 7.570642°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.573741078268916,
+          33.13799743182464
+        ]
+      },
+      "properties": {
+        "id": "wp_045",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.137997°N, 7.573741°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.573980624346007,
+          33.17839167686472
+        ]
+      },
+      "properties": {
+        "id": "wp_046",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.178392°N, 7.573981°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.576705516533904,
+          33.22124131636156
+        ]
+      },
+      "properties": {
+        "id": "wp_047",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.221241°N, 7.576706°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.579220797769522,
+          33.15093317545464
+        ]
+      },
+      "properties": {
+        "id": "wp_048",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.150933°N, 7.579221°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.583921985774661,
+          33.19887326224296
+        ]
+      },
+      "properties": {
+        "id": "wp_049",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.198873°N, 7.583922°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.584700524858593,
+          33.18026316776626
+        ]
+      },
+      "properties": {
+        "id": "wp_050",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.180263°N, 7.584701°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.588203951135227,
+          33.16907913998123
+        ]
+      },
+      "properties": {
+        "id": "wp_051",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.169079°N, 7.588204°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.58982092438701,
+          33.196702333589954
+        ]
+      },
+      "properties": {
+        "id": "wp_052",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.196702°N, 7.589821°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.591842132562236,
+          33.220911932897025
+        ]
+      },
+      "properties": {
+        "id": "wp_053",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.220912°N, 7.591842°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.594671818595128,
+          33.163419755063074
+        ]
+      },
+      "properties": {
+        "id": "wp_054",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.163420°N, 7.594672°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.595076064034669,
+          33.184081004400696
+        ]
+      },
+      "properties": {
+        "id": "wp_055",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.184081°N, 7.595076°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.596513368210328,
+          33.15421202294168
+        ]
+      },
+      "properties": {
+        "id": "wp_056",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.154212°N, 7.596513°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.600960031324869,
+          33.22666115229494
+        ]
+      },
+      "properties": {
+        "id": "wp_057",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.226661°N, 7.600960°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.60131935498825,
+          33.19468112731924
+        ]
+      },
+      "properties": {
+        "id": "wp_058",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.194681°N, 7.601319°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.601948175997487,
+          33.168360484033684
+        ]
+      },
+      "properties": {
+        "id": "wp_059",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.168360°N, 7.601948°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.609381734933011,
+          33.223719163535755
+        ]
+      },
+      "properties": {
+        "id": "wp_060",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.223719°N, 7.609382°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.609651229568855,
+          33.152842092733074
+        ]
+      },
+      "properties": {
+        "id": "wp_061",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.152842°N, 7.609651°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.611200823376061,
+          33.18107164874603
+        ]
+      },
+      "properties": {
+        "id": "wp_062",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.181072°N, 7.611201°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.612413549794882,
+          33.14181527202886
+        ]
+      },
+      "properties": {
+        "id": "wp_063",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.141815°N, 7.612414°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.636398567089772,
+          33.22585267010783
+        ]
+      },
+      "properties": {
+        "id": "wp_064",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.225853°N, 7.636399°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.636802806714583,
+          33.09451897130152
+        ]
+      },
+      "properties": {
+        "id": "wp_065",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.094519°N, 7.636803°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.644011786154851,
+          33.10945346581757
+        ]
+      },
+      "properties": {
+        "id": "wp_066",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.109453°N, 7.644012°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.668573221364412,
+          33.137668050713785
+        ]
+      },
+      "properties": {
+        "id": "wp_067",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.137668°N, 7.668573°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.678215146606645,
+          33.11621328632429
+        ]
+      },
+      "properties": {
+        "id": "wp_068",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.116213°N, 7.678215°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.679652445774554,
+          33.121198935580104
+        ]
+      },
+      "properties": {
+        "id": "wp_069",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.121199°N, 7.679652°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.680640592816353,
+          33.2298950862611
+        ]
+      },
+      "properties": {
+        "id": "wp_070",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.229895°N, 7.680641°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.684653068864287,
+          33.12293568149945
+        ]
+      },
+      "properties": {
+        "id": "wp_071",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.122936°N, 7.684653°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.690881387034761,
+          33.21938479409721
+        ]
+      },
+      "properties": {
+        "id": "wp_072",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.219385°N, 7.690881°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.710734160372443,
+          33.18902174141121
+        ]
+      },
+      "properties": {
+        "id": "wp_073",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.189022°N, 7.710734°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.712126545857251,
+          33.12569051261394
+        ]
+      },
+      "properties": {
+        "id": "wp_074",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.125691°N, 7.712127°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.712126545253983,
+          33.227963708781694
+        ]
+      },
+      "properties": {
+        "id": "wp_075",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.227964°N, 7.712127°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.489479100297252,
+          33.194591292307564
+        ]
+      },
+      "properties": {
+        "id": "wp_076",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.194591°N, 7.489479°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.484313790419004,
+          33.13382026664326
+        ]
+      },
+      "properties": {
+        "id": "wp_001",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.133820°N, 7.484314°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.492533373635347,
+          33.17550209501041
+        ]
+      },
+      "properties": {
+        "id": "wp_002",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.175502°N, 7.492533°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.497653772415828,
+          33.16584520485373
+        ]
+      },
+      "properties": {
+        "id": "wp_003",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.165845°N, 7.497654°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.499450402765746,
+          33.1879437596482
+        ]
+      },
+      "properties": {
+        "id": "wp_004",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.187944°N, 7.499450°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.501247031539301,
+          33.156323062222455
+        ]
+      },
+      "properties": {
+        "id": "wp_005",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.156323°N, 7.501247°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.505019956479427,
+          33.194726042232865
+        ]
+      },
+      "properties": {
+        "id": "wp_006",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.194726°N, 7.505020°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.512835299265351,
+          33.21740850270305
+        ]
+      },
+      "properties": {
+        "id": "wp_007",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.217409°N, 7.512835°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.513643784381939,
+          33.14136611377757
+        ]
+      },
+      "properties": {
+        "id": "wp_008",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.141366°N, 7.513644°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.525546462492998,
+          33.14230934277442
+        ]
+      },
+      "properties": {
+        "id": "wp_009",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.142309°N, 7.525546°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.525771039390568,
+          33.13988389200431
+        ]
+      },
+      "properties": {
+        "id": "wp_010",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.139884°N, 7.525771°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.52936429767048,
+          33.119177727101246
+        ]
+      },
+      "properties": {
+        "id": "wp_011",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.119178°N, 7.529364°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.533334853986599,
+          33.18564407606593
+        ]
+      },
+      "properties": {
+        "id": "wp_012",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.185644°N, 7.533335°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.537449140015799,
+          33.20487700392687
+        ]
+      },
+      "properties": {
+        "id": "wp_013",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.204877°N, 7.537449°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.538437285811744,
+          33.13678470657276
+        ]
+      },
+      "properties": {
+        "id": "wp_014",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.136785°N, 7.538437°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.539006218603959,
+          33.156053569922314
+        ]
+      },
+      "properties": {
+        "id": "wp_015",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.156054°N, 7.539006°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.539724872025361,
+          33.22875721987047
+        ]
+      },
+      "properties": {
+        "id": "wp_016",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.228757°N, 7.539725°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.540772910591001,
+          33.18479966029638
+        ]
+      },
+      "properties": {
+        "id": "wp_017",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.184800°N, 7.540773°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.540862731846609,
+          33.197915059863966
+        ]
+      },
+      "properties": {
+        "id": "wp_018",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.197915°N, 7.540863°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.541222061894158,
+          33.19418705441864
+        ]
+      },
+      "properties": {
+        "id": "wp_019",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.194187°N, 7.541222°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.543198356981244,
+          33.131484646661704
+        ]
+      },
+      "properties": {
+        "id": "wp_020",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.131485°N, 7.543198°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.543872093121665,
+          33.109251346282875
+        ]
+      },
+      "properties": {
+        "id": "wp_021",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.109251°N, 7.543872°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.544665605665624,
+          33.133745408298005
+        ]
+      },
+      "properties": {
+        "id": "wp_022",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.133745°N, 7.544666°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.546414327340227,
+          33.105065190745556
+        ]
+      },
+      "properties": {
+        "id": "wp_023",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.105065°N, 7.546414°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.547555185591412,
+          33.1846599203926
+        ]
+      },
+      "properties": {
+        "id": "wp_024",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.184660°N, 7.547555°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.547689936049289,
+          33.209503329582176
+        ]
+      },
+      "properties": {
+        "id": "wp_025",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.209503°N, 7.547690°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.547869595840539,
+          33.146037355665186
+        ]
+      },
+      "properties": {
+        "id": "wp_026",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.146037°N, 7.547870°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.548049258594244,
+          33.20653888823231
+        ]
+      },
+      "properties": {
+        "id": "wp_027",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.206539°N, 7.548049°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.549351814728959,
+          33.1077242028196
+        ]
+      },
+      "properties": {
+        "id": "wp_028",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.107724°N, 7.549352°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.551462858355611,
+          33.21251268395534
+        ]
+      },
+      "properties": {
+        "id": "wp_029",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.212513°N, 7.551463°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.552900162185637,
+          33.2066287184503
+        ]
+      },
+      "properties": {
+        "id": "wp_030",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.206629°N, 7.552900°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.55352898466105,
+          33.20433801605443
+        ]
+      },
+      "properties": {
+        "id": "wp_031",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.204338°N, 7.553529°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.554517126557325,
+          33.209548245690165
+        ]
+      },
+      "properties": {
+        "id": "wp_032",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.209548°N, 7.554517°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.558155304613935,
+          33.20514649878823
+        ]
+      },
+      "properties": {
+        "id": "wp_033",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.205146°N, 7.558155°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.558649374669688,
+          33.193423481464215
+        ]
+      },
+      "properties": {
+        "id": "wp_034",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.193423°N, 7.558649°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.558963788520151,
+          33.20739228679522
+        ]
+      },
+      "properties": {
+        "id": "wp_035",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.207392°N, 7.558964°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.560446009633202,
+          33.21642035820992
+        ]
+      },
+      "properties": {
+        "id": "wp_036",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.216420°N, 7.560446°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.56116466185739,
+          33.12730747898185
+        ]
+      },
+      "properties": {
+        "id": "wp_037",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.127307°N, 7.561165°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.563320621903792,
+          33.17815212629725
+        ]
+      },
+      "properties": {
+        "id": "wp_038",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.178152°N, 7.563321°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.564039271833574,
+          33.1610841334782
+        ]
+      },
+      "properties": {
+        "id": "wp_039",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.161084°N, 7.564039°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.565533740994717,
+          33.08843492672992
+        ]
+      },
+      "properties": {
+        "id": "wp_040",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.088435°N, 7.565534°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.566195224232965,
+          33.22459502689126
+        ]
+      },
+      "properties": {
+        "id": "wp_041",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.224595°N, 7.566195°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.567273207861097,
+          33.212961843357746
+        ]
+      },
+      "properties": {
+        "id": "wp_042",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.212962°N, 7.567273°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.569698657118322,
+          33.18201487849781
+        ]
+      },
+      "properties": {
+        "id": "wp_043",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.182015°N, 7.569699°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.570641889956925,
+          33.13934490127862
+        ]
+      },
+      "properties": {
+        "id": "wp_044",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.139345°N, 7.570642°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.573741078268916,
+          33.13799743182464
+        ]
+      },
+      "properties": {
+        "id": "wp_045",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.137997°N, 7.573741°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.573980624346007,
+          33.17839167686472
+        ]
+      },
+      "properties": {
+        "id": "wp_046",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.178392°N, 7.573981°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.576705516533904,
+          33.22124131636156
+        ]
+      },
+      "properties": {
+        "id": "wp_047",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.221241°N, 7.576706°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.579220797769522,
+          33.15093317545464
+        ]
+      },
+      "properties": {
+        "id": "wp_048",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.150933°N, 7.579221°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.583921985774661,
+          33.19887326224296
+        ]
+      },
+      "properties": {
+        "id": "wp_049",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.198873°N, 7.583922°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.584700524858593,
+          33.18026316776626
+        ]
+      },
+      "properties": {
+        "id": "wp_050",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.180263°N, 7.584701°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.588203951135227,
+          33.16907913998123
+        ]
+      },
+      "properties": {
+        "id": "wp_051",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.169079°N, 7.588204°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.58982092438701,
+          33.196702333589954
+        ]
+      },
+      "properties": {
+        "id": "wp_052",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.196702°N, 7.589821°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.591842132562236,
+          33.220911932897025
+        ]
+      },
+      "properties": {
+        "id": "wp_053",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.220912°N, 7.591842°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.594671818595128,
+          33.163419755063074
+        ]
+      },
+      "properties": {
+        "id": "wp_054",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.163420°N, 7.594672°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.595076064034669,
+          33.184081004400696
+        ]
+      },
+      "properties": {
+        "id": "wp_055",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.184081°N, 7.595076°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.596513368210328,
+          33.15421202294168
+        ]
+      },
+      "properties": {
+        "id": "wp_056",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.154212°N, 7.596513°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.600960031324869,
+          33.22666115229494
+        ]
+      },
+      "properties": {
+        "id": "wp_057",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.226661°N, 7.600960°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.60131935498825,
+          33.19468112731924
+        ]
+      },
+      "properties": {
+        "id": "wp_058",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.194681°N, 7.601319°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.601948175997487,
+          33.168360484033684
+        ]
+      },
+      "properties": {
+        "id": "wp_059",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.168360°N, 7.601948°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.609381734933011,
+          33.223719163535755
+        ]
+      },
+      "properties": {
+        "id": "wp_060",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.223719°N, 7.609382°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.609651229568855,
+          33.152842092733074
+        ]
+      },
+      "properties": {
+        "id": "wp_061",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.152842°N, 7.609651°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.611200823376061,
+          33.18107164874603
+        ]
+      },
+      "properties": {
+        "id": "wp_062",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.181072°N, 7.611201°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.612413549794882,
+          33.14181527202886
+        ]
+      },
+      "properties": {
+        "id": "wp_063",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.141815°N, 7.612414°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.636398567089772,
+          33.22585267010783
+        ]
+      },
+      "properties": {
+        "id": "wp_064",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.225853°N, 7.636399°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.636802806714583,
+          33.09451897130152
+        ]
+      },
+      "properties": {
+        "id": "wp_065",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.094519°N, 7.636803°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.644011786154851,
+          33.10945346581757
+        ]
+      },
+      "properties": {
+        "id": "wp_066",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.109453°N, 7.644012°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.668573221364412,
+          33.137668050713785
+        ]
+      },
+      "properties": {
+        "id": "wp_067",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.137668°N, 7.668573°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.678215146606645,
+          33.11621328632429
+        ]
+      },
+      "properties": {
+        "id": "wp_068",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.116213°N, 7.678215°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.679652445774554,
+          33.121198935580104
+        ]
+      },
+      "properties": {
+        "id": "wp_069",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.121199°N, 7.679652°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.680640592816353,
+          33.2298950862611
+        ]
+      },
+      "properties": {
+        "id": "wp_070",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.229895°N, 7.680641°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.684653068864287,
+          33.12293568149945
+        ]
+      },
+      "properties": {
+        "id": "wp_071",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.122936°N, 7.684653°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.690881387034761,
+          33.21938479409721
+        ]
+      },
+      "properties": {
+        "id": "wp_072",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.219385°N, 7.690881°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.710734160372443,
+          33.18902174141121
+        ]
+      },
+      "properties": {
+        "id": "wp_073",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.189022°N, 7.710734°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.712126545857251,
+          33.12569051261394
+        ]
+      },
+      "properties": {
+        "id": "wp_074",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.125691°N, 7.712127°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.712126545253983,
+          33.227963708781694
+        ]
+      },
+      "properties": {
+        "id": "wp_075",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.227964°N, 7.712127°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.489479100297252,
+          33.194591292307564
+        ]
+      },
+      "properties": {
+        "id": "wp_076",
+        "type": "unknown",
+        "name": "unknown",
+        "observation": "",
+        "region": "Berrechid",
+        "coordinates": "33.194591°N, 7.489479°W",
+        "detection_confidence": 0.87,
+        "last_updated": "2025-10-11",
+        "year": 2025
+      }
+    }
+  ]
+}

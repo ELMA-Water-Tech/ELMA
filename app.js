@@ -77,161 +77,7 @@ const appData = {
   },
   waterPoints: {
     type: "FeatureCollection",
-    features: [
-      {
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: [-7.562358, 33.313187]
-        },
-        properties: {
-          id: "wp_001",
-          type: "retention_basin",
-          name: "Bassin de rétention d'Eau",
-          observation: "Bassin de rétention d'Eau",
-          region: "Berrechid",
-          coordinates: "33.313187°N, 7.562358°W",
-          detection_confidence: 0.95,
-          last_updated: "2025-10-11"
-        }
-      },
-      {
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: [-7.536927, 33.272681]
-        },
-        properties: {
-          id: "wp_002",
-          type: "washing_station",
-          name: "Station de lavage",
-          observation: "Station de lavage de carottes",
-          region: "Berrechid",
-          coordinates: "33.272681°N, 7.536927°W",
-          detection_confidence: 0.88,
-          last_updated: "2025-10-11"
-        }
-      },
-      {
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: [-7.536989, 33.272758]
-        },
-        properties: {
-          id: "wp_003",
-          type: "retention_basin",
-          name: "Bassin de rétention",
-          observation: "Bassin de rétention",
-          region: "Berrechid",
-          coordinates: "33.272758°N, 7.536989°W",
-          detection_confidence: 0.92,
-          last_updated: "2025-10-11"
-        }
-      },
-      {
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: [-7.560149, 33.320525]
-        },
-        properties: {
-          id: "wp_004",
-          type: "retention_basin",
-          name: "Bassin de rétention d'Eau",
-          observation: "Bassin de rétention d'Eau",
-          region: "Berrechid",
-          coordinates: "33.320525°N, 7.560149°W",
-          detection_confidence: 0.94,
-          last_updated: "2025-10-11"
-        }
-      },
-      {
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: [-7.558367, 33.3326433]
-        },
-        properties: {
-          id: "wp_005",
-          type: "retention_basin",
-          name: "Bassin de rétention d'Eau",
-          observation: "Bassin de rétention d'Eau",
-          region: "Berrechid",
-          coordinates: "33.332643°N, 7.558367°W",
-          detection_confidence: 0.96,
-          last_updated: "2025-10-11"
-        }
-      },
-      {
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: [-7.552444, 33.305452]
-        },
-        properties: {
-          id: "wp_006",
-          type: "retention_basin",
-          name: "Bassin de rétention d'Eau",
-          observation: "Bassin de rétention d'Eau",
-          region: "Berrechid",
-          coordinates: "33.305452°N, 7.552444°W",
-          detection_confidence: 0.91,
-          last_updated: "2025-10-11"
-        }
-      },
-      {
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: [-7.566754, 33.297586]
-        },
-        properties: {
-          id: "wp_007",
-          type: "retention_basin",
-          name: "Bassin de rétention d'Eau",
-          observation: "Bassin de rétention d'Eau",
-          region: "Berrechid",
-          coordinates: "33.297586°N, 7.566754°W",
-          detection_confidence: 0.93,
-          last_updated: "2025-10-11"
-        }
-      },
-      {
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: [-7.568796, 33.315619]
-        },
-        properties: {
-          id: "wp_008",
-          type: "retention_basin",
-          name: "Bassin de rétention d'Eau",
-          observation: "Bassin de rétention d'Eau",
-          region: "Berrechid",
-          coordinates: "33.315619°N, 7.568796°W",
-          detection_confidence: 0.89,
-          last_updated: "2025-10-11"
-        }
-      },
-      {
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: [-7.578509, 33.118222]
-        },
-        properties: {
-          id: "wp_009",
-          type: "retention_basin",
-          name: "Bassin de rétention",
-          observation: "Bassin de rétention",
-          region: "Berrechid",
-          coordinates: "33.118222°N, 7.578509°W",
-          detection_confidence: 0.87,
-          last_updated: "2025-10-11"
-        }
-      }
-    ]
+    features: [] // Will be loaded from waterPoints/water_points.geojson
   },
   basins: {
     type: "FeatureCollection",
@@ -299,6 +145,7 @@ let wellsLayer;
 let basinsLayer;
 let waterPointsLayer;
 let charts = {};
+let selectedYear = null; // For year filter (null means all years)
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
@@ -313,7 +160,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initializeApp() {
     updateDateTime();
-    loadRegionBoundary().then(() => {
+    // Load both region boundaries and water points before initializing the map
+    Promise.all([
+        loadRegionBoundary(),
+        loadWaterPoints()
+    ]).then(() => {
         initializeMap();
         initializeEventListeners();
         initializeCharts();
@@ -444,6 +295,23 @@ function calculatePolygonCenter(coordinates) {
     }
     
     return [totalLat / numPoints, totalLng / numPoints];
+}
+
+// Load water points from GeoJSON file
+async function loadWaterPoints() {
+    try {
+        const response = await fetch('waterPoints/water_points.geojson');
+        const geojsonData = await response.json();
+        
+        if (geojsonData.features && geojsonData.features.length > 0) {
+            // Replace the empty features array with loaded data
+            appData.waterPoints.features = geojsonData.features;
+            console.log(`Loaded ${geojsonData.features.length} water points from GeoJSON`);
+        }
+    } catch (error) {
+        console.error('Error loading water points:', error);
+        // Keep the empty array if loading fails
+    }
 }
 
 // Initialize Leaflet map
@@ -581,15 +449,8 @@ function addWaterPoints() {
         const coords = [point.geometry.coordinates[1], point.geometry.coordinates[0]];
         const props = point.properties;
         
-        // Different colors and shapes for different types
-        let markerColor, markerShape;
-        if (props.type === 'retention_basin') {
-            markerColor = '#10b981'; // Emerald green for retention basins
-            markerShape = 'square';
-        } else if (props.type === 'washing_station') {
-            markerColor = '#f59e0b'; // Amber for washing stations
-            markerShape = 'triangle';
-        }
+        // All water points use the same color (emerald green for retention basins)
+        const markerColor = '#10b981'; // Emerald green for retention basins
         
         const marker = L.circleMarker(coords, {
             radius: 6,
@@ -703,29 +564,52 @@ function initializeEventListeners() {
         switchRegion(this.value);
     });
     
-    // Layer toggles
-    document.getElementById('showWells').addEventListener('change', function() {
-        if (this.checked) {
-            map.addLayer(wellsLayer);
-        } else {
-            map.removeLayer(wellsLayer);
-        }
-    });
-    
+    // Layer toggles - basin toggle controls all water features
     document.getElementById('showBasins').addEventListener('change', function() {
         if (this.checked) {
-            map.addLayer(basinsLayer);
+            // Show all water-related layers
+            if (basinsLayer) map.addLayer(basinsLayer);
+            if (wellsLayer) map.addLayer(wellsLayer);
+            if (waterPointsLayer) map.addLayer(waterPointsLayer);
         } else {
-            map.removeLayer(basinsLayer);
+            // Hide all water-related layers
+            if (basinsLayer) map.removeLayer(basinsLayer);
+            if (wellsLayer) map.removeLayer(wellsLayer);
+            if (waterPointsLayer) map.removeLayer(waterPointsLayer);
         }
     });
     
-    document.getElementById('showWaterPoints').addEventListener('change', function() {
-        if (this.checked) {
-            map.addLayer(waterPointsLayer);
+    // Year filter slider (compact version in map header)
+    const yearSlider = document.getElementById('yearSlider');
+    const yearValue = document.getElementById('yearValue');
+    
+    // Initialize to show all years
+    yearValue.textContent = 'Toutes';
+    selectedYear = null;
+    
+    yearSlider.addEventListener('input', function() {
+        const sliderValue = parseInt(this.value);
+        // If slider is at max position, show all years
+        if (sliderValue === parseInt(this.max)) {
+            selectedYear = null;
+            yearValue.textContent = 'Toutes';
         } else {
-            map.removeLayer(waterPointsLayer);
+            selectedYear = sliderValue;
+            yearValue.textContent = selectedYear;
         }
+        const sourceType = document.getElementById('waterSourceFilter').value;
+        filterWaterSources(sourceType);
+        updateFilterResult(sourceType);
+    });
+    
+    // Double-click on year value to reset to all years
+    yearValue.addEventListener('dblclick', function() {
+        selectedYear = null;
+        yearValue.textContent = 'Toutes';
+        yearSlider.value = yearSlider.max;
+        const sourceType = document.getElementById('waterSourceFilter').value;
+        filterWaterSources(sourceType);
+        updateFilterResult(sourceType);
     });
     
     // Water source filter
@@ -796,11 +680,20 @@ function filterWaterSources(sourceType) {
     basinsLayer.clearLayers();
     waterPointsLayer.clearLayers();
     
+    // Get current year filter value
+    const yearSlider = document.getElementById('yearSlider');
+    const currentYearFilter = selectedYear; // selectedYear is defined in initializeEventListeners
+    
     // Show/hide layers based on filter
     if (sourceType === 'all' || sourceType === 'wells') {
         appData.wells.features.forEach(well => {
             const coords = [well.geometry.coordinates[1], well.geometry.coordinates[0]];
             const props = well.properties;
+            
+            // Apply year filter if set
+            if (currentYearFilter !== null && props.year && props.year !== currentYearFilter) {
+                return; // Skip this well
+            }
             
             const marker = L.circleMarker(coords, {
                 radius: 8,
@@ -826,20 +719,23 @@ function filterWaterSources(sourceType) {
         // No additional markers needed
     }
     
-    if (sourceType === 'all' || sourceType === 'retention_basins' || sourceType === 'washing_stations') {
+    if (sourceType === 'all' || sourceType === 'retention_basins') {
         const filteredWaterPoints = sourceType === 'all' ? 
             appData.waterPoints.features : 
             appData.waterPoints.features.filter(point => {
-                if (sourceType === 'retention_basins') return point.properties.type === 'retention_basin';
-                if (sourceType === 'washing_stations') return point.properties.type === 'washing_station';
-                return true;
+                return point.properties.type === 'retention_basin';
             });
         
         filteredWaterPoints.forEach(point => {
             const coords = [point.geometry.coordinates[1], point.geometry.coordinates[0]];
             const props = point.properties;
             
-            let markerColor = props.type === 'retention_basin' ? '#10b981' : '#f59e0b';
+            // Apply year filter if set
+            if (currentYearFilter !== null && props.year && props.year !== currentYearFilter) {
+                return; // Skip this water point
+            }
+            
+            const markerColor = '#10b981'; // Emerald green for all retention basins
             
             const marker = L.circleMarker(coords, {
                 radius: 6,
@@ -865,26 +761,39 @@ function updateFilterResult(sourceType) {
     let resultText = '';
     let count = 0;
     
+    // Apply year filter to counts if set
+    const applyYearFilter = (items) => {
+        if (selectedYear === null) return items;
+        return items.filter(item => item.properties.year === selectedYear);
+    };
+    
     switch(sourceType) {
         case 'all':
-            count = appData.wells.features.length + 1 + appData.waterPoints.features.length;
+            const filteredWells = applyYearFilter(appData.wells.features);
+            const filteredWaterPoints = applyYearFilter(appData.waterPoints.features);
+            count = filteredWells.length + 1 + filteredWaterPoints.length;
             resultText = `Affichage de ${count} sources d'eau`;
+            if (selectedYear !== null) {
+                resultText += ` (${selectedYear})`;
+            }
             break;
         case 'wells':
-            count = appData.wells.features.length;
+            count = applyYearFilter(appData.wells.features).length;
             resultText = `Affichage de ${count} puits`;
+            if (selectedYear !== null) {
+                resultText += ` (${selectedYear})`;
+            }
             break;
         case 'basins':
             count = 1;
             resultText = `Affichage du bassin principal`;
             break;
         case 'retention_basins':
-            count = appData.waterPoints.features.filter(p => p.properties.type === 'retention_basin').length;
+            count = applyYearFilter(appData.waterPoints.features.filter(p => p.properties.type === 'retention_basin')).length;
             resultText = `Affichage de ${count} bassins de rétention`;
-            break;
-        case 'washing_stations':
-            count = appData.waterPoints.features.filter(p => p.properties.type === 'washing_station').length;
-            resultText = `Affichage de ${count} station(s) de lavage`;
+            if (selectedYear !== null) {
+                resultText += ` (${selectedYear})`;
+            }
             break;
     }
     
@@ -904,7 +813,7 @@ function createWellStatusChart() {
     charts.wellStatus = new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: ['Puits actifs', 'Puits inactifs'],
+            labels: ['Bassins déclarés', 'Bassins non déclarés'],
             datasets: [{
                 data: [
                     appData.analytics.region_summary.active_wells,

@@ -56,10 +56,6 @@
                             <span class="value" id="regionArea">1,200 km²</span>
                         </div>
                         <div class="info-item">
-                            <span class="label">Population :</span>
-                            <span class="value" id="regionPopulation">168,687</span>
-                        </div>
-                        <div class="info-item">
                             <span class="label">Coordonnées :</span>
                             <span class="value" id="regionCoords">33.35°N, -7.58°W</span>
                         </div>
@@ -92,24 +88,10 @@
                     <h3>Contrôle des couches</h3>
                     <div class="layer-controls">
                         <label class="toggle-control">
-                            <input type="checkbox" id="showWells" checked>
-                            <span class="toggle-label">
-                                <span class="toggle-icon wells-icon"></span>
-                                Afficher les puits
-                            </span>
-                        </label>
-                        <label class="toggle-control">
                             <input type="checkbox" id="showBasins" checked>
                             <span class="toggle-label">
                                 <span class="toggle-icon basins-icon"></span>
                                 Afficher le bassin
-                            </span>
-                        </label>
-                        <label class="toggle-control">
-                            <input type="checkbox" id="showWaterPoints" checked>
-                            <span class="toggle-label">
-                                <span class="toggle-icon water-points-icon"></span>
-                                Points d'eau
                             </span>
                         </label>
                     </div>
@@ -123,8 +105,7 @@
                             <option value="all">Toutes les sources (13)</option>
                             <option value="wells">Puits (3)</option>
                             <option value="basins">Bassin principal (1)</option>
-                            <option value="retention_basins">Bassins de rétention (8)</option>
-                            <option value="washing_stations">Stations de lavage (1)</option>
+                            <option value="retention_basins">Bassins de rétention (9)</option>
                         </select>
                         <div class="filter-info">
                             <span id="filterResult" class="filter-result-text">Affichage de 13 sources d'eau</span>
@@ -140,6 +121,10 @@
             <section class="map-container">
                 <div class="map-header">
                     <h3>Carte interactive</h3>
+                    <div class="map-header-year-filter">
+                        <input type="range" id="yearSlider" class="year-slider-compact" min="2018" max="2025" value="2025" step="1">
+                        <span class="year-value-compact" id="yearValue">Toutes</span>
+                    </div>
                     <div class="map-controls">
                         <button class="btn btn--sm btn--outline" id="resetMapView">Réinitialiser</button>
                         <button class="btn btn--sm btn--outline" id="toggleLegend">Légende</button>
@@ -160,10 +145,6 @@
                         <div class="legend-item">
                             <span class="legend-symbol retention-basin-symbol"></span>
                             <span>Bassin de rétention</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-symbol washing-station-symbol"></span>
-                            <span>Station de lavage</span>
                         </div>
                         <div class="legend-item">
                             <span class="legend-symbol region-symbol berrechid-symbol"></span>
@@ -187,12 +168,12 @@
                     <div class="kpi-grid">
                         <div class="kpi-card">
                             <div class="kpi-value" id="kpiTotalWells">3</div>
-                            <div class="kpi-label">Total des puits</div>
+                            <div class="kpi-label">Total des bassins</div>
                             <div class="kpi-change positive">+1 ce mois</div>
                         </div>
                         <div class="kpi-card">
                             <div class="kpi-value" id="kpiActiveWells">2</div>
-                            <div class="kpi-label">Puits actifs</div>
+                            <div class="kpi-label">Bassins déclarés</div>
                             <div class="kpi-change neutral">Aucun changement</div>
                         </div>
                         <div class="kpi-card">
@@ -211,7 +192,7 @@
                 <div class="sidebar-section">
                     <h3>Analytics Charts</h3>
                     <div class="chart-container">
-                        <h4>Répartition du statut des puits</h4>
+                        <h4>Répartition du statut des bassins</h4>
                         <canvas id="wellStatusChart"></canvas>
                     </div>
                 </div>

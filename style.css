@@ -1000,7 +1000,18 @@ select.form-control {
     cursor: col-resize;
     position: relative;
     transition: background-color var(--duration-fast) var(--ease-standard);
-    z-index: 10;
+    z-index: 100;
+    min-width: 4px;
+}
+
+.splitter::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -5px;
+    right: -5px;
+    bottom: 0;
+    cursor: col-resize;
 }
 
 .splitter:hover {
@@ -1181,17 +1192,9 @@ select.form-control {
     border-radius: 50%;
 }
 
-.wells-icon {
-    background: var(--color-primary);
-}
-
 .basins-icon {
     background: rgba(var(--color-blue-600-rgb), 0.2);
     border: 2px solid var(--color-primary);
-}
-
-.water-points-icon {
-    background: linear-gradient(135deg, #10b981 50%, #f59e0b 50%);
 }
 
 /* Filter Controls */
@@ -1215,6 +1218,98 @@ select.form-control {
     display: inline-block;
 }
 
+/* Year Filter Controls */
+.year-filter-controls {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+}
+
+.year-slider-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+}
+
+.year-slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.year-value {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--color-primary);
+    background: rgba(59, 130, 246, 0.1);
+    padding: var(--space-2) var(--space-8);
+    border-radius: var(--radius-sm);
+}
+
+.year-slider {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(to right, #e2e8f0 0%, var(--color-primary) 100%);
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+.year-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    cursor: pointer;
+    border: 3px solid white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+}
+
+.year-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 3px 12px rgba(59, 130, 246, 0.4);
+}
+
+.year-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    cursor: pointer;
+    border: 3px solid white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+}
+
+.year-slider::-moz-range-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 3px 12px rgba(59, 130, 246, 0.4);
+}
+
+.year-slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--font-size-xs);
+    color: #64748b;
+    margin-top: -4px;
+}
+
+.year-filter-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-4);
+}
+
+.btn--xs {
+    padding: var(--space-2) var(--space-12);
+    font-size: var(--font-size-xs);
+}
+
 /* Map Container */
 .map-container {
     display: flex;
@@ -1231,11 +1326,13 @@ select.form-control {
     justify-content: space-between;
     align-items: center;
     padding: var(--space-16) var(--space-20);
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(203, 213, 225, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    gap: var(--space-16);
 }
 
 .map-header h3 {
@@ -1243,11 +1340,86 @@ select.form-control {
     font-weight: var(--font-weight-semibold);
     color: #1e293b;
     margin: 0;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+    flex-shrink: 0;
+}
+
+.map-header-year-filter {
+    display: flex;
+    align-items: center;
+    gap: var(--space-12);
+    flex: 1;
+    max-width: 300px;
+}
+
+.year-slider-compact {
+    flex: 1;
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(to right, #e2e8f0 0%, var(--color-primary) 100%);
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+.year-slider-compact::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.year-slider-compact::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+}
+
+.year-slider-compact::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.year-slider-compact::-moz-range-thumb:hover {
+    transform: scale(1.15);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+}
+
+.year-value-compact {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-primary);
+    background: rgba(59, 130, 246, 0.1);
+    padding: var(--space-4) var(--space-12);
+    border-radius: var(--radius-sm);
+    min-width: 60px;
+    text-align: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.year-value-compact:hover {
+    background: rgba(59, 130, 246, 0.2);
+    transform: scale(1.05);
 }
 
 .map-controls {
     display: flex;
     gap: var(--space-8);
+    flex-shrink: 0;
 }
 
 .map-view {
@@ -1317,10 +1489,6 @@ select.form-control {
 
 .retention-basin-symbol {
     background: #10b981;
-}
-
-.washing-station-symbol {
-    background: #f59e0b;
 }
 
 .region-symbol {
