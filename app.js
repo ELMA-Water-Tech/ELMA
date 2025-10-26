@@ -170,6 +170,10 @@ function initializeApp() {
         initializeCharts();
         updateAnalytics();
         initializeSplitters();
+    }).catch(error => {
+        console.error('Error initializing app:', error);
+        // Still try to initialize splitters even if other parts fail
+        setTimeout(initializeSplitters, 1000);
     });
 }
 
@@ -1080,45 +1084,85 @@ function initializeSplitters() {
     const mapContainer = document.querySelector('.map-container');
     const splitters = document.querySelectorAll('.splitter');
     
+    if (!mainGrid || !leftSidebar || !rightSidebar || splitters.length === 0) {
+        console.error('Splitter elements not found');
+        return;
+    }
+    
     let isDragging = false;
     let currentSplitter = null;
     let startX = 0;
     let startLeftWidth = 0;
     let startRightWidth = 0;
 
-    splitters.forEach(splitter => {
+    console.log('Initializing splitters:', splitters.length);
+    
+    splitters.forEach((splitter, index) => {
+        console.log(`Adding event listener to splitter ${index}:`, splitter);
+        
+        // Remove any existing event listeners to avoid duplicates
+        splitter.removeEventListener('mousedown', handleSplitterMouseDown);
+        
+        // Add the event listener
         splitter.addEventListener('mousedown', handleSplitterMouseDown);
+        
+        // Ensure splitter is properly styled
+        splitter.style.cursor = 'col-resize';
+        splitter.title = 'Drag to resize panels';
+        splitter.style.backgroundColor = 'var(--color-border)';
+        
+        // Add hover effect programmatically as backup
+        splitter.addEventListener('mouseenter', () => {
+            splitter.style.backgroundColor = 'var(--color-primary)';
+        });
+        
+        splitter.addEventListener('mouseleave', () => {
+            if (!splitter.classList.contains('dragging')) {
+                splitter.style.backgroundColor = 'var(--color-border)';
+            }
+        });
     });
 
     function handleSplitterMouseDown(e) {
         e.preventDefault();
+        e.stopPropagation();
+        
+        console.log('Splitter mousedown:', e.target);
+        
         isDragging = true;
-        currentSplitter = e.target;
+        currentSplitter = e.target.closest('.splitter');
         startX = e.clientX;
         
         // Get current actual widths in pixels
         startLeftWidth = leftSidebar.offsetWidth;
         startRightWidth = rightSidebar.offsetWidth;
         
+        console.log('Starting drag - Left width:', startLeftWidth, 'Right width:', startRightWidth);
+        
         // Add dragging class for visual feedback
         mainGrid.classList.add('dragging');
         currentSplitter.classList.add('dragging');
         
         // Add global event listeners
-        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mousemove', handleMouseMove, { passive: false });
         document.addEventListener('mouseup', handleMouseUp);
         
         // Prevent text selection during drag
         document.body.style.userSelect = 'none';
+        document.body.style.cursor = 'col-resize';
     }
 
     function handleMouseMove(e) {
         if (!isDragging || !currentSplitter) return;
         
         e.preventDefault();
+        e.stopPropagation();
+        
         const deltaX = e.clientX - startX;
         const containerWidth = mainGrid.offsetWidth;
         const target = currentSplitter.dataset.target;
+        
+        console.log('Mouse move - deltaX:', deltaX, 'target:', target);
         
         let newLeftWidth, newRightWidth;
         
@@ -1144,7 +1188,9 @@ function initializeSplitters() {
         // Only update if map width is reasonable
         if (newMapWidth >= 300) {
             // Update grid template columns
-            mainGrid.style.gridTemplateColumns = `${newLeftWidth}px 4px ${newMapWidth}px 4px ${newRightWidth}px`;
+            const newGridTemplate = `${newLeftWidth}px 4px ${newMapWidth}px 4px ${newRightWidth}px`;
+            console.log('Updating grid template:', newGridTemplate);
+            mainGrid.style.gridTemplateColumns = newGridTemplate;
             
             // Trigger map resize
             if (typeof map !== 'undefined' && map) {
@@ -1157,15 +1203,21 @@ function initializeSplitters() {
             if (typeof charts !== 'undefined') {
                 Object.values(charts).forEach(chart => {
                     if (chart && chart.resize) {
-                        chart.resize();
+                        requestAnimationFrame(() => {
+                            chart.resize();
+                        });
                     }
                 });
             }
+        } else {
+            console.warn('Map width too small:', newMapWidth);
         }
     }
 
     function handleMouseUp(e) {
         if (!isDragging) return;
+        
+        console.log('Mouse up - ending drag');
         
         isDragging = false;
         
@@ -1179,8 +1231,9 @@ function initializeSplitters() {
         document.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseup', handleMouseUp);
         
-        // Restore text selection
+        // Restore text selection and cursor
         document.body.style.userSelect = '';
+        document.body.style.cursor = '';
         
         currentSplitter = null;
         
@@ -1199,4 +1252,23 @@ function initializeSplitters() {
             });
         }
     }
+    
+    // Add a test function to window for debugging
+    window.testSplitters = function() {
+        console.log('=== Splitter Debug Info ===');
+        console.log('Main grid:', mainGrid);
+        console.log('Left sidebar:', leftSidebar, 'Width:', leftSidebar?.offsetWidth);
+        console.log('Right sidebar:', rightSidebar, 'Width:', rightSidebar?.offsetWidth);
+        console.log('Splitters found:', splitters.length);
+        splitters.forEach((s, i) => {
+            console.log(`Splitter ${i}:`, s, 'Target:', s.dataset.target);
+        });
+        console.log('Current grid template:', mainGrid?.style.gridTemplateColumns || 'default');
+        console.log('========================');
+    };
+    
+    // Call test function after a short delay
+    setTimeout(() => {
+        if (window.testSplitters) window.testSplitters();
+    }, 500);
 }
