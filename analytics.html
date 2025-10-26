@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plateforme ELMA - Analytics Avancés</title>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Chart.js Date Adapter -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="analytics.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <h1 class="app-title">Plateforme ELMA - Analytics Avancés</h1>
+                    <p class="app-subtitle">Analyse temporelle des ressources en eau</p>
+                </div>
+                <div class="header-info">
+                    <span class="date-display" id="currentDate"></span>
+                    <button class="nav-button" id="backToMap" title="Retour à la carte">
+                        <span class="nav-icon">🗺️</span>
+                        <span class="nav-text">Carte</span>
+                    </button>
+                    <button class="logout-button" id="logoutButton" title="Déconnexion">
+                        <span class="logout-icon">🔓</span>
+                        <span class="logout-text">Déconnexion</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="analytics-main">
+            <!-- Control Panel -->
+            <aside class="analytics-sidebar">
+                <div class="sidebar-section">
+                    <h3>Sélection de la zone</h3>
+                    <select id="zoneSelector" class="form-control">
+                        <option value="berrechid">Région de Berrechid</option>
+                        <option value="demo">Zone de démonstration</option>
+                        <option value="zone_1">Zone 1 - Nord</option>
+                        <option value="zone_2">Zone 2 - Sud</option>
+                        <option value="zone_3">Zone 3 - Est</option>
+                        <option value="zone_4">Zone 4 - Ouest</option>
+                    </select>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Période d'analyse</h3>
+                    <div class="form-group">
+                        <label class="form-label" for="startDate">Date de début</label>
+                        <input type="date" id="startDate" class="form-control" value="2020-01-01">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="endDate">Date de fin</label>
+                        <input type="date" id="endDate" class="form-control">
+                    </div>
+                    <button class="btn btn--primary btn--full-width" id="updateCharts">
+                        Mettre à jour
+                    </button>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Paramètres à afficher</h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="showPrecipitation" checked>
+                            <span>Précipitations</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="showPiezometry" checked>
+                            <span>Piézométrie</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="showTemperature" checked>
+                            <span>Température</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="showWaterLevel" checked>
+                            <span>Niveau d'eau</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="showEvaporation" checked>
+                            <span>Évapotranspiration</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Statistiques de la zone</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="avgPrecipitation">--</div>
+                            <div class="stat-label">Précip. moyenne</div>
+                            <div class="stat-unit">mm/an</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="avgPiezometry">--</div>
+                            <div class="stat-label">Piézo. moyenne</div>
+                            <div class="stat-unit">m</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="waterTrend">--</div>
+                            <div class="stat-label">Tendance</div>
+                            <div class="stat-unit">%/an</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="rechargeRate">--</div>
+                            <div class="stat-label">Taux de recharge</div>
+                            <div class="stat-unit">%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Export des données</h3>
+                    <div class="export-buttons">
+                        <button class="btn btn--secondary btn--sm" id="exportCSV">
+                            📊 CSV
+                        </button>
+                        <button class="btn btn--secondary btn--sm" id="exportPDF">
+                            📄 PDF
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Charts Area -->
+            <div class="charts-container">
+                <!-- Precipitation Chart -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Précipitations</h3>
+                        <div class="chart-controls">
+                            <select class="chart-period-selector" data-chart="precipitation">
+                                <option value="monthly">Mensuel</option>
+                                <option value="yearly" selected>Annuel</option>
+                                <option value="seasonal">Saisonnier</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="precipitationChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Piezometry Chart -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Piézométrie (Niveau de la nappe)</h3>
+                        <div class="chart-controls">
+                            <select class="chart-period-selector" data-chart="piezometry">
+                                <option value="monthly" selected>Mensuel</option>
+                                <option value="yearly">Annuel</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="piezometryChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Temperature & Evapotranspiration Chart -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Température & Évapotranspiration</h3>
+                        <div class="chart-controls">
+                            <select class="chart-period-selector" data-chart="temperature">
+                                <option value="monthly" selected>Mensuel</option>
+                                <option value="yearly">Annuel</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="temperatureChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Water Level Chart -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Niveau d'eau des bassins</h3>
+                        <div class="chart-controls">
+                            <select class="chart-period-selector" data-chart="waterLevel">
+                                <option value="monthly" selected>Mensuel</option>
+                                <option value="yearly">Annuel</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="waterLevelChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Correlation Chart -->
+                <div class="chart-card chart-card--wide">
+                    <div class="chart-header">
+                        <h3>Analyse de corrélation: Précipitations vs Piézométrie</h3>
+                        <div class="chart-info">
+                            <span class="correlation-value" id="correlationValue">R² = --</span>
+                        </div>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="correlationChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Trend Analysis -->
+                <div class="chart-card chart-card--wide">
+                    <div class="chart-header">
+                        <h3>Analyse des tendances</h3>
+                        <div class="chart-controls">
+                            <button class="btn btn--sm btn--outline" id="showTrendLines">
+                                Afficher les tendances
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <p class="footer-text">© 2025 ELMA Water Technologies · Plateforme de gestion des ressources en eau</p>
+            <p class="footer-version">Version 0.1.0</p>
+        </div>
+    </footer>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="modal-overlay hidden">
+        <div class="modal-container">
+            <div class="modal-body">
+                <p class="modal-text">Êtes-vous sûr de vouloir vous déconnecter?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelLogout" class="btn btn--secondary btn--sm">Annuler</button>
+                <button id="confirmLogout" class="btn btn--primary btn--sm">Se déconnecter</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="analytics.js"></script>
+</body>
+</html>
+

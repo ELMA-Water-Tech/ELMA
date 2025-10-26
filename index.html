@@ -27,6 +27,10 @@
                 </div>
                 <div class="header-info">
                     <span class="date-display" id="currentDate"></span>
+                    <button class="analytics-button" id="analyticsButton" title="Analytics Avancés">
+                        <span class="analytics-icon">📊</span>
+                        <span class="analytics-text">Analytics</span>
+                    </button>
                     <button class="logout-button" id="logoutButton" title="Déconnexion">
                         <span class="logout-icon">🔓</span>
                         <span class="logout-text">Déconnexion</span>
@@ -122,9 +126,16 @@
             <section class="map-container">
                 <div class="map-header">
                     <h3>Carte interactive</h3>
-                    <div class="map-header-year-filter">
-                        <input type="range" id="yearSlider" class="year-slider-compact" min="2018" max="2025" value="2025" step="1">
-                        <span class="year-value-compact" id="yearValue">Toutes</span>
+                    <div class="year-selector">
+                        <button class="year-btn" data-year="all">Toutes</button>
+                        <button class="year-btn" data-year="2025">2025</button>
+                        <button class="year-btn" data-year="2024">2024</button>
+                        <button class="year-btn" data-year="2023">2023</button>
+                        <button class="year-btn" data-year="2022">2022</button>
+                        <button class="year-btn" data-year="2021">2021</button>
+                        <button class="year-btn" data-year="2020">2020</button>
+                        <button class="year-btn" data-year="2019">2019</button>
+                        <button class="year-btn" data-year="2018">2018</button>
                     </div>
                     <div class="map-controls">
                         <button class="btn btn--sm btn--outline" id="resetMapView">Réinitialiser</button>
@@ -241,6 +252,14 @@
             </aside>
         </main>
     </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <p class="footer-text">© 2025 ELMA Water Technologies · Plateforme de gestion des ressources en eau</p>
+            <p class="footer-version">Version 0.1.0</p>
+        </div>
+    </footer>
 
     <!-- Logout Confirmation Modal -->
     <div id="logoutModal" class="modal-overlay hidden">

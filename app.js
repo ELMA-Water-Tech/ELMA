@@ -583,37 +583,34 @@ function initializeEventListeners() {
         }
     });
     
-    // Year filter slider (compact version in map header)
-    const yearSlider = document.getElementById('yearSlider');
-    const yearValue = document.getElementById('yearValue');
+    // Year filter buttons
+    const yearButtons = document.querySelectorAll('.year-btn');
     
-    // Initialize to show all years
-    yearValue.textContent = 'Toutes';
+    // Initialize - set "Toutes" as active
     selectedYear = null;
+    yearButtons[0].classList.add('active');
     
-    yearSlider.addEventListener('input', function() {
-        const sliderValue = parseInt(this.value);
-        // If slider is at max position, show all years
-        if (sliderValue === parseInt(this.max)) {
-            selectedYear = null;
-            yearValue.textContent = 'Toutes';
-        } else {
-            selectedYear = sliderValue;
-            yearValue.textContent = selectedYear;
-        }
-        const sourceType = document.getElementById('waterSourceFilter').value;
-        filterWaterSources(sourceType);
-        updateFilterResult(sourceType);
-    });
-    
-    // Double-click on year value to reset to all years
-    yearValue.addEventListener('dblclick', function() {
-        selectedYear = null;
-        yearValue.textContent = 'Toutes';
-        yearSlider.value = yearSlider.max;
-        const sourceType = document.getElementById('waterSourceFilter').value;
-        filterWaterSources(sourceType);
-        updateFilterResult(sourceType);
+    yearButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            yearButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Update selected year
+            const yearValue = this.getAttribute('data-year');
+            if (yearValue === 'all') {
+                selectedYear = null;
+            } else {
+                selectedYear = parseInt(yearValue);
+            }
+            
+            // Update filters
+            const sourceType = document.getElementById('waterSourceFilter').value;
+            filterWaterSources(sourceType);
+            updateFilterResult(sourceType);
+        });
     });
     
     // Water source filter
@@ -631,6 +628,11 @@ function initializeEventListeners() {
     document.getElementById('toggleLegend').addEventListener('click', function() {
         const legend = document.getElementById('mapLegend');
         legend.classList.toggle('hidden');
+    });
+    
+    // Analytics navigation
+    document.getElementById('analyticsButton').addEventListener('click', function() {
+        window.location.href = 'analytics.html';
     });
     
     // Logout functionality
