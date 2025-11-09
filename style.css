@@ -1507,6 +1507,20 @@ select.form-control {
     border: 2px solid #fff;
 }
 
+/* Stats info indicator */
+.stats-info {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-top: 0.25rem;
+    margin-bottom: 1rem;
+    font-style: italic;
+    text-align: center;
+    padding: 0.5rem;
+    background-color: rgba(139, 92, 246, 0.05);
+    border-radius: var(--radius-md);
+    border-left: 3px solid #8b5cf6;
+}
+
 .retention-basin-symbol {
     background: #10b981;
 }

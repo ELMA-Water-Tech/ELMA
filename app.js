@@ -93,7 +93,7 @@ const appData = {
       total_wells: 3,
       active_wells: 2,
       inactive_wells: 1,
-      total_basins: 38, // Basins detected in segmentation analysis
+      total_basins: 76, // Basins (points) detected in segmentation analysis
       total_water_points: 76, // Points detected in segmentation analysis
       avg_well_depth: 45.0,
       avg_water_level: 12.0,
@@ -427,6 +427,9 @@ function initializeMap() {
     
     // Add segmentation data
     addSegmentationData();
+    
+    // Add map event listeners for dynamic stats
+    addMapEventListeners();
 }
 
 function addRegionBoundary() {
@@ -599,6 +602,98 @@ function addSegmentationData() {
     console.log(`Loaded ${basinPolygonsLayer.getLayers().length} basins and ${analysisPointsLayer.getLayers().length} points`);
 }
 
+// Add map event listeners for dynamic statistics
+function addMapEventListeners() {
+    // Update stats when map view changes
+    map.on('zoomend moveend', function() {
+        updateVisibleStats();
+    });
+}
+
+// Update statistics based on visible map bounds
+function updateVisibleStats() {
+    const bounds = map.getBounds();
+    const currentRegion = appData.currentRegion;
+    
+    let visibleBasins = 0;
+    let visiblePolygons = 0;
+    let visibleArea = 0;
+    
+    // Count visible features from segmentation data
+    if (currentRegion === 'segmentation_area' || currentRegion === 'all_regions') {
+        const segmentationData = appData.segmentation_area.segmentationData;
+        
+        if (segmentationData && segmentationData.features) {
+            segmentationData.features.forEach(feature => {
+                if (feature.geometry.type === 'Polygon') {
+                    // Check if polygon is visible in bounds
+                    if (isPolygonVisible(feature.geometry.coordinates[0], bounds)) {
+                        visiblePolygons++;
+                        const area = calculatePolygonArea(feature.geometry.coordinates[0]);
+                        visibleArea += area;
+                    }
+                } else if (feature.geometry.type === 'Point') {
+                    // Check if point is visible in bounds - points represent basins
+                    const coords = feature.geometry.coordinates;
+                    if (bounds.contains([coords[1], coords[0]])) {
+                        visibleBasins++;
+                    }
+                }
+            });
+        }
+    }
+    
+    // Update the KPIs in right sidebar
+    if (visibleBasins > 0 || visiblePolygons > 0) {
+        document.getElementById('kpiBasinCount').textContent = visibleBasins;
+        document.getElementById('kpiPlotArea').textContent = formatNumber(Math.round(visibleArea));
+        
+        // Update basin evolution based on visible basins (points)
+        const basinEvolution = calculateBasinEvolution(visibleBasins);
+        document.getElementById('kpiBasinEvolution').textContent = basinEvolution >= 0 ? `+${basinEvolution}%` : `${basinEvolution}%`;
+    }
+    
+    console.log(`Visible in bounds: ${visibleBasins} basins (points), ${visiblePolygons} polygons, ${Math.round(visibleArea)} ha`);
+}
+
+// Check if a polygon is visible within the map bounds
+function isPolygonVisible(coordinates, bounds) {
+    // Check if any point of the polygon is within bounds
+    for (let i = 0; i < coordinates.length; i++) {
+        const [lng, lat] = coordinates[i];
+        if (bounds.contains([lat, lng])) {
+            return true;
+        }
+    }
+    
+    // Also check if the polygon completely contains the bounds
+    // (for very large polygons that contain the visible area)
+    const center = bounds.getCenter();
+    if (isPointInPolygon([center.lng, center.lat], coordinates)) {
+        return true;
+    }
+    
+    return false;
+}
+
+// Check if a point is inside a polygon using ray casting algorithm
+function isPointInPolygon(point, polygon) {
+    const [x, y] = point;
+    let inside = false;
+    
+    for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+        const [xi, yi] = polygon[i];
+        const [xj, yj] = polygon[j];
+        
+        const intersect = ((yi > y) !== (yj > y)) &&
+            (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+        
+        if (intersect) inside = !inside;
+    }
+    
+    return inside;
+}
+
 // Initialize event listeners
 function initializeEventListeners() {
     // Region selector
@@ -701,8 +796,8 @@ function updateAnalytics() {
         // Count basins from segmentation data
         const segmentationData = appData.segmentation_area.segmentationData;
         if (segmentationData && segmentationData.features) {
-            // Count only Polygon features (basins)
-            totalBasins = segmentationData.features.filter(f => f.geometry.type === 'Polygon').length;
+            // Count Point features (basins are represented by points)
+            totalBasins = segmentationData.features.filter(f => f.geometry.type === 'Point').length;
             
             // Calculate total area of all polygons in hectares
             segmentationData.features.forEach(feature => {
@@ -725,7 +820,7 @@ function updateAnalytics() {
     
     // Default if no region selected
     if (totalBasins === 0) {
-        totalBasins = 38; // Known count from segmentation file
+        totalBasins = 76; // Known count of points from segmentation file
         areaHectares = 12000; // Default area
     }
     
@@ -842,6 +937,11 @@ function switchRegion(regionKey) {
     
     // Update analytics and region info display
     updateAnalytics();
+    
+    // Update visible stats after region switch
+    setTimeout(() => {
+        updateVisibleStats();
+    }, 500);
 }
 
 // Update region information display
