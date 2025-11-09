@@ -48,8 +48,8 @@
                     <h3>Sélection de région</h3>
                     <select id="regionSelector" class="form-control">
                         <option value="all_regions">Toutes les régions</option>
-                        <option value="berrechid_region">Région de Berrechid</option>
-                        <option value="demo_area">Zone de démonstration</option>
+                        <option value="segmentation_area">Zone de démonstration</option>
+                        <option value="nappe_berrechid">Nappe de Berrechid</option>
                     </select>
                 </div>
 
@@ -68,53 +68,22 @@
                 </div>
 
                 <div class="sidebar-section">
-                    <h3>Résumé de détection</h3>
-                    <div class="summary-stats">
-                        <div class="stat-item">
-                            <span class="stat-number" id="totalWells">3</span>
-                            <span class="stat-label">Puits détectés</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number" id="totalBasins">1</span>
-                            <span class="stat-label">Bassin principal</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number" id="totalWaterPoints">9</span>
-                            <span class="stat-label">Points d'eau</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number" id="avgConfidence">88%</span>
-                            <span class="stat-label">Confiance moyenne</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="sidebar-section">
-                    <h3>Contrôle des couches</h3>
+                    <h3>Couches de données</h3>
                     <div class="layer-controls">
                         <label class="toggle-control">
-                            <input type="checkbox" id="showBasins" checked>
+                            <input type="checkbox" id="showBasinPolygons" checked>
                             <span class="toggle-label">
                                 <span class="toggle-icon basins-icon"></span>
-                                Afficher le bassin
+                                Afficher les bassins (38)
                             </span>
                         </label>
-                    </div>
-                </div>
-
-                <div class="sidebar-section">
-                    <h3>Filtrer les sources d'eau</h3>
-                    <div class="filter-controls">
-                        <label class="form-label" for="waterSourceFilter">Type de source :</label>
-                        <select id="waterSourceFilter" class="form-control">
-                            <option value="all">Toutes les sources (13)</option>
-                            <option value="wells">Puits (3)</option>
-                            <option value="basins">Bassin principal (1)</option>
-                            <option value="retention_basins">Bassins de rétention (9)</option>
-                        </select>
-                        <div class="filter-info">
-                            <span id="filterResult" class="filter-result-text">Affichage de 13 sources d'eau</span>
-                        </div>
+                        <label class="toggle-control">
+                            <input type="checkbox" id="showAnalysisPoints" checked>
+                            <span class="toggle-label">
+                                <span class="toggle-icon points-icon"></span>
+                                Afficher les points (76)
+                            </span>
+                        </label>
                     </div>
                 </div>
             </aside>
@@ -126,16 +95,8 @@
             <section class="map-container">
                 <div class="map-header">
                     <h3>Carte interactive</h3>
-                    <div class="year-selector">
-                        <button class="year-btn" data-year="all">Toutes</button>
-                        <button class="year-btn" data-year="2025">2025</button>
-                        <button class="year-btn" data-year="2024">2024</button>
-                        <button class="year-btn" data-year="2023">2023</button>
-                        <button class="year-btn" data-year="2022">2022</button>
-                        <button class="year-btn" data-year="2021">2021</button>
-                        <button class="year-btn" data-year="2020">2020</button>
-                        <button class="year-btn" data-year="2019">2019</button>
-                        <button class="year-btn" data-year="2018">2018</button>
+                    <div class="region-name-display" id="regionNameDisplay">
+                        Zone : Toutes les régions
                     </div>
                     <div class="map-controls">
                         <button class="btn btn--sm btn--outline" id="resetMapView">Réinitialiser</button>
@@ -147,24 +108,12 @@
                     <h4>Légende</h4>
                     <div class="legend-items">
                         <div class="legend-item">
-                            <span class="legend-symbol wells-symbol"></span>
-                            <span>Puits</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-symbol basins-symbol"></span>
-                            <span>Bassin principal</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-symbol retention-basin-symbol"></span>
-                            <span>Bassin de rétention</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-symbol region-symbol berrechid-symbol"></span>
-                            <span>Région de Berrechid</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-symbol region-symbol demo-symbol"></span>
+                            <span class="legend-symbol region-symbol segmentation-symbol"></span>
                             <span>Zone de démonstration</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-symbol region-symbol" style="background-color: #ef4444;"></span>
+                            <span>Nappe de Berrechid</span>
                         </div>
                     </div>
                 </div>
@@ -179,73 +128,24 @@
                     <h3>Indicateurs clés</h3>
                     <div class="kpi-grid">
                         <div class="kpi-card">
-                            <div class="kpi-value" id="kpiTotalWells">3</div>
-                            <div class="kpi-label">Total des bassins</div>
-                            <div class="kpi-change positive">+1 ce mois</div>
-                        </div>
-                        <div class="kpi-card">
-                            <div class="kpi-value" id="kpiActiveWells">2</div>
-                            <div class="kpi-label">Bassins déclarés</div>
-                            <div class="kpi-change neutral">Aucun changement</div>
-                        </div>
-                        <div class="kpi-card">
-                            <div class="kpi-value" id="kpiTotalCapacity">1,200</div>
-                            <div class="kpi-label">Surface (km²)</div>
+                            <div class="kpi-value" id="kpiPlotArea">120,000</div>
+                            <div class="kpi-label">Superficie de la parcelle (ha)</div>
                             <div class="kpi-change neutral">Superficie totale</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-value" id="kpiBasinCount">1</div>
+                            <div class="kpi-label">Nombre de bassins associés</div>
+                            <div class="kpi-change positive">Bassin détecté</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-value" id="kpiBasinEvolution">0%</div>
+                            <div class="kpi-label">Évolution du nombre de bassins</div>
+                            <div class="kpi-change neutral">Stable</div>
                         </div>
                         <div class="kpi-card">
                             <div class="kpi-value" id="kpiAvgLevel">88%</div>
                             <div class="kpi-label">Confiance moyenne</div>
                             <div class="kpi-change positive">Très fiable</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="sidebar-section">
-                    <h3>Analytics Charts</h3>
-                    <div class="chart-container">
-                        <h4>Répartition du statut des bassins</h4>
-                        <canvas id="wellStatusChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="sidebar-section">
-                    <div class="chart-container">
-                        <h4>Indicateurs du bassin</h4>
-                        <canvas id="basinLevelsChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="sidebar-section">
-                    <div class="chart-container">
-                        <h4>Confiance de détection</h4>
-                        <canvas id="confidenceChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="sidebar-section">
-                    <h3>Activité récente</h3>
-                    <div class="activity-feed">
-                        <div class="activity-item">
-                            <div class="activity-dot wells-dot"></div>
-                            <div class="activity-content">
-                                <div class="activity-title">Nouveau puits détecté</div>
-                                <div class="activity-time">Il y a 2 heures</div>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-dot basins-dot"></div>
-                            <div class="activity-content">
-                                <div class="activity-title">Niveau du bassin mis à jour</div>
-                                <div class="activity-time">Il y a 4 heures</div>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-dot analysis-dot"></div>
-                            <div class="activity-content">
-                                <div class="activity-title">Analyse terminée</div>
-                                <div class="activity-time">Il y a 6 heures</div>
-                            </div>
                         </div>
                     </div>
                 </div>

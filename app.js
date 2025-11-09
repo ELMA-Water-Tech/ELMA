@@ -2,21 +2,23 @@
 
 // Application Data
 const appData = {
-  berrechid_region: {
-    name: "Région de Berrechid",
-    center: [33.351177, -7.577820],
-    boundary: null, // Will be loaded from GeoJSON
-    area: "1200 km²",
-    population: "168,687",
-    color: "#3b82f6" // Blue
-  },
-  demo_area: {
+  segmentation_area: {
     name: "Zone de démonstration",
-    center: [33.160, -7.598], // Approximate center
+    center: [33.15, -7.53], // Will be calculated from data
     boundary: null, // Will be loaded from GeoJSON
-    area: "850 km²",
-    population: "95,000",
-    color: "#10b981" // Emerald green
+    segmentationData: null, // Will hold the full GeoJSON data
+    area: "Variable",
+    population: "N/A",
+    color: "#8b5cf6" // Purple
+  },
+  nappe_berrechid: {
+    name: "Nappe de Berrechid",
+    center: [33.15, -7.75], // Will be calculated from data
+    boundary: null, // Will be loaded from CSV
+    nappePoints: [], // Will hold coordinate points
+    area: "~2,500 km²",
+    population: "N/A",
+    color: "#ef4444" // Red
   },
   currentRegion: "all_regions", // Default to show all regions
   wells: {
@@ -91,8 +93,8 @@ const appData = {
       total_wells: 3,
       active_wells: 2,
       inactive_wells: 1,
-      total_basins: 1, // Main Berrechid basin
-      total_water_points: 9, // Water points detected
+      total_basins: 38, // Basins detected in segmentation analysis
+      total_water_points: 76, // Points detected in segmentation analysis
       avg_well_depth: 45.0,
       avg_water_level: 12.0,
       total_basin_capacity: 0, // To be determined from actual data
@@ -106,9 +108,9 @@ const appData = {
     },
     detection_stats: {
       avg_confidence: 0.88,
-      high_confidence_detections: 2,
-      medium_confidence_detections: 1,
-      low_confidence_detections: 0
+      high_confidence_detections: 30,
+      medium_confidence_detections: 6,
+      low_confidence_detections: 2
     }
   }
 };
@@ -141,11 +143,9 @@ function checkAuthentication() {
 // Global variables
 let map;
 let regionBoundaryLayer;
-let wellsLayer;
-let basinsLayer;
-let waterPointsLayer;
+let basinPolygonsLayer;
+let analysisPointsLayer;
 let charts = {};
-let selectedYear = null; // For year filter (null means all years)
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
@@ -160,10 +160,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initializeApp() {
     updateDateTime();
-    // Load both region boundaries and water points before initializing the map
+    // Load region boundaries, water points, and nappe data before initializing the map
     Promise.all([
         loadRegionBoundary(),
-        loadWaterPoints()
+        loadWaterPoints(),
+        loadNappeBerrechid()
     ]).then(() => {
         initializeMap();
         initializeEventListeners();
@@ -194,26 +195,12 @@ function updateDateTime() {
 // Load region boundaries from GeoJSON files
 async function loadRegionBoundary() {
     try {
-        // Load Berrechid region
-        await loadSpecificRegion('berrechid_region', 'regions/bassin.geojson', true);
-        
-        // Load Demo area
-        await loadSpecificRegion('demo_area', 'regions/demoarea.geojson', false);
+        // Load Segmentation analysis
+        await loadSegmentationData('segmentation_area', 'regions/segmentation_analysis.geojson');
         
         console.log('All region boundaries loaded successfully');
     } catch (error) {
         console.error('Error loading region boundaries:', error);
-        // Fallback to original rectangle for Berrechid if loading fails
-        appData.berrechid_region.boundary = {
-            type: "Polygon",
-            coordinates: [[
-                [-7.65, 33.20],
-                [-7.45, 33.20], 
-                [-7.45, 33.40],
-                [-7.65, 33.40],
-                [-7.65, 33.20]
-            ]]
-        };
     }
 }
 
@@ -301,6 +288,66 @@ function calculatePolygonCenter(coordinates) {
     return [totalLat / numPoints, totalLng / numPoints];
 }
 
+// Load segmentation analysis data
+async function loadSegmentationData(regionKey, filePath) {
+    try {
+        const response = await fetch(filePath);
+        const geojsonData = await response.json();
+        
+        if (geojsonData.features && geojsonData.features.length > 0) {
+            // Store the full GeoJSON data
+            appData[regionKey].segmentationData = geojsonData;
+            
+            // Calculate bounds from all features to determine center
+            let minLat = Infinity, maxLat = -Infinity;
+            let minLng = Infinity, maxLng = -Infinity;
+            
+            geojsonData.features.forEach(feature => {
+                if (feature.geometry.type === 'Point') {
+                    const [lng, lat] = feature.geometry.coordinates;
+                    minLat = Math.min(minLat, lat);
+                    maxLat = Math.max(maxLat, lat);
+                    minLng = Math.min(minLng, lng);
+                    maxLng = Math.max(maxLng, lng);
+                } else if (feature.geometry.type === 'Polygon') {
+                    feature.geometry.coordinates[0].forEach(coord => {
+                        const [lng, lat] = coord;
+                        minLat = Math.min(minLat, lat);
+                        maxLat = Math.max(maxLat, lat);
+                        minLng = Math.min(minLng, lng);
+                        maxLng = Math.max(maxLng, lng);
+                    });
+                }
+            });
+            
+            // Calculate center
+            const centerLat = (minLat + maxLat) / 2;
+            const centerLng = (minLng + maxLng) / 2;
+            appData[regionKey].center = [centerLat, centerLng];
+            
+            // Create a boundary box for the region
+            appData[regionKey].boundary = {
+                type: "Polygon",
+                coordinates: [[
+                    [minLng, minLat],
+                    [maxLng, minLat],
+                    [maxLng, maxLat],
+                    [minLng, maxLat],
+                    [minLng, minLat]
+                ]]
+            };
+            
+            console.log(`${regionKey} loaded:`, {
+                center: appData[regionKey].center,
+                featureCount: geojsonData.features.length,
+                bounds: { minLat, maxLat, minLng, maxLng }
+            });
+        }
+    } catch (error) {
+        console.error(`Error loading ${regionKey}:`, error);
+    }
+}
+
 // Load water points from GeoJSON file
 async function loadWaterPoints() {
     try {
@@ -318,10 +365,56 @@ async function loadWaterPoints() {
     }
 }
 
+// Load Nappe de Berrechid from CSV file
+async function loadNappeBerrechid() {
+    try {
+        const response = await fetch('regions/nappeber.csv');
+        const csvText = await response.text();
+        
+        // Parse CSV
+        const lines = csvText.trim().split('\n');
+        const points = [];
+        
+        // Skip header, parse data lines
+        for (let i = 1; i < lines.length; i++) {
+            const [fid, lat, lng] = lines[i].split(',');
+            if (lat && lng) {
+                points.push([parseFloat(lng), parseFloat(lat)]);
+            }
+        }
+        
+        if (points.length > 0) {
+            // Close the polygon by adding the first point at the end
+            points.push(points[0]);
+            
+            // Store points and create boundary
+            appData.nappe_berrechid.nappePoints = points;
+            appData.nappe_berrechid.boundary = {
+                type: "Polygon",
+                coordinates: [points]
+            };
+            
+            // Calculate center
+            let sumLat = 0, sumLng = 0;
+            for (let i = 0; i < points.length - 1; i++) {
+                sumLng += points[i][0];
+                sumLat += points[i][1];
+            }
+            const centerLng = sumLng / (points.length - 1);
+            const centerLat = sumLat / (points.length - 1);
+            appData.nappe_berrechid.center = [centerLat, centerLng];
+            
+            console.log(`Loaded Nappe de Berrechid with ${points.length - 1} points`);
+        }
+    } catch (error) {
+        console.error('Error loading Nappe de Berrechid:', error);
+    }
+}
+
 // Initialize Leaflet map
 function initializeMap() {
     // Initialize map
-    map = L.map('map').setView(appData.berrechid_region.center, 11);
+    map = L.map('map').setView(appData.segmentation_area.center, 11);
     
     // Add Esri World Imagery tile layer
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
@@ -332,10 +425,8 @@ function initializeMap() {
     // Add region boundary
     addRegionBoundary();
     
-    // Add wells, basins, and water points
-    addWells();
-    addBasins();
-    addWaterPoints();
+    // Add segmentation data
+    addSegmentationData();
 }
 
 function addRegionBoundary() {
@@ -369,7 +460,7 @@ function addRegionBoundary() {
 }
 
 function addAllRegionBoundaries() {
-    const regions = ['berrechid_region', 'demo_area'];
+    const regions = ['segmentation_area', 'nappe_berrechid'];
     
     regions.forEach(regionKey => {
         const regionData = appData[regionKey];
@@ -413,152 +504,99 @@ function createRegionPopup(regionKey, regionData) {
                 </div>
                 <div class=\"popup-detail\">
                     <span class=\"label\">Type :</span>
-                    <span class=\"value\">${regionKey === 'berrechid_region' ? 'Nappe de Berrechid' : 'Zone d\'étude'}</span>
+                    <span class=\"value\">${regionKey === 'nappe_berrechid' ? 'Nappe souterraine' : 'Zone d\'analyse'}</span>
                 </div>
             </div>
         </div>
     `;
 }
 
-function addWells() {
-    wellsLayer = L.featureGroup().addTo(map);
+function addSegmentationData() {
+    // Create separate layers for basins and points
+    basinPolygonsLayer = L.featureGroup().addTo(map);
+    analysisPointsLayer = L.featureGroup().addTo(map);
     
-    appData.wells.features.forEach(well => {
-        const coords = [well.geometry.coordinates[1], well.geometry.coordinates[0]];
-        const props = well.properties;
+    const segmentationData = appData.segmentation_area.segmentationData;
+    
+    if (!segmentationData || !segmentationData.features) {
+        console.log('No segmentation data available');
+        return;
+    }
+    
+    // Only display if segmentation_area is selected
+    if (appData.currentRegion !== 'segmentation_area' && appData.currentRegion !== 'all_regions') {
+        return;
+    }
+    
+    segmentationData.features.forEach(feature => {
+        const props = feature.properties;
+        
+        if (feature.geometry.type === 'Point') {
+            const coords = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]];
         
         const marker = L.circleMarker(coords, {
-            radius: 8,
-            fillColor: props.status === 'active' ? '#3b82f6' : '#ef4444',
+                radius: 4,
+                fillColor: props.has_segmentation ? '#8b5cf6' : '#6b7280',
             color: '#ffffff',
-            weight: 2,
-            opacity: 1,
-            fillOpacity: 0.9
-        });
-        
-        marker.bindPopup(createWellPopup(props));
-        
-        marker.on('click', function() {
-            map.setView(coords, 14);
-        });
-        
-        wellsLayer.addLayer(marker);
-    });
-}
-
-function addWaterPoints() {
-    waterPointsLayer = L.featureGroup().addTo(map);
-    
-    appData.waterPoints.features.forEach(point => {
-        const coords = [point.geometry.coordinates[1], point.geometry.coordinates[0]];
-        const props = point.properties;
-        
-        // All water points use the same color (emerald green for retention basins)
-        const markerColor = '#10b981'; // Emerald green for retention basins
-        
-        const marker = L.circleMarker(coords, {
-            radius: 6,
-            fillColor: markerColor,
-            color: '#ffffff',
-            weight: 2,
-            opacity: 1,
-            fillOpacity: 0.8
-        });
-        
-        marker.bindPopup(createWaterPointPopup(props));
-        
-        marker.on('click', function() {
-            map.setView(coords, 15);
-        });
-        
-        waterPointsLayer.addLayer(marker);
-    });
-}
-
-function addBasins() {
-    basinsLayer = L.featureGroup().addTo(map);
-    
-    // The main basin is represented by the region boundary itself
-    // We can add additional basin-specific styling or data if needed in the future
-    
-    // For now, the basin layer group exists but the actual basin area
-    // is represented by the region boundary with different styling
-}
-
-function createWellPopup(props) {
-    return `
+                weight: 1,
+                opacity: 0.8,
+                fillOpacity: 0.6
+            });
+            
+            marker.bindPopup(`
         <div class="popup-content">
-            <div class="popup-header">Puits ${props.id.toUpperCase()}</div>
+                    <div class="popup-header">Point d'analyse ${props.point_index}</div>
             <div class="popup-details">
                 <div class="popup-detail">
-                    <span class="label">Statut :</span>
-                    <span class="value">
-                        <span class="status-badge ${props.status}">${props.status === 'active' ? 'ACTIF' : 'INACTIF'}</span>
-                    </span>
+                            <span class="label">Année :</span>
+                            <span class="value">${props.year || 'N/A'}</span>
                 </div>
                 <div class="popup-detail">
-                    <span class="label">Profondeur :</span>
-                    <span class="value">${props.depth}m</span>
+                            <span class="label">Segmentation :</span>
+                            <span class="value">${props.has_segmentation ? 'Oui' : 'Non'}</span>
                 </div>
                 <div class="popup-detail">
-                    <span class="label">Niveau d'eau :</span>
-                    <span class="value">${props.water_level}m</span>
+                            <span class="label">Fichier :</span>
+                            <span class="value">${props.json_file || 'N/A'}</span>
                 </div>
-                <div class="popup-detail">
-                    <span class="label">Qualité :</span>
-                    <span class="value">
-                        <span class="quality-badge ${props.quality}">${props.quality === 'good' ? 'BONNE' : props.quality === 'moderate' ? 'MOYENNE' : 'MAUVAISE'}</span>
-                    </span>
                 </div>
-                <div class="popup-detail">
-                    <span class="label">Confiance :</span>
-                    <span class="value">${(props.detection_confidence * 100).toFixed(0)}%</span>
                 </div>
-                <div class="popup-detail">
-                    <span class="label">Dernière mise à jour :</span>
-                    <span class="value">${formatDate(props.last_updated)}</span>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
-// Basin popup removed - basin is represented by region boundary only
-
-function createWaterPointPopup(props) {
-    const typeLabel = props.type === 'retention_basin' ? 'Bassin de rétention' : 'Station de lavage';
-    
-    return `
+            `);
+            
+            analysisPointsLayer.addLayer(marker);
+            
+        } else if (feature.geometry.type === 'Polygon') {
+            const coordinates = feature.geometry.coordinates[0].map(coord => [coord[1], coord[0]]);
+            
+            const polygon = L.polygon(coordinates, {
+                color: '#8b5cf6',
+                weight: 2,
+                opacity: 0.8,
+                fillColor: '#8b5cf6',
+                fillOpacity: 0.3
+            });
+            
+            polygon.bindPopup(`
         <div class="popup-content">
-            <div class="popup-header">${props.name}</div>
+                    <div class="popup-header">Bassin détecté</div>
             <div class="popup-details">
                 <div class="popup-detail">
-                    <span class="label">Type :</span>
-                    <span class="value">${typeLabel}</span>
+                            <span class="label">Point :</span>
+                            <span class="value">${props.point_index || 'N/A'}</span>
                 </div>
                 <div class="popup-detail">
-                    <span class="label">Région :</span>
-                    <span class="value">${props.region}</span>
+                            <span class="label">Année :</span>
+                            <span class="value">${props.year || 'N/A'}</span>
                 </div>
-                ${props.capacity ? `
-                <div class="popup-detail">
-                    <span class="label">Capacité :</span>
-                    <span class="value">${props.capacity} m³</span>
-                </div>` : ''}
-                ${props.status ? `
-                <div class="popup-detail">
-                    <span class="label">Statut :</span>
-                    <span class="value">
-                        <span class="status-badge ${props.status}">${props.status === 'active' ? 'ACTIF' : 'INACTIF'}</span>
-                    </span>
-                </div>` : ''}
-                <div class="popup-detail">
-                    <span class="label">Coordonnées :</span>
-                    <span class="value">${props.coordinates}</span>
                 </div>
             </div>
-        </div>
-    `;
+            `);
+            
+            basinPolygonsLayer.addLayer(polygon);
+        }
+    });
+    
+    console.log(`Loaded ${basinPolygonsLayer.getLayers().length} basins and ${analysisPointsLayer.getLayers().length} points`);
 }
 
 // Initialize event listeners
@@ -568,55 +606,21 @@ function initializeEventListeners() {
         switchRegion(this.value);
     });
     
-    // Layer toggles - basin toggle controls all water features
-    document.getElementById('showBasins').addEventListener('change', function() {
+    // Layer toggles for basins and points
+    document.getElementById('showBasinPolygons').addEventListener('change', function() {
         if (this.checked) {
-            // Show all water-related layers
-            if (basinsLayer) map.addLayer(basinsLayer);
-            if (wellsLayer) map.addLayer(wellsLayer);
-            if (waterPointsLayer) map.addLayer(waterPointsLayer);
+            if (basinPolygonsLayer) map.addLayer(basinPolygonsLayer);
         } else {
-            // Hide all water-related layers
-            if (basinsLayer) map.removeLayer(basinsLayer);
-            if (wellsLayer) map.removeLayer(wellsLayer);
-            if (waterPointsLayer) map.removeLayer(waterPointsLayer);
+            if (basinPolygonsLayer) map.removeLayer(basinPolygonsLayer);
         }
     });
     
-    // Year filter buttons
-    const yearButtons = document.querySelectorAll('.year-btn');
-    
-    // Initialize - set "Toutes" as active
-    selectedYear = null;
-    yearButtons[0].classList.add('active');
-    
-    yearButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Remove active class from all buttons
-            yearButtons.forEach(btn => btn.classList.remove('active'));
-            
-            // Add active class to clicked button
-            this.classList.add('active');
-            
-            // Update selected year
-            const yearValue = this.getAttribute('data-year');
-            if (yearValue === 'all') {
-                selectedYear = null;
-            } else {
-                selectedYear = parseInt(yearValue);
-            }
-            
-            // Update filters
-            const sourceType = document.getElementById('waterSourceFilter').value;
-            filterWaterSources(sourceType);
-            updateFilterResult(sourceType);
-        });
-    });
-    
-    // Water source filter
-    document.getElementById('waterSourceFilter').addEventListener('change', function() {
-        filterWaterSources(this.value);
-        updateFilterResult(this.value);
+    document.getElementById('showAnalysisPoints').addEventListener('change', function() {
+        if (this.checked) {
+            if (analysisPointsLayer) map.addLayer(analysisPointsLayer);
+        } else {
+            if (analysisPointsLayer) map.removeLayer(analysisPointsLayer);
+        }
     });
     
     // Map controls
@@ -680,286 +684,107 @@ function logout() {
     window.location.href = 'login.html';
 }
 
-function filterWaterSources(sourceType) {
-    // Clear all layers
-    wellsLayer.clearLayers();
-    basinsLayer.clearLayers();
-    waterPointsLayer.clearLayers();
-    
-    // Get current year filter value
-    const yearSlider = document.getElementById('yearSlider');
-    const currentYearFilter = selectedYear; // selectedYear is defined in initializeEventListeners
-    
-    // Show/hide layers based on filter
-    if (sourceType === 'all' || sourceType === 'wells') {
-        appData.wells.features.forEach(well => {
-            const coords = [well.geometry.coordinates[1], well.geometry.coordinates[0]];
-            const props = well.properties;
-            
-            // Apply year filter if set
-            if (currentYearFilter !== null && props.year && props.year !== currentYearFilter) {
-                return; // Skip this well
-            }
-            
-            const marker = L.circleMarker(coords, {
-                radius: 8,
-                fillColor: props.status === 'active' ? '#3b82f6' : '#ef4444',
-                color: '#ffffff',
-                weight: 2,
-                opacity: 1,
-                fillOpacity: 0.9
-            });
-            
-            marker.bindPopup(createWellPopup(props));
-            marker.on('click', function() {
-                map.setView(coords, 14);
-            });
-            
-            wellsLayer.addLayer(marker);
-        });
-    }
-    
-    // Basin is represented by the region boundary itself, not individual markers
-    if (sourceType === 'all' || sourceType === 'basins') {
-        // Basin boundary is already shown via the region polygon
-        // No additional markers needed
-    }
-    
-    if (sourceType === 'all' || sourceType === 'retention_basins') {
-        const filteredWaterPoints = sourceType === 'all' ? 
-            appData.waterPoints.features : 
-            appData.waterPoints.features.filter(point => {
-                return point.properties.type === 'retention_basin';
-            });
-        
-        filteredWaterPoints.forEach(point => {
-            const coords = [point.geometry.coordinates[1], point.geometry.coordinates[0]];
-            const props = point.properties;
-            
-            // Apply year filter if set
-            if (currentYearFilter !== null && props.year && props.year !== currentYearFilter) {
-                return; // Skip this water point
-            }
-            
-            const markerColor = '#10b981'; // Emerald green for all retention basins
-            
-            const marker = L.circleMarker(coords, {
-                radius: 6,
-                fillColor: markerColor,
-                color: '#ffffff',
-                weight: 2,
-                opacity: 1,
-                fillOpacity: 0.8
-            });
-            
-            marker.bindPopup(createWaterPointPopup(props));
-            marker.on('click', function() {
-                map.setView(coords, 15);
-            });
-            
-            waterPointsLayer.addLayer(marker);
-        });
-    }
-}
-
-function updateFilterResult(sourceType) {
-    const filterResultElement = document.getElementById('filterResult');
-    let resultText = '';
-    let count = 0;
-    
-    // Apply year filter to counts if set
-    const applyYearFilter = (items) => {
-        if (selectedYear === null) return items;
-        return items.filter(item => item.properties.year === selectedYear);
-    };
-    
-    switch(sourceType) {
-        case 'all':
-            const filteredWells = applyYearFilter(appData.wells.features);
-            const filteredWaterPoints = applyYearFilter(appData.waterPoints.features);
-            count = filteredWells.length + 1 + filteredWaterPoints.length;
-            resultText = `Affichage de ${count} sources d'eau`;
-            if (selectedYear !== null) {
-                resultText += ` (${selectedYear})`;
-            }
-            break;
-        case 'wells':
-            count = applyYearFilter(appData.wells.features).length;
-            resultText = `Affichage de ${count} puits`;
-            if (selectedYear !== null) {
-                resultText += ` (${selectedYear})`;
-            }
-            break;
-        case 'basins':
-            count = 1;
-            resultText = `Affichage du bassin principal`;
-            break;
-        case 'retention_basins':
-            count = applyYearFilter(appData.waterPoints.features.filter(p => p.properties.type === 'retention_basin')).length;
-            resultText = `Affichage de ${count} bassins de rétention`;
-            if (selectedYear !== null) {
-                resultText += ` (${selectedYear})`;
-            }
-            break;
-    }
-    
-    filterResultElement.textContent = resultText;
-}
 
 // Initialize charts
 function initializeCharts() {
-    createWellStatusChart();
-    createBasinLevelsChart();
-    createConfidenceChart();
-}
-
-function createWellStatusChart() {
-    const ctx = document.getElementById('wellStatusChart').getContext('2d');
-    
-    charts.wellStatus = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: ['Bassins déclarés', 'Bassins non déclarés'],
-            datasets: [{
-                data: [
-                    appData.analytics.region_summary.active_wells,
-                    appData.analytics.region_summary.inactive_wells
-                ],
-                backgroundColor: ['#3b82f6', '#ef4444']
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        font: {
-                            size: 11
-                        }
-                    }
-                }
-            }
-        }
-    });
-}
-
-function createBasinLevelsChart() {
-    const ctx = document.getElementById('basinLevelsChart').getContext('2d');
-    
-    // Show water level indicators for the main Berrechid basin
-    const indicators = ['Niveau actuel', 'Capacité utilisée', 'Réserve'];
-    const values = [65, 45, 35]; // Sample values for demonstration
-    
-    charts.basinLevels = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: indicators,
-            datasets: [{
-                label: "Niveau (%)",
-                data: values,
-                backgroundColor: ['#3b82f6', '#2563eb', '#1d4ed8']
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100,
-                    ticks: {
-                        font: {
-                            size: 10
-                        }
-                    }
-                },
-                x: {
-                    ticks: {
-                        font: {
-                            size: 10
-                        }
-                    }
-                }
-            }
-        }
-    });
-}
-
-function createConfidenceChart() {
-    const ctx = document.getElementById('confidenceChart').getContext('2d');
-    
-    charts.confidence = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Élevée (>90%)', 'Moyenne (70-90%)', 'Faible (<70%)'],
-            datasets: [{
-                label: 'Détections',
-                data: [
-                    appData.analytics.detection_stats.high_confidence_detections,
-                    appData.analytics.detection_stats.medium_confidence_detections,
-                    appData.analytics.detection_stats.low_confidence_detections
-                ],
-                backgroundColor: ['#10b981', '#f59e0b', '#ef4444']
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        stepSize: 1,
-                        font: {
-                            size: 10
-                        }
-                    }
-                },
-                x: {
-                    ticks: {
-                        font: {
-                            size: 10
-                        }
-                    }
-                }
-            }
-        }
-    });
+    // No charts to initialize - charts removed from sidebar
 }
 
 // Update analytics displays
 function updateAnalytics() {
-    const summary = appData.analytics.region_summary;
+    const currentRegion = appData.currentRegion;
+    let totalBasins = 0;
+    let areaHectares = 0;
+    
+    // Calculate based on current region
+    if (currentRegion === 'segmentation_area' || currentRegion === 'all_regions') {
+        // Count basins from segmentation data
+        const segmentationData = appData.segmentation_area.segmentationData;
+        if (segmentationData && segmentationData.features) {
+            // Count only Polygon features (basins)
+            totalBasins = segmentationData.features.filter(f => f.geometry.type === 'Polygon').length;
+            
+            // Calculate total area of all polygons in hectares
+            segmentationData.features.forEach(feature => {
+                if (feature.geometry.type === 'Polygon') {
+                    const area = calculatePolygonArea(feature.geometry.coordinates[0]);
+                    areaHectares += area;
+                }
+            });
+        }
+    }
+    
+    if (currentRegion === 'nappe_berrechid' || currentRegion === 'all_regions') {
+        // Add nappe area if selected
+        // Approximate area: 2500 km² = 250,000 ha
+        if (currentRegion === 'nappe_berrechid') {
+            areaHectares = 250000;
+            totalBasins = 1; // The nappe itself is one large basin
+        }
+    }
+    
+    // Default if no region selected
+    if (totalBasins === 0) {
+        totalBasins = 38; // Known count from segmentation file
+        areaHectares = 12000; // Default area
+    }
+    
+    // Calculate basin evolution (simulated growth rate)
+    const basinEvolution = calculateBasinEvolution(totalBasins);
     
     // Update KPI values
-    document.getElementById('kpiTotalWells').textContent = summary.total_wells;
-    document.getElementById('kpiActiveWells').textContent = summary.active_wells;
-    document.getElementById('kpiTotalCapacity').textContent = `1,200`; // Basin area in km²
+    document.getElementById('kpiPlotArea').textContent = formatNumber(Math.round(areaHectares));
+    document.getElementById('kpiBasinCount').textContent = totalBasins;
+    document.getElementById('kpiBasinEvolution').textContent = basinEvolution >= 0 ? `+${basinEvolution}%` : `${basinEvolution}%`;
     document.getElementById('kpiAvgLevel').textContent = `${Math.round(appData.analytics.detection_stats.avg_confidence * 100)}%`;
     
-    // Update summary stats in left sidebar
-    document.getElementById('totalWells').textContent = summary.total_wells;
-    document.getElementById('totalBasins').textContent = summary.total_basins;
-    document.getElementById('totalWaterPoints').textContent = appData.waterPoints.features.length;
-    document.getElementById('avgConfidence').textContent = `${Math.round(appData.analytics.detection_stats.avg_confidence * 100)}%`;
+    // Update evolution status class
+    const evolutionCard = document.getElementById('kpiBasinEvolution').parentElement;
+    const evolutionChange = evolutionCard.querySelector('.kpi-change');
+    if (basinEvolution > 0) {
+        evolutionChange.className = 'kpi-change positive';
+        evolutionChange.textContent = 'Croissance annuelle';
+    } else if (basinEvolution < 0) {
+        evolutionChange.className = 'kpi-change negative';
+        evolutionChange.textContent = 'Décroissance annuelle';
+    } else {
+        evolutionChange.className = 'kpi-change neutral';
+        evolutionChange.textContent = 'Stable';
+    }
     
     // Update region information
     updateRegionInfo();
+}
+
+// Calculate polygon area in hectares using the Shoelace formula
+function calculatePolygonArea(coordinates) {
+    if (!coordinates || coordinates.length < 3) return 0;
     
-    // Initialize filter result text
-    updateFilterResult('all');
+    let area = 0;
+    const n = coordinates.length;
+    
+    for (let i = 0; i < n - 1; i++) {
+        const [x1, y1] = coordinates[i];
+        const [x2, y2] = coordinates[i + 1];
+        area += (x1 * y2) - (x2 * y1);
+    }
+    
+    area = Math.abs(area / 2);
+    
+    // Convert from degrees² to hectares (approximate)
+    // 1 degree² ≈ 12,100 km² at equator, but varies with latitude
+    // At 33°N latitude: 1 degree ≈ 93 km
+    // So 1 degree² ≈ 8,649 km² = 864,900 ha
+    const degreesToHectares = 864900;
+    
+    return area * degreesToHectares;
+}
+
+// Calculate basin evolution
+function calculateBasinEvolution(currentBasins) {
+    // Simulate historical growth - in real scenario would use actual historical data
+    // Assume 5% annual growth based on detection improvements
+    return 5;
 }
 
 // Switch between regions
@@ -971,14 +796,25 @@ function switchRegion(regionKey) {
         map.removeLayer(regionBoundaryLayer);
     }
     
+    // Remove and re-add segmentation layers
+    if (basinPolygonsLayer) {
+        map.removeLayer(basinPolygonsLayer);
+    }
+    if (analysisPointsLayer) {
+        map.removeLayer(analysisPointsLayer);
+    }
+    
     // Add new region boundary
     addRegionBoundary();
+    
+    // Re-add segmentation data if applicable
+    addSegmentationData();
     
     // Update map view
     if (regionKey === 'all_regions') {
         // Calculate bounds for all regions
         const allBounds = [];
-        const regions = ['berrechid_region', 'demo_area'];
+        const regions = ['segmentation_area', 'nappe_berrechid'];
         
         regions.forEach(region => {
             const regionData = appData[region];
@@ -1004,8 +840,8 @@ function switchRegion(regionKey) {
         console.log('Switched to region:', currentRegionData.name);
     }
     
-    // Update region info display
-    updateRegionInfo();
+    // Update analytics and region info display
+    updateAnalytics();
 }
 
 // Update region information display
@@ -1014,16 +850,20 @@ function updateRegionInfo() {
     
     if (currentRegionKey === 'all_regions') {
         // Calculate combined information for all regions
-        const regions = ['berrechid_region', 'demo_area'];
+        const regions = ['segmentation_area', 'nappe_berrechid'];
         let totalPopulation = 0;
         let areaText = '';
         
         regions.forEach((regionKey, index) => {
             const regionData = appData[regionKey];
             if (regionData) {
-                // Parse population (remove formatting)
+                // Parse population (remove formatting) - skip N/A
+                if (regionData.population !== 'N/A') {
                 const popValue = parseInt(regionData.population.replace(/\s/g, ''));
+                    if (!isNaN(popValue)) {
                 totalPopulation += popValue;
+                    }
+                }
                 
                 // Combine area information
                 if (index > 0) areaText += ' + ';
@@ -1031,17 +871,21 @@ function updateRegionInfo() {
             }
         });
         
+        // Update region name display
+        document.getElementById('regionNameDisplay').textContent = 'Zone : Toutes les régions';
+        
         // Update display
         document.getElementById('regionArea').textContent = areaText;
-        document.getElementById('regionPopulation').textContent = totalPopulation.toLocaleString('fr-FR') + ' habitants';
         document.getElementById('regionCoords').textContent = 'Vue d\'ensemble';
     } else {
         // Single region view
         const currentRegionData = appData[currentRegionKey];
         
+        // Update region name display
+        document.getElementById('regionNameDisplay').textContent = `Zone : ${currentRegionData.name}`;
+        
         // Update region information in the sidebar
         document.getElementById('regionArea').textContent = currentRegionData.area;
-        document.getElementById('regionPopulation').textContent = currentRegionData.population;
         
         // Update coordinates display (center of region)
         const center = currentRegionData.center;

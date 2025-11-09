@@ -3,7 +3,7 @@
 
 // Valid license codes (in production, this would be server-side)
 const VALID_LICENSES = [
-    'ABH2025-C8N-MG3-2P9-XZ'
+    'ABH2025-C8N-MG3-2P9-XY'
 ];
 
 // Combine all valid licenses

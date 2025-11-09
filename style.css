@@ -51,9 +51,9 @@
   --color-red-500-rgb: 239, 68, 68;
 
   /* Background color tokens (Light Mode) - Professional & Clean */
-  --color-bg-1: rgba(249, 250, 251, 1); /* Pure light gray */
-  --color-bg-2: rgba(243, 244, 246, 1); /* Subtle gray */
-  --color-bg-3: rgba(239, 246, 255, 0.5); /* Very light blue */
+  --color-bg-1: rgba(250, 249, 247, 1); /* Creamy white */
+  --color-bg-2: rgba(248, 246, 244, 1); /* Subtle cream */
+  --color-bg-3: rgba(255, 255, 255, 0.5); /* Very light white */
   --color-bg-4: rgba(255, 255, 255, 1); /* Pure white */
   --color-bg-5: rgba(59, 130, 246, 0.03); /* Barely visible blue */
   --color-bg-6: rgba(16, 185, 129, 0.03); /* Barely visible emerald */
@@ -61,7 +61,7 @@
   --color-bg-8: rgba(239, 68, 68, 0.03); /* Barely visible red */
 
   /* Semantic Color Tokens (Light Mode) - Professional Theme */
-  --color-background: var(--color-gray-50);
+  --color-background: #faf9f7;
   --color-surface: var(--color-white);
   --color-text: var(--color-gray-900);
   --color-text-secondary: var(--color-gray-600);
@@ -329,16 +329,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background: linear-gradient(135deg, 
-    #e0f2fe 0%, 
-    #dbeafe 20%, 
-    #e0e7ff 40%, 
-    #f3e8ff 60%, 
-    #fae8ff 80%, 
-    #fce7f3 100%
-  );
-  background-size: 400% 400%;
-  animation: subtleGradientShift 30s ease infinite;
+  background-color: #faf9f7;
 }
 
 @keyframes subtleGradientShift {
@@ -1111,6 +1102,15 @@ select.form-control {
     border-left: 1px solid rgba(203, 213, 225, 0.5);
 }
 
+/* Region Name Display */
+.region-name-display {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
+    color: #4a5568;
+    text-align: center;
+    line-height: var(--line-height-tight);
+}
+
 .sidebar-section {
     margin-bottom: var(--space-32);
 }
@@ -1233,8 +1233,8 @@ select.form-control {
 }
 
 .basins-icon {
-    background: rgba(var(--color-blue-600-rgb), 0.2);
-    border: 2px solid var(--color-primary);
+    background-color: #8b5cf6;
+    border: 2px solid #fff;
 }
 
 /* Filter Controls */
@@ -1362,8 +1362,8 @@ select.form-control {
 }
 
 .map-header {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     padding: var(--space-16) var(--space-20);
     background: rgba(255, 255, 255, 0.85);
@@ -1382,6 +1382,10 @@ select.form-control {
     margin: 0;
     text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
     flex-shrink: 0;
+}
+
+.map-header .map-controls {
+    justify-self: end;
 }
 
 /* Year Selector */
@@ -1498,6 +1502,11 @@ select.form-control {
     border: 2px solid var(--color-primary);
 }
 
+.points-icon {
+    background-color: #6b7280;
+    border: 2px solid #fff;
+}
+
 .retention-basin-symbol {
     background: #10b981;
 }
@@ -1512,6 +1521,10 @@ select.form-control {
 
 .demo-symbol {
     border: 2px solid rgba(var(--color-emerald-500-rgb), 0.6);
+}
+
+.segmentation-symbol {
+    border: 2px solid rgba(139, 92, 246, 0.6);
 }
 
 /* KPI Cards */

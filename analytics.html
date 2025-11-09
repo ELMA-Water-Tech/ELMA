@@ -44,8 +44,8 @@
                 <div class="sidebar-section">
                     <h3>Sélection de la zone</h3>
                     <select id="zoneSelector" class="form-control">
-                        <option value="berrechid">Région de Berrechid</option>
-                        <option value="demo">Zone de démonstration</option>
+                        <option value="segmentation">Zone de démonstration</option>
+                        <option value="nappe">Nappe de Berrechid</option>
                         <option value="zone_1">Zone 1 - Nord</option>
                         <option value="zone_2">Zone 2 - Sud</option>
                         <option value="zone_3">Zone 3 - Est</option>
@@ -82,10 +82,6 @@
                         <label class="checkbox-label">
                             <input type="checkbox" id="showTemperature" checked>
                             <span>Température</span>
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="showWaterLevel" checked>
-                            <span>Niveau d'eau</span>
                         </label>
                         <label class="checkbox-label">
                             <input type="checkbox" id="showEvaporation" checked>
@@ -184,35 +180,6 @@
                     </div>
                 </div>
 
-                <!-- Water Level Chart -->
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3>Niveau d'eau des bassins</h3>
-                        <div class="chart-controls">
-                            <select class="chart-period-selector" data-chart="waterLevel">
-                                <option value="monthly" selected>Mensuel</option>
-                                <option value="yearly">Annuel</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="chart-body">
-                        <canvas id="waterLevelChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Correlation Chart -->
-                <div class="chart-card chart-card--wide">
-                    <div class="chart-header">
-                        <h3>Analyse de corrélation: Précipitations vs Piézométrie</h3>
-                        <div class="chart-info">
-                            <span class="correlation-value" id="correlationValue">R² = --</span>
-                        </div>
-                    </div>
-                    <div class="chart-body">
-                        <canvas id="correlationChart"></canvas>
-                    </div>
-                </div>
-
                 <!-- Trend Analysis -->
                 <div class="chart-card chart-card--wide">
                     <div class="chart-header">
@@ -235,7 +202,7 @@
     <footer class="app-footer">
         <div class="footer-content">
             <p class="footer-text">© 2025 ELMA Water Technologies · Plateforme de gestion des ressources en eau</p>
-            <p class="footer-version">Version 0.1.0</p>
+            <p class="footer-version">Version 0.2.0</p>
         </div>
     </footer>
 

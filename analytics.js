@@ -25,7 +25,7 @@ function checkAuthentication() {
 
 // Global variables
 let charts = {};
-let currentZone = 'berrechid';
+let currentZone = 'segmentation';
 let currentPeriod = {
     start: '2020-01-01',
     end: new Date().toISOString().split('T')[0]
@@ -59,21 +59,21 @@ function generateTimeSeriesData(startDate, endDate, baseValue, variance, trend =
 
 // Zone-specific data configurations
 const zoneConfigs = {
-    berrechid: {
-        name: 'Région de Berrechid',
+    segmentation: {
+        name: 'Zone de démonstration',
+        precipitation: { base: 300, variance: 130, trend: -12 },
+        piezometry: { base: 42, variance: 7, trend: -4 },
+        temperature: { base: 17.5, variance: 11.5, trend: 1.3 },
+        waterLevel: { base: 14, variance: 4.5, trend: -1.8 },
+        evaporation: { base: 1750, variance: 290, trend: 45 }
+    },
+    nappe: {
+        name: 'Nappe de Berrechid',
         precipitation: { base: 280, variance: 120, trend: -15 },
         piezometry: { base: 45, variance: 8, trend: -5 },
         temperature: { base: 18, variance: 12, trend: 1.5 },
         waterLevel: { base: 12.5, variance: 4, trend: -2 },
         evaporation: { base: 1800, variance: 300, trend: 50 }
-    },
-    demo: {
-        name: 'Zone de démonstration',
-        precipitation: { base: 320, variance: 140, trend: -10 },
-        piezometry: { base: 38, variance: 6, trend: -3 },
-        temperature: { base: 17, variance: 11, trend: 1.2 },
-        waterLevel: { base: 15, variance: 5, trend: -1.5 },
-        evaporation: { base: 1700, variance: 280, trend: 40 }
     },
     zone_1: {
         name: 'Zone 1 - Nord',
@@ -166,7 +166,7 @@ function initializeEventListeners() {
     });
     
     // Parameter checkboxes
-    ['showPrecipitation', 'showPiezometry', 'showTemperature', 'showWaterLevel', 'showEvaporation'].forEach(id => {
+    ['showPrecipitation', 'showPiezometry', 'showTemperature', 'showEvaporation'].forEach(id => {
         document.getElementById(id).addEventListener('change', function() {
             updateChartVisibility();
         });
@@ -285,7 +285,43 @@ function initializeCharts() {
                 borderWidth: 2
             }]
         },
-        options: getTimeSeriesOptions('m', 'Évolution du niveau de la nappe')
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false
+                }
+            },
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'month',
+                        displayFormats: {
+                            month: 'MMM yyyy'
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                },
+                y: {
+                    reverse: true,
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'm (profondeur)'
+                    }
+                }
+            }
+        }
     });
     
     // Temperature & Evapotranspiration Chart
@@ -315,40 +351,6 @@ function initializeCharts() {
             ]
         },
         options: getDualAxisOptions()
-    });
-    
-    // Water Level Chart
-    const waterCtx = document.getElementById('waterLevelChart').getContext('2d');
-    charts.waterLevel = new Chart(waterCtx, {
-        type: 'line',
-        data: {
-            datasets: [{
-                label: 'Niveau d\'eau (m)',
-                data: [],
-                borderColor: 'rgba(99, 102, 241, 1)',
-                backgroundColor: 'rgba(99, 102, 241, 0.1)',
-                fill: true,
-                tension: 0.4,
-                borderWidth: 2
-            }]
-        },
-        options: getTimeSeriesOptions('m', 'Niveau d\'eau des bassins')
-    });
-    
-    // Correlation Chart
-    const corrCtx = document.getElementById('correlationChart').getContext('2d');
-    charts.correlation = new Chart(corrCtx, {
-        type: 'scatter',
-        data: {
-            datasets: [{
-                label: 'Corrélation',
-                data: [],
-                backgroundColor: 'rgba(59, 130, 246, 0.6)',
-                borderColor: 'rgba(59, 130, 246, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: getScatterOptions()
     });
     
     // Trend Analysis Chart
@@ -468,39 +470,6 @@ function getDualAxisOptions() {
     };
 }
 
-function getScatterOptions() {
-    return {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false
-            },
-            tooltip: {
-                callbacks: {
-                    label: function(context) {
-                        return `Précip: ${context.parsed.x}mm, Piézo: ${context.parsed.y}m`;
-                    }
-                }
-            }
-        },
-        scales: {
-            x: {
-                title: {
-                    display: true,
-                    text: 'Précipitations (mm)'
-                }
-            },
-            y: {
-                title: {
-                    display: true,
-                    text: 'Niveau piézométrique (m)'
-                }
-            }
-        }
-    };
-}
-
 function getTrendOptions() {
     return {
         responsive: true,
@@ -535,6 +504,7 @@ function getTrendOptions() {
                 type: 'linear',
                 display: true,
                 position: 'right',
+                reverse: true,
                 title: {
                     display: true,
                     text: 'Piézométrie (m)'
@@ -558,8 +528,6 @@ function updateAllCharts() {
         config.piezometry.base, config.piezometry.variance, config.piezometry.trend);
     const tempData = generateTimeSeriesData(currentPeriod.start, currentPeriod.end,
         config.temperature.base, config.temperature.variance, config.temperature.trend);
-    const waterData = generateTimeSeriesData(currentPeriod.start, currentPeriod.end,
-        config.waterLevel.base, config.waterLevel.variance, config.waterLevel.trend);
     const evapData = generateTimeSeriesData(currentPeriod.start, currentPeriod.end,
         config.evaporation.base, config.evaporation.variance, config.evaporation.trend);
     
@@ -576,22 +544,6 @@ function updateAllCharts() {
     charts.temperature.data.datasets[1].data = evapData;
     charts.temperature.update();
     
-    // Update water level chart
-    charts.waterLevel.data.datasets[0].data = waterData;
-    charts.waterLevel.update();
-    
-    // Update correlation chart
-    const correlationData = precipData.map((p, i) => ({
-        x: p.y,
-        y: piezoData[i].y
-    }));
-    charts.correlation.data.datasets[0].data = correlationData;
-    charts.correlation.update();
-    
-    // Calculate R²
-    const r2 = calculateR2(precipData.map(d => d.y), piezoData.map(d => d.y));
-    document.getElementById('correlationValue').textContent = `R² = ${r2.toFixed(3)}`;
-    
     // Update trend chart
     charts.trend.data.datasets[0].data = precipData;
     charts.trend.data.datasets[1].data = piezoData;
@@ -599,20 +551,6 @@ function updateAllCharts() {
     
     // Update zone stats
     loadZoneData(currentZone);
-}
-
-function calculateR2(x, y) {
-    const n = x.length;
-    const sumX = x.reduce((a, b) => a + b, 0);
-    const sumY = y.reduce((a, b) => a + b, 0);
-    const sumXY = x.reduce((sum, xi, i) => sum + xi * y[i], 0);
-    const sumX2 = x.reduce((sum, xi) => sum + xi * xi, 0);
-    const sumY2 = y.reduce((sum, yi) => sum + yi * yi, 0);
-    
-    const numerator = (n * sumXY - sumX * sumY) ** 2;
-    const denominator = (n * sumX2 - sumX ** 2) * (n * sumY2 - sumY ** 2);
-    
-    return denominator === 0 ? 0 : numerator / denominator;
 }
 
 function updateChartVisibility() {

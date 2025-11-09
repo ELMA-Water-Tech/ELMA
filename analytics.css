@@ -8,16 +8,7 @@
     flex: 1;
     gap: 0;
     overflow: hidden;
-    background: linear-gradient(135deg, 
-        #e0f2fe 0%, 
-        #dbeafe 20%, 
-        #e0e7ff 40%, 
-        #f3e8ff 60%, 
-        #fae8ff 80%, 
-        #fce7f3 100%
-    );
-    background-size: 400% 400%;
-    animation: subtleGradientShift 30s ease infinite;
+    background-color: #faf9f7;
 }
 
 /* Sidebar */
