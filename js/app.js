@@ -79,7 +79,7 @@ const appData = {
   },
   waterPoints: {
     type: "FeatureCollection",
-    features: [] // Will be loaded from waterPoints/water_points.geojson
+    features: [] // Will be loaded from data/geojson/water_points.geojson
   },
   basins: {
     type: "FeatureCollection",
@@ -196,7 +196,7 @@ function updateDateTime() {
 async function loadRegionBoundary() {
     try {
         // Load Segmentation analysis
-        await loadSegmentationData('segmentation_area', 'regions/segmentation_analysis.geojson');
+        await loadSegmentationData('segmentation_area', 'data/geojson/segmentation_analysis.geojson');
         
         console.log('All region boundaries loaded successfully');
     } catch (error) {
@@ -351,7 +351,7 @@ async function loadSegmentationData(regionKey, filePath) {
 // Load water points from GeoJSON file
 async function loadWaterPoints() {
     try {
-        const response = await fetch('waterPoints/water_points.geojson');
+        const response = await fetch('data/geojson/water_points.geojson');
         const geojsonData = await response.json();
         
         if (geojsonData.features && geojsonData.features.length > 0) {
@@ -368,7 +368,7 @@ async function loadWaterPoints() {
 // Load Nappe de Berrechid from CSV file
 async function loadNappeBerrechid() {
     try {
-        const response = await fetch('regions/nappeber.csv');
+        const response = await fetch('data/csv/nappeber.csv');
         const csvText = await response.text();
         
         // Parse CSV

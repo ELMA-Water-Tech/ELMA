@@ -19,7 +19,7 @@ body {
     height: 100vh;
     background: 
         linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)),
-        url('assest/img/bg.jpg') center/cover no-repeat,
+        url('../assets/images/bg.jpg') center/cover no-repeat,
         linear-gradient(135deg, 
             #0f172a 0%, 
             #1e293b 15%, 
