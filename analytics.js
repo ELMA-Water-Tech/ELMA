@@ -1,4 +1,4 @@
-// ELMA Platform - Advanced Analytics
+// AquaDetect Platform - Advanced Analytics
 
 // Authentication check
 function checkAuthentication() {

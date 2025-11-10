@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentation - Plateforme ELMA</title>
+    <title>Documentation - AquaDetect</title>
     
     <style>
         * {
@@ -295,7 +295,7 @@
         <aside class="doc-sidebar">
             <div class="doc-sidebar-header">
                 <div class="doc-sidebar-title">📚 Documentation</div>
-                <div class="doc-sidebar-subtitle">Plateforme ELMA</div>
+                <div class="doc-sidebar-subtitle">AquaDetect</div>
             </div>
             
             <nav>
@@ -366,13 +366,13 @@
         
             <div class="doc-header">
                 <h1 class="doc-title">Documentation</h1>
-                <p class="doc-subtitle">Plateforme ELMA - Gestion des Ressources en Eau</p>
+                <p class="doc-subtitle">AquaDetect - Gestion des Ressources en Eau</p>
             </div>
             
             <div class="doc-section" id="overview">
                 <h2>Vue d'ensemble</h2>
                 <p>
-                    La <strong>Plateforme ELMA</strong> est un système avancé de détection et de gestion des ressources en eau 
+                    <strong>AquaDetect</strong> est un système avancé de détection et de gestion des ressources en eau 
                     basé sur l'imagerie satellite. Elle permet de surveiller, analyser et gérer les bassins de rétention d'eau 
                     et les nappes souterraines dans la région de Berrechid, Maroc.
                 </p>
@@ -415,6 +415,21 @@
             
             <div class="doc-section" id="guide">
                 <h2>Guide d'utilisation</h2>
+                
+                <h3>0. Guide de démarrage interactif</h3>
+                <p>
+                    Lors de votre première visite, un guide interactif s'affiche automatiquement pour vous présenter 
+                    les principales fonctionnalités de la plateforme. Ce guide met en évidence chaque élément important 
+                    avec des explications détaillées.
+                </p>
+                <p>
+                    Si vous souhaitez revoir le guide à tout moment, vous pouvez le redémarrer en cliquant sur le bouton ci-dessous :
+                </p>
+                <button 
+                    onclick="window.open('index.html', '_self'); localStorage.removeItem('elma_hasSeenGuide');" 
+                    style="padding: 12px 24px; background: #0066cc; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 500; cursor: pointer; margin: 16px 0;">
+                    🔄 Redémarrer le guide interactif
+                </button>
                 
                 <h3>1. Navigation de la carte</h3>
                 <ul>
@@ -534,7 +549,7 @@
             </div>
             
             <div class="doc-footer">
-                <p>© 2025 ELMA Water Technologies · Plateforme de gestion des ressources en eau</p>
+                <p>© 2025 AquaDetect · Plateforme de gestion des ressources en eau</p>
             </div>
         </div>
     </div>

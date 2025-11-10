@@ -1,4 +1,4 @@
-// ELMA Water Technologies - Login System
+// AquaDetect - Login System
 // License codes for access control
 
 // Valid license codes (in production, this would be server-side)
@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Console log for developers (show valid licenses in development)
-console.log('🔐 ELMA Water Technologies - Access Control');
+console.log('🔐 AquaDetect - Access Control');
 console.log('📋 Valid License Code:');
 VALID_LICENSES.forEach(license => console.log(`   • ${license}`));
 console.log('⏰ License Duration: 24 hours');

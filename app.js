@@ -1,4 +1,4 @@
-// ELMA Platform - Main Application JavaScript
+// AquaDetect Platform - Main Application JavaScript
 
 // Application Data
 const appData = {

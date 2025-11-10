@@ -1,0 +1,219 @@
+/* Onboarding Guide Styles - Clean Apple UX Style */
+
+.onboarding-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.onboarding-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.onboarding-spotlight {
+    position: absolute;
+    border: 3px solid #007aff;
+    border-radius: 12px;
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10000;
+}
+
+.onboarding-tooltip {
+    position: absolute;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 400px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2),
+                0 0 1px rgba(0, 0, 0, 0.1);
+    z-index: 10001;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.onboarding-tooltip.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.onboarding-tooltip-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.onboarding-tooltip-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1d1d1f;
+    letter-spacing: -0.02em;
+}
+
+.onboarding-step-counter {
+    font-size: 0.8125rem;
+    color: #86868b;
+    font-weight: 500;
+}
+
+.onboarding-tooltip-content {
+    color: #1d1d1f;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+.onboarding-tooltip-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.onboarding-btn {
+    padding: 9px 20px;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    letter-spacing: -0.01em;
+}
+
+.onboarding-btn-next {
+    background: #007aff;
+    color: #ffffff;
+    flex: 1;
+}
+
+.onboarding-btn-next:hover {
+    background: #0051d5;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+}
+
+.onboarding-btn-next:active {
+    transform: translateY(0);
+}
+
+.onboarding-btn-skip {
+    background: #f5f5f7;
+    color: #1d1d1f;
+}
+
+.onboarding-btn-skip:hover {
+    background: #e8e8ed;
+}
+
+.onboarding-dots {
+    display: flex;
+    gap: 6px;
+    margin-top: 16px;
+    justify-content: center;
+    padding-top: 16px;
+    border-top: 1px solid #e5e5e7;
+}
+
+.onboarding-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #d1d1d6;
+    transition: all 0.2s ease;
+}
+
+.onboarding-dot.active {
+    background: #007aff;
+    width: 20px;
+    border-radius: 3px;
+}
+
+/* Welcome Screen */
+.onboarding-welcome {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 480px;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2),
+                0 0 1px rgba(0, 0, 0, 0.1);
+    z-index: 10001;
+    text-align: center;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.96);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.onboarding-welcome.active {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.onboarding-welcome-icon {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+}
+
+.onboarding-welcome-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #1d1d1f;
+    margin-bottom: 12px;
+    letter-spacing: -0.03em;
+}
+
+.onboarding-welcome-subtitle {
+    font-size: 1rem;
+    color: #86868b;
+    margin-bottom: 32px;
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+.onboarding-welcome-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.onboarding-welcome-actions .onboarding-btn {
+    flex: 1;
+    padding: 12px 24px;
+    font-size: 0.9375rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .onboarding-tooltip {
+        max-width: 90vw;
+        padding: 20px;
+    }
+    
+    .onboarding-welcome {
+        max-width: 90vw;
+        padding: 32px 24px;
+    }
+    
+    .onboarding-welcome-title {
+        font-size: 1.75rem;
+    }
+    
+    .onboarding-tooltip-title {
+        font-size: 1.125rem;
+    }
+}
