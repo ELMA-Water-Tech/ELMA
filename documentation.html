@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - Plateforme ELMA</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            background: #ffffff;
+            color: #1d1d1f;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .documentation-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Styles */
+        .doc-sidebar {
+            width: 260px;
+            background: #fafafa;
+            border-right: 1px solid #e5e5e7;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+        }
+        
+        .doc-sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .doc-sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .doc-sidebar::-webkit-scrollbar-thumb {
+            background: #d1d1d6;
+            border-radius: 10px;
+        }
+        
+        .doc-sidebar::-webkit-scrollbar-thumb:hover {
+            background: #b0b0b5;
+        }
+        
+        .doc-sidebar-header {
+            padding: 2rem 1.5rem 1.5rem;
+            border-bottom: 1px solid #e5e5e7;
+            background: #ffffff;
+        }
+        
+        .doc-sidebar-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .doc-sidebar-subtitle {
+            font-size: 0.8125rem;
+            color: #86868b;
+            font-weight: 400;
+        }
+        
+        .doc-nav {
+            list-style: none;
+            padding: 1rem 0.75rem;
+        }
+        
+        .doc-nav-item {
+            margin-bottom: 0.125rem;
+        }
+        
+        .doc-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            padding: 0.5rem 0.75rem;
+            color: #1d1d1f;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 400;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 6px;
+            letter-spacing: -0.01em;
+        }
+        
+        .doc-nav-link:hover {
+            background: #f5f5f7;
+            color: #0066cc;
+        }
+        
+        .doc-nav-link.active {
+            background: #e8e8ed;
+            color: #0066cc;
+            font-weight: 500;
+        }
+        
+        .doc-nav-icon {
+            font-size: 1rem;
+            min-width: 18px;
+            opacity: 0.7;
+        }
+        
+        .doc-nav-link.active .doc-nav-icon,
+        .doc-nav-link:hover .doc-nav-icon {
+            opacity: 1;
+        }
+        
+        /* Main Content Styles */
+        .documentation-container {
+            flex: 1;
+            margin-left: 260px;
+            background: #ffffff;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1.125rem;
+            background: #f5f5f7;
+            color: #0066cc;
+            text-decoration: none;
+            border-radius: 980px;
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            margin: 2rem 0 0 3rem;
+        }
+        
+        .back-button:hover {
+            background: #e8e8ed;
+        }
+        
+        .doc-header {
+            padding: 4rem 3rem 3rem;
+            max-width: 880px;
+            margin: 0 auto;
+            border-bottom: 1px solid #e5e5e7;
+        }
+        
+        .doc-title {
+            font-size: 3rem;
+            color: #1d1d1f;
+            margin: 0 0 0.75rem 0;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+        
+        .doc-subtitle {
+            font-size: 1.25rem;
+            color: #86868b;
+            margin: 0;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+        
+        .doc-section {
+            margin-bottom: 4rem;
+            padding: 0 3rem;
+            max-width: 880px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .doc-section:first-of-type {
+            padding-top: 3rem;
+        }
+        
+        .doc-section h2 {
+            font-size: 2rem;
+            color: #1d1d1f;
+            margin: 0 0 1.5rem 0;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+        
+        .doc-section h3 {
+            font-size: 1.5rem;
+            color: #1d1d1f;
+            margin: 2.5rem 0 1rem 0;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        
+        .doc-section h4 {
+            font-size: 1.125rem;
+            color: #1d1d1f;
+            margin: 1.5rem 0 0.75rem 0;
+            font-weight: 600;
+        }
+        
+        .doc-section p {
+            color: #515154;
+            font-size: 1.0625rem;
+            line-height: 1.7;
+            margin: 0 0 1.25rem 0;
+        }
+        
+        .doc-section ul {
+            color: #515154;
+            font-size: 1.0625rem;
+            line-height: 1.7;
+            margin: 1.25rem 0;
+            padding-left: 1.5rem;
+        }
+        
+        .doc-section li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .doc-section strong {
+            color: #1d1d1f;
+            font-weight: 600;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            padding: 1.75rem;
+            background: #fafafa;
+            border: 1px solid #e5e5e7;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .feature-card:hover {
+            background: #f5f5f7;
+            border-color: #d1d1d6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .feature-card h4 {
+            margin: 0 0 0.75rem 0;
+            color: #1d1d1f;
+            font-size: 1.0625rem;
+            font-weight: 600;
+        }
+        
+        .feature-card p {
+            margin: 0;
+            font-size: 0.9375rem;
+            color: #86868b;
+            line-height: 1.6;
+        }
+        
+        .highlight {
+            background: #f5f5f7;
+            padding: 0.1875rem 0.5rem;
+            border-radius: 6px;
+            color: #0066cc;
+            font-weight: 500;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+            font-size: 0.9375rem;
+        }
+        
+        .doc-footer {
+            text-align: center;
+            padding: 3rem;
+            background: #fafafa;
+            border-top: 1px solid #e5e5e7;
+            margin-top: 4rem;
+        }
+        
+        .doc-footer p {
+            color: #86868b;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="documentation-wrapper">
+        <!-- Left Sidebar Navigation -->
+        <aside class="doc-sidebar">
+            <div class="doc-sidebar-header">
+                <div class="doc-sidebar-title">📚 Documentation</div>
+                <div class="doc-sidebar-subtitle">Plateforme ELMA</div>
+            </div>
+            
+            <nav>
+                <ul class="doc-nav">
+                    <li class="doc-nav-item">
+                        <a href="#overview" class="doc-nav-link active">
+                            <span class="doc-nav-icon">🌍</span>
+                            <span>Vue d'ensemble</span>
+                        </a>
+                    </li>
+                    <li class="doc-nav-item">
+                        <a href="#features" class="doc-nav-link">
+                            <span class="doc-nav-icon">✨</span>
+                            <span>Fonctionnalités</span>
+                        </a>
+                    </li>
+                    <li class="doc-nav-item">
+                        <a href="#guide" class="doc-nav-link">
+                            <span class="doc-nav-icon">🚀</span>
+                            <span>Guide d'utilisation</span>
+                        </a>
+                    </li>
+                    <li class="doc-nav-item">
+                        <a href="#kpis" class="doc-nav-link">
+                            <span class="doc-nav-icon">📊</span>
+                            <span>Indicateurs clés</span>
+                        </a>
+                    </li>
+                    <li class="doc-nav-item">
+                        <a href="#coordinates" class="doc-nav-link">
+                            <span class="doc-nav-icon">🔧</span>
+                            <span>Système de coordonnées</span>
+                        </a>
+                    </li>
+                    <li class="doc-nav-item">
+                        <a href="#basin-data" class="doc-nav-link">
+                            <span class="doc-nav-icon">💾</span>
+                            <span>Données des bassins</span>
+                        </a>
+                    </li>
+                    <li class="doc-nav-item">
+                        <a href="#analytics" class="doc-nav-link">
+                            <span class="doc-nav-icon">📈</span>
+                            <span>Page Analytics</span>
+                        </a>
+                    </li>
+                    <li class="doc-nav-item">
+                        <a href="#security" class="doc-nav-link">
+                            <span class="doc-nav-icon">🔐</span>
+                            <span>Sécurité</span>
+                        </a>
+                    </li>
+                    <li class="doc-nav-item">
+                        <a href="#support" class="doc-nav-link">
+                            <span class="doc-nav-icon">📞</span>
+                            <span>Support & Contact</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <!-- Main Content -->
+        <div class="documentation-container">
+            <a href="index.html" class="back-button">
+                ← Retour à la plateforme
+            </a>
+        
+            <div class="doc-header">
+                <h1 class="doc-title">Documentation</h1>
+                <p class="doc-subtitle">Plateforme ELMA - Gestion des Ressources en Eau</p>
+            </div>
+            
+            <div class="doc-section" id="overview">
+                <h2>Vue d'ensemble</h2>
+                <p>
+                    La <strong>Plateforme ELMA</strong> est un système avancé de détection et de gestion des ressources en eau 
+                    basé sur l'imagerie satellite. Elle permet de surveiller, analyser et gérer les bassins de rétention d'eau 
+                    et les nappes souterraines dans la région de Berrechid, Maroc.
+                </p>
+                <p>
+                    Le système utilise des technologies de pointe incluant l'intelligence artificielle, l'apprentissage automatique, 
+                    et la cartographie SIG pour fournir des données précises et en temps réel.
+                </p>
+            </div>
+            
+            <div class="doc-section" id="features">
+                <h2>Fonctionnalités principales</h2>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>🗺️ Cartographie Interactive</h4>
+                        <p>Visualisation des bassins et nappes sur une carte interactive avec imagerie satellite.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📊 Indicateurs en Temps Réel</h4>
+                        <p>Suivi dynamique de la superficie, du nombre de bassins et de leur évolution.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🔍 Sélection de Régions</h4>
+                        <p>Navigation entre différentes zones d'étude : Zone de démonstration et Nappe de Berrechid.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📈 Analytics Avancés</h4>
+                        <p>Graphiques détaillés sur les précipitations, la piézométrie et les tendances.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📍 Coordonnées Lambert</h4>
+                        <p>Système de projection conforme conique du Maroc (EPSG:26191).</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>👁️ Contrôle des Couches</h4>
+                        <p>Affichage sélectif des bassins et segmentations.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="doc-section" id="guide">
+                <h2>Guide d'utilisation</h2>
+                
+                <h3>1. Navigation de la carte</h3>
+                <ul>
+                    <li><strong>Zoom</strong> : Utilisez la molette de la souris ou les boutons +/- sur la carte</li>
+                    <li><strong>Déplacement</strong> : Cliquez et glissez pour déplacer la vue</li>
+                    <li><strong>Plein écran</strong> : Cliquez sur l'icône plein écran en haut à droite</li>
+                </ul>
+                
+                <h3>2. Sélection de région</h3>
+                <p>
+                    Utilisez le menu déroulant dans la barre latérale gauche pour changer la zone affichée. 
+                    Le nom de la région s'affiche au centre de la carte.
+                </p>
+                
+                <h3>3. Contrôle des couches</h3>
+                <ul>
+                    <li><strong>Afficher les segmentations</strong> : Active/désactive les polygones de segmentation</li>
+                    <li><strong>Afficher les bassins</strong> : Active/désactive les points de bassin</li>
+                </ul>
+                
+                <h3>4. Statistiques dynamiques</h3>
+                <p>
+                    Les indicateurs clés se mettent à jour automatiquement lorsque vous zoomez ou déplacez la carte, 
+                    affichant uniquement les données de la zone visible.
+                </p>
+                
+                <h3>5. Interaction avec les points</h3>
+                <ul>
+                    <li>Cliquez sur un point de bassin pour voir ses détails</li>
+                    <li>Les coordonnées X,Y (Lambert Maroc) s'affichent dans la barre latérale gauche</li>
+                    <li>Une popup s'ouvre avec les détails du bassin : superficie, profondeur, volume, etc.</li>
+                </ul>
+            </div>
+            
+            <div class="doc-section" id="kpis">
+                <h2>Indicateurs clés (KPIs)</h2>
+                <p>Les indicateurs sont mis à jour dynamiquement selon la zone visible sur la carte :</p>
+                
+                <ul>
+                    <li><strong>Superficie de la parcelle (ha)</strong> : Surface totale des segmentations visibles</li>
+                    <li><strong>Nombre de bassins associés</strong> : Nombre de points de bassin visibles dans la zone</li>
+                    <li><strong>Évolution du nombre de bassins</strong> : Taux de croissance annuel (+5%)</li>
+                    <li><strong>Confiance moyenne</strong> : Niveau de fiabilité de détection (88%)</li>
+                </ul>
+            </div>
+            
+            <div class="doc-section" id="coordinates">
+                <h2>Système de coordonnées</h2>
+                <p>
+                    La plateforme utilise le <strong>système Lambert Conformal Conic du Maroc (EPSG:26191)</strong> 
+                    pour les coordonnées projetées :
+                </p>
+                
+                <ul>
+                    <li><strong>Projection</strong> : Lambert Conformal Conic</li>
+                    <li><strong>Datum</strong> : Merchich</li>
+                    <li><strong>Unités</strong> : Mètres</li>
+                    <li><strong>Zone</strong> : Maroc</li>
+                </ul>
+                
+                <p>Les coordonnées sont affichées en mètres (m) dans le format : <span class="highlight">X: 305,432, Y: 302,156</span></p>
+            </div>
+            
+            <div class="doc-section" id="basin-data">
+                <h2>Données des bassins</h2>
+                <p>Chaque bassin détecté contient les informations suivantes :</p>
+                
+                <ul>
+                    <li><strong>Point Index</strong> : Identifiant unique du bassin</li>
+                    <li><strong>Année</strong> : Année de détection (2020-2024)</li>
+                    <li><strong>Superficie</strong> : Surface en m² (area_m2)</li>
+                    <li><strong>Catégorie</strong> : Classification de taille (area_category)</li>
+                    <li><strong>Profondeur max</strong> : Profondeur maximale en mètres (hmax_m)</li>
+                    <li><strong>Volume</strong> : Capacité en m³ (volume_m3)</li>
+                </ul>
+            </div>
+            
+            <div class="doc-section" id="analytics">
+                <h2>Page Analytics</h2>
+                <p>
+                    La page Analytics fournit des analyses avancées sur plusieurs paramètres environnementaux :
+                </p>
+                
+                <ul>
+                    <li><strong>Précipitations</strong> : Analyse des données pluviométriques mensuelles</li>
+                    <li><strong>Piézométrie</strong> : Évolution des niveaux d'eau souterrains (axe Y inversé)</li>
+                    <li><strong>Analyses de tendances</strong> : Corrélations entre précipitations et piézométrie</li>
+                </ul>
+                
+                <p>Les données sont filtrables par zone et période d'analyse.</p>
+            </div>
+            
+            <div class="doc-section" id="security">
+                <h2>Sécurité & Authentification</h2>
+                <p>
+                    L'accès à la plateforme nécessite une authentification par licence :
+                </p>
+                
+                <ul>
+                    <li><strong>Licence utilisateur</strong> : Clé unique fournie par ELMA</li>
+                    <li><strong>Déconnexion automatique</strong> : Après expiration de la session</li>
+                    <li><strong>Protection des données</strong> : Toutes les données sont sécurisées</li>
+                </ul>
+            </div>
+            
+            <div class="doc-section" id="support">
+                <h2>Support & Contact</h2>
+                <p>
+                    Pour toute question ou problème technique, veuillez contacter l'équipe ELMA :
+                </p>
+                
+                <ul>
+                    <li><strong>Email</strong> : support@elma-platform.com</li>
+                    <li><strong>Téléphone</strong> : +212 XXX XXX XXX</li>
+                    <li><strong>Heures d'ouverture</strong> : Lun-Ven, 9h-18h (GMT+1)</li>
+                </ul>
+            </div>
+            
+            <div class="doc-footer">
+                <p>© 2025 ELMA Water Technologies · Plateforme de gestion des ressources en eau</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('.doc-nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links
+                document.querySelectorAll('.doc-nav-link').forEach(l => l.classList.remove('active'));
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Get target section
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Update active link on scroll
+        const sections = document.querySelectorAll('.doc-section');
+        const navLinks = document.querySelectorAll('.doc-nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

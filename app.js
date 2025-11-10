@@ -546,9 +546,10 @@ function addSegmentationData() {
                 fillOpacity: 0.6
             });
             
-            marker.bindPopup(`
+            // Build popup content with conditional fields
+            let popupContent = `
         <div class="popup-content">
-                    <div class="popup-header">Point d'analyse ${props.point_index}</div>
+                    <div class="popup-header">Bassin ${props.point_index}</div>
             <div class="popup-details">
                 <div class="popup-detail">
                             <span class="label">Année :</span>
@@ -557,14 +558,57 @@ function addSegmentationData() {
                 <div class="popup-detail">
                             <span class="label">Segmentation :</span>
                             <span class="value">${props.has_segmentation ? 'Oui' : 'Non'}</span>
-                </div>
+                        </div>`;
+            
+            // Add basin-specific data if available
+            if (props.area_m2) {
+                popupContent += `
                 <div class="popup-detail">
+                            <span class="label">Superficie :</span>
+                            <span class="value">${Math.round(props.area_m2).toLocaleString()} m²</span>
+                        </div>`;
+            }
+            
+            if (props.area_category) {
+                popupContent += `
+                <div class="popup-detail">
+                            <span class="label">Catégorie :</span>
+                            <span class="value">${props.area_category}</span>
+                        </div>`;
+            }
+            
+            if (props.hmax_m) {
+                popupContent += `
+                <div class="popup-detail">
+                            <span class="label">Profondeur max :</span>
+                            <span class="value">${props.hmax_m.toFixed(1)} m</span>
+                        </div>`;
+            }
+            
+            if (props.volume_m3) {
+                popupContent += `
+                <div class="popup-detail">
+                            <span class="label">Volume :</span>
+                            <span class="value">${Math.round(props.volume_m3).toLocaleString()} m³</span>
+                        </div>`;
+            }
+            
+            popupContent += `
+                        <div class="popup-detail">
                             <span class="label">Fichier :</span>
                             <span class="value">${props.json_file || 'N/A'}</span>
                 </div>
-                </div>
-                </div>
-            `);
+            </div>
+        </div>
+    `;
+            
+            marker.bindPopup(popupContent);
+            
+            // Add click event to show coordinates in sidebar
+            marker.on('click', function(e) {
+                console.log('Point clicked:', props.point_index, coords);
+                showPointCoordinates(coords, props.point_index);
+            });
             
             analysisPointsLayer.addLayer(marker);
             
@@ -579,27 +623,132 @@ function addSegmentationData() {
                 fillOpacity: 0.3
             });
             
-            polygon.bindPopup(`
+            // Build polygon popup with detailed information
+            let polygonPopup = `
         <div class="popup-content">
-                    <div class="popup-header">Bassin détecté</div>
+                    <div class="popup-header">Segmentation - Bassin ${props.point_index || 'N/A'}</div>
             <div class="popup-details">
-                <div class="popup-detail">
-                            <span class="label">Point :</span>
-                            <span class="value">${props.point_index || 'N/A'}</span>
-                </div>
                 <div class="popup-detail">
                             <span class="label">Année :</span>
                             <span class="value">${props.year || 'N/A'}</span>
-                </div>
-                </div>
+                        </div>`;
+            
+            if (props.area_m2) {
+                polygonPopup += `
+                <div class="popup-detail">
+                            <span class="label">Superficie :</span>
+                            <span class="value">${Math.round(props.area_m2).toLocaleString()} m²</span>
+                        </div>`;
+            }
+            
+            if (props.area_category) {
+                polygonPopup += `
+                <div class="popup-detail">
+                            <span class="label">Catégorie :</span>
+                            <span class="value">${props.area_category}</span>
+                        </div>`;
+            }
+            
+            if (props.hmax_m) {
+                polygonPopup += `
+                <div class="popup-detail">
+                            <span class="label">Profondeur max :</span>
+                            <span class="value">${props.hmax_m.toFixed(1)} m</span>
+                        </div>`;
+            }
+            
+            if (props.volume_m3) {
+                polygonPopup += `
+                <div class="popup-detail">
+                            <span class="label">Volume :</span>
+                            <span class="value">${Math.round(props.volume_m3).toLocaleString()} m³</span>
+                        </div>`;
+            }
+            
+            polygonPopup += `
             </div>
-            `);
+        </div>
+    `;
+            
+            polygon.bindPopup(polygonPopup);
             
             basinPolygonsLayer.addLayer(polygon);
         }
     });
     
     console.log(`Loaded ${basinPolygonsLayer.getLayers().length} basins and ${analysisPointsLayer.getLayers().length} points`);
+}
+
+// Define coordinate systems using Proj4js
+// WGS84 (standard GPS coordinates)
+const wgs84 = 'EPSG:4326';
+
+// Morocco Lambert Conformal Conic (EPSG:26191)
+// This is the standard projection system used in Morocco
+const moroccoLambert = '+proj=lcc +lat_1=33.3 +lat_0=33.3 +lon_0=-5.4 +k_0=0.999625769 +x_0=500000 +y_0=300000 +a=6378249.2 +b=6356515 +towgs84=31,146,47,0,0,0,0 +units=m +no_defs';
+
+// Transform WGS84 lat/lng to Morocco Lambert projected X,Y coordinates
+function latLngToXY(lng, lat) {
+    try {
+        // Use proj4 for accurate transformation
+        if (typeof proj4 !== 'undefined') {
+            const result = proj4(wgs84, moroccoLambert, [lng, lat]);
+            console.log('Proj4 transformation:', [lng, lat], '->', result);
+            return { 
+                x: Math.round(result[0]), 
+                y: Math.round(result[1]) 
+            };
+        } else {
+            console.warn('Proj4 library not loaded, using approximation');
+        }
+    } catch (error) {
+        console.error('Proj4 transformation error:', error);
+    }
+    
+    // Fallback to approximate calculation if proj4 fails
+    const centerLng = -7.58;
+    const centerLat = 33.27;
+    const centerX = 305000;
+    const centerY = 302000;
+    
+    const metersPerDegreeLng = 93000;
+    const metersPerDegreeLat = 111000;
+    
+    const x = centerX + (lng - centerLng) * metersPerDegreeLng;
+    const y = centerY + (lat - centerLat) * metersPerDegreeLat;
+    
+    console.log('Approximate transformation:', [lng, lat], '->', {x, y});
+    return { x: Math.round(x), y: Math.round(y) };
+}
+
+// Show point coordinates in left sidebar
+function showPointCoordinates(latLngCoords, pointIndex) {
+    console.log('showPointCoordinates called with:', latLngCoords, pointIndex);
+    
+    const coords = latLngToXY(latLngCoords[1], latLngCoords[0]);
+    console.log('Converted coords:', coords);
+    
+    // Update the Coordonnées field in left sidebar
+    const coordsElement = document.getElementById('regionCoords');
+    
+    if (!coordsElement) {
+        console.error('regionCoords element not found!');
+        return;
+    }
+    
+    coordsElement.textContent = `X: ${coords.x.toLocaleString()}, Y: ${coords.y.toLocaleString()}`;
+    console.log('Updated coordinates display');
+    
+    // Highlight the field temporarily
+    coordsElement.style.color = '#8b5cf6';
+    coordsElement.style.fontWeight = '600';
+    coordsElement.style.transition = 'all 0.3s ease';
+    
+    // Reset after 3 seconds
+    setTimeout(() => {
+        coordsElement.style.color = '';
+        coordsElement.style.fontWeight = '';
+    }, 3000);
 }
 
 // Add map event listeners for dynamic statistics
@@ -629,8 +778,18 @@ function updateVisibleStats() {
                     // Check if polygon is visible in bounds
                     if (isPolygonVisible(feature.geometry.coordinates[0], bounds)) {
                         visiblePolygons++;
-                        const area = calculatePolygonArea(feature.geometry.coordinates[0]);
-                        visibleArea += area;
+                        // Calculate precise geodesic area using Turf.js
+                        try {
+                            const polygon = turf.polygon(feature.geometry.coordinates);
+                            const areaInSquareMeters = turf.area(polygon); // Geodesic area in m²
+                            visibleArea += areaInSquareMeters / 10000; // Convert m² to hectares
+                        } catch (e) {
+                            console.warn('Error calculating area for polygon:', e);
+                            // Fallback to property value if Turf fails
+                            if (feature.properties && feature.properties.area_m2) {
+                                visibleArea += feature.properties.area_m2 / 10000;
+                            }
+                        }
                     }
                 } else if (feature.geometry.type === 'Point') {
                     // Check if point is visible in bounds - points represent basins
@@ -646,14 +805,14 @@ function updateVisibleStats() {
     // Update the KPIs in right sidebar
     if (visibleBasins > 0 || visiblePolygons > 0) {
         document.getElementById('kpiBasinCount').textContent = visibleBasins;
-        document.getElementById('kpiPlotArea').textContent = formatNumber(Math.round(visibleArea));
+        document.getElementById('kpiPlotArea').textContent = visibleArea.toFixed(3); // Show 3 decimal places for precision
         
         // Update basin evolution based on visible basins (points)
         const basinEvolution = calculateBasinEvolution(visibleBasins);
         document.getElementById('kpiBasinEvolution').textContent = basinEvolution >= 0 ? `+${basinEvolution}%` : `${basinEvolution}%`;
     }
     
-    console.log(`Visible in bounds: ${visibleBasins} basins (points), ${visiblePolygons} polygons, ${Math.round(visibleArea)} ha`);
+    console.log(`Visible in bounds: ${visibleBasins} basins (points), ${visiblePolygons} polygons, ${visibleArea.toFixed(3)} ha`);
 }
 
 // Check if a polygon is visible within the map bounds
@@ -713,7 +872,7 @@ function initializeEventListeners() {
     document.getElementById('showAnalysisPoints').addEventListener('change', function() {
         if (this.checked) {
             if (analysisPointsLayer) map.addLayer(analysisPointsLayer);
-        } else {
+            } else {
             if (analysisPointsLayer) map.removeLayer(analysisPointsLayer);
         }
     });
@@ -732,6 +891,11 @@ function initializeEventListeners() {
     // Analytics navigation
     document.getElementById('analyticsButton').addEventListener('click', function() {
         window.location.href = 'analytics.html';
+    });
+    
+    // Documentation navigation
+    document.getElementById('documentationButton').addEventListener('click', function() {
+        window.location.href = 'documentation.html';
     });
     
     // Logout functionality
@@ -799,16 +963,25 @@ function updateAnalytics() {
             // Count Point features (basins are represented by points)
             totalBasins = segmentationData.features.filter(f => f.geometry.type === 'Point').length;
             
-            // Calculate total area of all polygons in hectares
+            // Calculate total area of all polygons in hectares using precise geodesic calculation
             segmentationData.features.forEach(feature => {
                 if (feature.geometry.type === 'Polygon') {
-                    const area = calculatePolygonArea(feature.geometry.coordinates[0]);
-                    areaHectares += area;
+                    try {
+                        const polygon = turf.polygon(feature.geometry.coordinates);
+                        const areaInSquareMeters = turf.area(polygon); // Geodesic area in m²
+                        areaHectares += areaInSquareMeters / 10000; // Convert m² to hectares
+                    } catch (e) {
+                        console.warn('Error calculating area for polygon:', e);
+                        // Fallback to property value if Turf fails
+                        if (feature.properties && feature.properties.area_m2) {
+                            areaHectares += feature.properties.area_m2 / 10000;
+                        }
+                    }
                 }
-            });
-        }
+        });
     }
-    
+}
+
     if (currentRegion === 'nappe_berrechid' || currentRegion === 'all_regions') {
         // Add nappe area if selected
         // Approximate area: 2500 km² = 250,000 ha
@@ -852,28 +1025,30 @@ function updateAnalytics() {
 }
 
 // Calculate polygon area in hectares using the Shoelace formula
-function calculatePolygonArea(coordinates) {
-    if (!coordinates || coordinates.length < 3) return 0;
-    
-    let area = 0;
-    const n = coordinates.length;
-    
-    for (let i = 0; i < n - 1; i++) {
-        const [x1, y1] = coordinates[i];
-        const [x2, y2] = coordinates[i + 1];
-        area += (x1 * y2) - (x2 * y1);
-    }
-    
-    area = Math.abs(area / 2);
-    
-    // Convert from degrees² to hectares (approximate)
-    // 1 degree² ≈ 12,100 km² at equator, but varies with latitude
-    // At 33°N latitude: 1 degree ≈ 93 km
-    // So 1 degree² ≈ 8,649 km² = 864,900 ha
-    const degreesToHectares = 864900;
-    
-    return area * degreesToHectares;
-}
+// DEPRECATED: Old shoelace formula (inaccurate for lat/lng coordinates)
+// Now using Turf.js geodesic area calculation for precision
+// function calculatePolygonArea(coordinates) {
+//     if (!coordinates || coordinates.length < 3) return 0;
+//     
+//     let area = 0;
+//     const n = coordinates.length;
+//     
+//     for (let i = 0; i < n - 1; i++) {
+//         const [x1, y1] = coordinates[i];
+//         const [x2, y2] = coordinates[i + 1];
+//         area += (x1 * y2) - (x2 * y1);
+//     }
+//     
+//     area = Math.abs(area / 2);
+//     
+//     // Convert from degrees² to hectares (approximate)
+//     // 1 degree² ≈ 12,100 km² at equator, but varies with latitude
+//     // At 33°N latitude: 1 degree ≈ 93 km
+//     // So 1 degree² ≈ 8,649 km² = 864,900 ha
+//     const degreesToHectares = 864900;
+//     
+//     return area * degreesToHectares;
+// }
 
 // Calculate basin evolution
 function calculateBasinEvolution(currentBasins) {

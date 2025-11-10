@@ -11,6 +11,12 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
+    <!-- Proj4js for coordinate transformations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.9.0/proj4.js"></script>
+    
+    <!-- Turf.js for geodesic calculations -->
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+    
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
@@ -30,6 +36,10 @@
                     <button class="analytics-button" id="analyticsButton" title="Analytics Avancés">
                         <span class="analytics-icon">📊</span>
                         <span class="analytics-text">Analytics</span>
+                    </button>
+                    <button class="documentation-button" id="documentationButton" title="Documentation">
+                        <span class="documentation-icon">📚</span>
+                        <span class="documentation-text">Documentation</span>
                     </button>
                     <button class="logout-button" id="logoutButton" title="Déconnexion">
                         <span class="logout-icon">🔓</span>
@@ -61,8 +71,8 @@
                             <span class="value" id="regionArea">1,200 km²</span>
                         </div>
                         <div class="info-item">
-                            <span class="label">Coordonnées :</span>
-                            <span class="value" id="regionCoords">33.35°N, -7.58°W</span>
+                            <span class="label">Coordonnées (cliquer sur un point) :</span>
+                            <span class="value" id="regionCoords">X: -, Y: -</span>
                         </div>
                     </div>
                 </div>
@@ -112,7 +122,7 @@
                             <span>Zone de démonstration</span>
                         </div>
                         <div class="legend-item">
-                            <span class="legend-symbol region-symbol" style="background-color: #ef4444;"></span>
+                            <span class="legend-symbol region-symbol" style="background-color: #1e3bbf;"></span>
                             <span>Nappe de Berrechid</span>
                         </div>
                     </div>
@@ -126,7 +136,7 @@
             <aside class="right-sidebar">
                 <div class="sidebar-section">
                     <h3>Indicateurs clés</h3>
-                    <p class="stats-info">📍 Statistiques de la zone visible</p>
+                    <p class="stats-info">Statistiques de la zone visible</p>
                     <div class="kpi-grid">
                         <div class="kpi-card">
                             <div class="kpi-value" id="kpiPlotArea">120,000</div>
