@@ -60,7 +60,7 @@ function generateTimeSeriesData(startDate, endDate, baseValue, variance, trend =
 // Zone-specific data configurations
 const zoneConfigs = {
     segmentation: {
-        name: 'Zone de démonstration',
+        name: 'Périmètre du pilote',
         precipitation: { base: 300, variance: 130, trend: -12 },
         piezometry: { base: 42, variance: 7, trend: -4 },
         temperature: { base: 17.5, variance: 11.5, trend: 1.3 },

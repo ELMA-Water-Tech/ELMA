@@ -1,1 +1,1 @@
-name = Nappe de Berrechid - Zone de démonstration
+name = Nappe de Berrechid - Périmètre du pilote

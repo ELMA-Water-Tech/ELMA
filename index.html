@@ -31,24 +31,20 @@
             <div class="header-content">
                 <div class="logo-section">
                     <h1 class="app-title">AquaDetect</h1>
-                    <p class="app-subtitle">Détection & gestion des ressources en eau basée sur satellite</p>
+                    <p class="app-subtitle">Suivi des nappes et prélèvements par satellite</p>
                 </div>
                 <div class="header-info">
                     <span class="date-display" id="currentDate"></span>
                     <button class="help-button" id="helpButton" title="Aide - Revoir le guide" onclick="window.restartOnboarding()">
                         <span class="help-icon">❓</span>
                     </button>
-                    <button class="history-button" id="historyButton" title="Historique des Bassins">
-                        <span class="history-icon">⏱️</span>
-                        <span class="history-text">Historique</span>
-                    </button>
                     <button class="analytics-button" id="analyticsButton" title="Analytics Avancés">
                         <span class="analytics-icon">📊</span>
-                        <span class="analytics-text">Analytics</span>
+                        <span class="analytics-text">Analyses</span>
                     </button>
                     <button class="documentation-button" id="documentationButton" title="Documentation">
                         <span class="documentation-icon">📚</span>
-                        <span class="documentation-text">Documentation</span>
+                        <span class="documentation-text">Méthodes & Glossaire</span>
                     </button>
                     <button class="logout-button" id="logoutButton" title="Déconnexion">
                         <span class="logout-icon">🔓</span>
@@ -67,7 +63,7 @@
                     <h3>Sélection de région</h3>
                     <select id="regionSelector" class="form-control">
                         <option value="all_regions">Toutes les régions</option>
-                        <option value="segmentation_area">Zone de démonstration</option>
+                        <option value="segmentation_area">Périmètre du pilote</option>
                         <option value="nappe_berrechid">Nappe de Berrechid</option>
                     </select>
                 </div>
@@ -87,20 +83,20 @@
                 </div>
 
                 <div class="sidebar-section data-layers">
-                    <h3>Couches de données</h3>
+                    <h3>Couches</h3>
                     <div class="layer-controls">
                         <label class="toggle-control">
                             <input type="checkbox" id="showBasinPolygons" checked>
                             <span class="toggle-label">
                                 <span class="toggle-icon basins-icon"></span>
-                                Afficher les segmentations (38)
+                                Afficher les bassins d’irrigation délimités (<span id="polygonCount">0</span>)
                             </span>
                         </label>
                         <label class="toggle-control">
                             <input type="checkbox" id="showAnalysisPoints" checked>
                             <span class="toggle-label">
                                 <span class="toggle-icon points-icon"></span>
-                                Afficher les bassins (76)
+                                Afficher les Bassins d’irrigation détectés (<span id="pointCount">0</span>)
                             </span>
                         </label>
                     </div>
@@ -118,7 +114,10 @@
                         Zone : Toutes les régions
                     </div>
                     <div class="map-controls">
-                        <button class="btn btn--sm btn--outline" id="resetMapView">Réinitialiser</button>
+                        <button class="btn btn--sm btn--outline" id="historyButton" title="Historique des Bassins">
+                            <span class="history-icon">⏱️</span>
+                            <span>&nbsp; Historique</span>
+                        </button>
                         <button class="btn btn--sm btn--outline" id="toggleLegend">Légende</button>
                     </div>
                 </div>
@@ -128,7 +127,7 @@
                     <div class="legend-items">
                         <div class="legend-item">
                             <span class="legend-symbol region-symbol segmentation-symbol"></span>
-                            <span>Zone de démonstration</span>
+                            <span>Périmètre du pilote</span>
                         </div>
                         <div class="legend-item">
                             <span class="legend-symbol region-symbol" style="background-color: #1e3bbf;"></span>

@@ -286,6 +286,13 @@
     opacity: 0.5;
 }
 
+/* Axis labels styling */
+svg text {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
 /* Basin points in SVG */
 .basin-point {
     transition: all 0.3s ease;

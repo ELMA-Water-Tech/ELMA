@@ -105,11 +105,11 @@
             if (match && match[1]) {
                 document.getElementById('historyZoneName').textContent = match[1].trim();
             } else {
-                document.getElementById('historyZoneName').textContent = 'Zone de démonstration';
+                document.getElementById('historyZoneName').textContent = 'Périmètre du pilote';
             }
         } catch (error) {
             console.error('Error loading zone name:', error);
-            document.getElementById('historyZoneName').textContent = 'Zone de démonstration';
+            document.getElementById('historyZoneName').textContent = 'Périmètre du pilote';
         }
     }
 
@@ -270,6 +270,30 @@
         }
         
         svg.appendChild(gridGroup);
+
+        // Add axis labels
+        // X-axis label (bottom center)
+        const xLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        xLabel.setAttribute('x', svgWidth / 2);
+        xLabel.setAttribute('y', svgHeight - 10);
+        xLabel.setAttribute('text-anchor', 'middle');
+        xLabel.setAttribute('fill', '#86868b');
+        xLabel.setAttribute('font-size', '12');
+        xLabel.setAttribute('font-weight', '500');
+        xLabel.textContent = 'Longitude (X)';
+        svg.appendChild(xLabel);
+
+        // Y-axis label (left side, rotated)
+        const yLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        yLabel.setAttribute('x', 15);
+        yLabel.setAttribute('y', svgHeight / 2);
+        yLabel.setAttribute('text-anchor', 'middle');
+        yLabel.setAttribute('fill', '#86868b');
+        yLabel.setAttribute('font-size', '12');
+        yLabel.setAttribute('font-weight', '500');
+        yLabel.setAttribute('transform', `rotate(-90, 15, ${svgHeight / 2})`);
+        yLabel.textContent = 'Latitude (Y)';
+        svg.appendChild(yLabel);
 
         // Draw basins
         visibleBasins.forEach(basin => {

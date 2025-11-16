@@ -3,7 +3,7 @@
 // Application Data
 const appData = {
   segmentation_area: {
-    name: "Zone de démonstration",
+    name: "Périmètre du pilote",
     center: [33.15, -7.53], // Will be calculated from data
     boundary: null, // Will be loaded from GeoJSON
     segmentationData: null, // Will hold the full GeoJSON data
@@ -192,11 +192,24 @@ function updateDateTime() {
     document.getElementById('currentDate').textContent = now.toLocaleDateString('fr-FR', options);
 }
 
+// Update layer counts in the UI
+function updateLayerCounts(points, polygons) {
+    const pointCountEl = document.getElementById('pointCount');
+    const polygonCountEl = document.getElementById('polygonCount');
+    
+    if (pointCountEl) {
+        pointCountEl.textContent = points;
+    }
+    if (polygonCountEl) {
+        polygonCountEl.textContent = polygons;
+    }
+}
+
 // Load region boundaries from GeoJSON files
 async function loadRegionBoundary() {
     try {
-        // Load Segmentation analysis
-        await loadSegmentationData('segmentation_area', 'data/geojson/segmentation_analysis.geojson');
+        // Load Segmentation analysis (updated to 2025 data)
+        await loadSegmentationData('segmentation_area', 'data/geojson/berrechid_demo_2025.geojson');
         
         console.log('All region boundaries loaded successfully');
     } catch (error) {
@@ -336,6 +349,13 @@ async function loadSegmentationData(regionKey, filePath) {
                     [minLng, minLat]
                 ]]
             };
+            
+            // Count points and polygons for display
+            const pointCount = geojsonData.features.filter(f => f.geometry.type === 'Point').length;
+            const polygonCount = geojsonData.features.filter(f => f.geometry.type === 'Polygon').length;
+            
+            // Update the counts in the UI
+            updateLayerCounts(pointCount, polygonCount);
             
             console.log(`${regionKey} loaded:`, {
                 center: appData[regionKey].center,
@@ -878,10 +898,11 @@ function initializeEventListeners() {
     });
     
     // Map controls
-    document.getElementById('resetMapView').addEventListener('click', function() {
-        const currentRegionData = appData[appData.currentRegion];
-        map.setView(currentRegionData.center, 11);
-    });
+    // Reset map view button removed - functionality replaced by History button
+    // document.getElementById('resetMapView').addEventListener('click', function() {
+    //     const currentRegionData = appData[appData.currentRegion];
+    //     map.setView(currentRegionData.center, 11);
+    // });
     
     document.getElementById('toggleLegend').addEventListener('click', function() {
         const legend = document.getElementById('mapLegend');
