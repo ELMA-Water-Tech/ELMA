@@ -177,7 +177,7 @@
     <footer class="app-footer">
         <div class="footer-content">
             <p class="footer-text">© 2025 AquaDetect · Plateforme de gestion des ressources en eau</p>
-            <p class="footer-version">Version 0.1.0</p>
+            <p class="footer-version">Version 0.2.1</p>
         </div>
     </footer>
 
@@ -198,7 +198,10 @@
     <div id="historyModal" class="history-modal hidden">
         <div class="history-modal-content">
             <div class="history-modal-header">
-                <h2 class="history-modal-title">Évolution Historique des Bassins</h2>
+                <div class="history-modal-title-container">
+                    <h2 class="history-modal-title">Évolution Historique des Bassins</h2>
+                    <p class="history-modal-zone" id="historyZoneName">Chargement...</p>
+                </div>
                 <button class="history-modal-close" id="closeHistoryModal">&times;</button>
             </div>
             <div class="history-modal-body">

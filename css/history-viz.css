@@ -51,12 +51,25 @@
     border-bottom: 1px solid #e5e5e7;
 }
 
+.history-modal-title-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
 .history-modal-title {
     font-size: 1.5rem;
     font-weight: 600;
     color: #1d1d1f;
     margin: 0;
     letter-spacing: -0.02em;
+}
+
+.history-modal-zone {
+    font-size: 0.875rem;
+    color: #86868b;
+    margin: 0;
+    font-weight: 500;
 }
 
 .history-modal-close {

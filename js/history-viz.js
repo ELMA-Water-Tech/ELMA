@@ -85,11 +85,32 @@
         const modal = document.getElementById('historyModal');
         modal.classList.remove('hidden');
         
+        // Load zone name
+        loadZoneName();
+        
         // Load data and initialize visualization
         loadBasinData().then(() => {
             initializeSVG();
             updateVisualization();
         });
+    }
+
+    async function loadZoneName() {
+        try {
+            const response = await fetch('data/geojson/demo_berrechid_by_years/zone_info.txt');
+            const text = await response.text();
+            
+            // Parse "name = Zone Name" format
+            const match = text.match(/name\s*=\s*(.+)/i);
+            if (match && match[1]) {
+                document.getElementById('historyZoneName').textContent = match[1].trim();
+            } else {
+                document.getElementById('historyZoneName').textContent = 'Zone de démonstration';
+            }
+        } catch (error) {
+            console.error('Error loading zone name:', error);
+            document.getElementById('historyZoneName').textContent = 'Zone de démonstration';
+        }
     }
 
     function closeHistoryModal() {
