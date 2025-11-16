@@ -22,6 +22,7 @@
     
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/onboarding.css">
+    <link rel="stylesheet" href="css/history-viz.css">
 </head>
 <body>
     <div class="app-container">
@@ -36,6 +37,10 @@
                     <span class="date-display" id="currentDate"></span>
                     <button class="help-button" id="helpButton" title="Aide - Revoir le guide" onclick="window.restartOnboarding()">
                         <span class="help-icon">❓</span>
+                    </button>
+                    <button class="history-button" id="historyButton" title="Historique des Bassins">
+                        <span class="history-icon">⏱️</span>
+                        <span class="history-text">Historique</span>
                     </button>
                     <button class="analytics-button" id="analyticsButton" title="Analytics Avancés">
                         <span class="analytics-icon">📊</span>
@@ -189,7 +194,53 @@
         </div>
     </div>
 
+    <!-- Historical Basins Visualization Modal -->
+    <div id="historyModal" class="history-modal hidden">
+        <div class="history-modal-content">
+            <div class="history-modal-header">
+                <h2 class="history-modal-title">Évolution Historique des Bassins</h2>
+                <button class="history-modal-close" id="closeHistoryModal">&times;</button>
+            </div>
+            <div class="history-modal-body">
+                    <div class="history-stats">
+                        <div class="history-stat-item">
+                            <span class="history-stat-label">Année:</span>
+                            <span class="history-stat-value" id="currentYearDisplay">2017</span>
+                        </div>
+                    <div class="history-stat-item">
+                        <span class="history-stat-label">Bassins visibles:</span>
+                        <span class="history-stat-value" id="visibleBasinsCount">0</span>
+                    </div>
+                    <div class="history-stat-item">
+                        <span class="history-stat-label">Nouveaux:</span>
+                        <span class="history-stat-value history-stat-new" id="newBasinsCount">0</span>
+                    </div>
+                </div>
+                <div class="history-visualization-container">
+                    <div class="history-controls">
+                        <button class="history-control-btn" id="playPauseBtn">
+                            <span id="playIcon">▶️</span>
+                        </button>
+                        <button class="history-control-btn" id="resetBtn">
+                            🔄
+                        </button>
+                    </div>
+                    <svg id="historyVisualization" class="history-svg"></svg>
+                    <div class="history-legend" id="historyLegend"></div>
+                </div>
+            </div>
+            <div class="history-modal-footer">
+                    <div class="history-slider-container">
+                        <label for="yearSlider" class="history-slider-label">Chronologie</label>
+                        <input type="range" id="yearSlider" class="history-slider" min="2017" max="2025" value="2017" step="1">
+                        <div class="history-year-markers" id="yearMarkers"></div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
     <script src="js/app.js"></script>
     <script src="js/onboarding.js"></script>
+    <script src="js/history-viz.js"></script>
 </body>
 </html>
