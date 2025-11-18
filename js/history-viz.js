@@ -10,6 +10,8 @@
     let svgWidth, svgHeight;
     let minYear = 2017;
     let maxYear = 2025;
+    let barChart = null;
+    let showSingleYear = false; // Toggle between cumulative and single year view
     
     // Year colors (different color per year)
     const yearColors = {
@@ -26,39 +28,60 @@
 
     // Initialize the visualization
     function initHistoryVisualization() {
-        const historyButton = document.getElementById('historyButton');
-        const closeButton = document.getElementById('closeHistoryModal');
-        const modal = document.getElementById('historyModal');
         const slider = document.getElementById('yearSlider');
         const playPauseBtn = document.getElementById('playPauseBtn');
         const resetBtn = document.getElementById('resetBtn');
+        const backToMapBtn = document.getElementById('backToMap');
+        const logoutButton = document.getElementById('logoutButton');
 
-        if (!historyButton || !modal) {
+        if (!slider || !playPauseBtn || !resetBtn) {
             console.error('History visualization elements not found');
             return;
         }
 
-        // Open modal
-        historyButton.addEventListener('click', function() {
-            openHistoryModal();
-        });
+        // Back to map navigation
+        if (backToMapBtn) {
+            backToMapBtn.addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
+        }
 
-        // Close modal
-        closeButton.addEventListener('click', function() {
-            closeHistoryModal();
-        });
+        // Logout functionality
+        if (logoutButton) {
+            logoutButton.addEventListener('click', function() {
+                const modal = document.getElementById('logoutModal');
+                if (modal) {
+                    modal.classList.remove('hidden');
+                }
+            });
+        }
 
-        // Close on overlay click
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                closeHistoryModal();
-            }
-        });
+        // Logout modal handlers
+        const confirmLogout = document.getElementById('confirmLogout');
+        const cancelLogout = document.getElementById('cancelLogout');
+        
+        if (confirmLogout) {
+            confirmLogout.addEventListener('click', function() {
+                sessionStorage.removeItem('elmaLicenseVerified');
+                window.location.href = 'login.html';
+            });
+        }
+        
+        if (cancelLogout) {
+            cancelLogout.addEventListener('click', function() {
+                const modal = document.getElementById('logoutModal');
+                if (modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+        }
 
         // Slider change
         slider.addEventListener('input', function() {
             currentYear = parseInt(this.value);
+            showSingleYear = false; // Return to cumulative view when using slider
             updateVisualization();
+            updateBarChartHighlight();
         });
 
         // Play/Pause button
@@ -73,25 +96,26 @@
 
         // Window resize
         window.addEventListener('resize', function() {
-            if (!modal.classList.contains('hidden')) {
-                resizeVisualization();
-            }
+            resizeVisualization();
         });
 
-        createYearMarkers();
-    }
-
-    function openHistoryModal() {
-        const modal = document.getElementById('historyModal');
-        modal.classList.remove('hidden');
-        
         // Load zone name
         loadZoneName();
         
+        // Update date display
+        updateDateTime();
+        
         // Load data and initialize visualization
+        console.log('Starting to load basin data...');
         loadBasinData().then(() => {
-            initializeSVG();
-            updateVisualization();
+            console.log('Basin data loaded successfully, initializing SVG...');
+            // Small delay to ensure DOM is fully rendered and flexbox has calculated dimensions
+            setTimeout(() => {
+                initializeSVG();
+                updateVisualization();
+            }, 100);
+        }).catch(error => {
+            console.error('Failed to load basin data:', error);
         });
     }
 
@@ -113,10 +137,18 @@
         }
     }
 
-    function closeHistoryModal() {
-        const modal = document.getElementById('historyModal');
-        modal.classList.add('hidden');
-        stopAnimation();
+    function updateDateTime() {
+        // Set the last update date (when the data was last refreshed)
+        const lastUpdate = new Date('2025-11-18'); // Change this date when you update the data
+        const options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        };
+        const lastUpdateElement = document.getElementById('lastUpdateDate');
+        if (lastUpdateElement) {
+            lastUpdateElement.textContent = 'Dernière mise à jour: ' + lastUpdate.toLocaleDateString('fr-FR', options);
+        }
     }
 
     async function loadBasinData() {
@@ -159,12 +191,19 @@
 
             // Update slider
             const slider = document.getElementById('yearSlider');
-            slider.min = minYear;
-            slider.max = maxYear;
-            slider.value = minYear;
+            if (slider) {
+                slider.min = minYear;
+                slider.max = maxYear;
+                slider.value = minYear;
+                console.log('Slider updated');
+            } else {
+                console.error('Slider element not found');
+            }
 
             console.log(`Total loaded: ${basinData.length} basin points from ${minYear} to ${maxYear}`);
             createLegend();
+            createYearMarkers();
+            initBarChart();
         } catch (error) {
             console.error('Error loading basin data:', error);
         }
@@ -172,11 +211,19 @@
 
     function initializeSVG() {
         const svg = document.getElementById('historyVisualization');
+        if (!svg) {
+            console.error('SVG element not found');
+            return;
+        }
+        
         const container = svg.parentElement;
         
-        // Account for controls on left (60px + 16px gap) and legend on right (120px + 16px gap)
-        svgWidth = container.clientWidth - 212;
-        svgHeight = 320; // Fixed height to match CSS
+        // Get the actual rendered dimensions of the SVG (flexbox will size it automatically)
+        const rect = svg.getBoundingClientRect();
+        svgWidth = rect.width > 0 ? rect.width : 800; // Fallback to 800 if not yet rendered
+        svgHeight = rect.height > 0 ? rect.height : 500; // Fallback to 500 if not yet rendered
+        
+        console.log('Initializing SVG with dimensions:', svgWidth, 'x', svgHeight);
         
         svg.setAttribute('width', svgWidth);
         svg.setAttribute('height', svgHeight);
@@ -190,21 +237,31 @@
 
     function updateVisualization() {
         const svg = document.getElementById('historyVisualization');
+        if (!svg) {
+            console.error('SVG element not found in updateVisualization');
+            return;
+        }
+        
+        console.log('Updating visualization for year:', currentYear);
+        console.log('Total basin data points:', basinData.length);
         
         // Clear existing content
         svg.innerHTML = '';
 
-        // Filter basins up to current year
-        const visibleBasins = basinData.filter(b => b.year <= currentYear);
-        const newBasins = basinData.filter(b => b.year === currentYear);
+        // Filter basins based on view mode
+        const visibleBasins = showSingleYear 
+            ? basinData.filter(b => b.year === currentYear)  // Single year only
+            : basinData.filter(b => b.year <= currentYear);  // Cumulative
+
+        console.log('Visible basins:', visibleBasins.length, 'Mode:', showSingleYear ? 'Single Year' : 'Cumulative');
 
         // Update stats
         document.getElementById('currentYearDisplay').textContent = currentYear;
         document.getElementById('visibleBasinsCount').textContent = visibleBasins.length;
-        document.getElementById('newBasinsCount').textContent = newBasins.length;
 
         if (visibleBasins.length === 0) {
             // Show empty state
+            console.log('No basins to display');
             const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
             text.setAttribute('x', svgWidth / 2);
             text.setAttribute('y', svgHeight / 2);
@@ -213,8 +270,13 @@
             text.setAttribute('font-size', '16');
             text.textContent = 'Aucun bassin détecté pour cette période';
             svg.appendChild(text);
+            
+            // Update bar chart highlight even when no basins
+            updateBarChartHighlight();
             return;
         }
+        
+        console.log('Drawing', visibleBasins.length, 'basins on SVG...');
 
         // Calculate bounds for scaling
         const xCoords = visibleBasins.map(b => b.x);
@@ -321,10 +383,145 @@
 
             svg.appendChild(circle);
         });
+
+        // Update bar chart highlight
+        updateBarChartHighlight();
+    }
+
+    function initBarChart() {
+        const canvas = document.getElementById('basinsBarChart');
+        if (!canvas) {
+            console.error('Bar chart canvas not found');
+            return;
+        }
+
+        const ctx = canvas.getContext('2d');
+
+        // Count basins per year
+        const basinCountsByYear = {};
+        for (let year = minYear; year <= maxYear; year++) {
+            basinCountsByYear[year] = basinData.filter(b => b.year === year).length;
+        }
+
+        const years = Object.keys(basinCountsByYear).map(Number);
+        const counts = years.map(year => basinCountsByYear[year]);
+        const backgroundColors = years.map(year => yearColors[year]);
+
+        barChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: years,
+                datasets: [{
+                    label: 'Nombre de bassins',
+                    data: counts,
+                    backgroundColor: backgroundColors,
+                    borderColor: backgroundColors.map(color => color),
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        padding: 12,
+                        cornerRadius: 8,
+                        callbacks: {
+                            label: function(context) {
+                                return `Bassins: ${context.parsed.y}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 10,
+                            color: '#86868b',
+                            font: {
+                                size: 11
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)',
+                            drawBorder: false
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#1d1d1f',
+                            font: {
+                                size: 11,
+                                weight: '500'
+                            }
+                        },
+                        grid: {
+                            display: false
+                        }
+                    }
+                },
+                onClick: (event, activeElements) => {
+                    if (activeElements.length > 0) {
+                        const index = activeElements[0].index;
+                        const year = years[index];
+                        currentYear = year;
+                        showSingleYear = true; // Enable single year view when clicking on bar
+                        document.getElementById('yearSlider').value = year;
+                        updateVisualization();
+                        updateBarChartHighlight();
+                    }
+                }
+            }
+        });
+
+        console.log('Bar chart initialized with', years.length, 'years');
+        updateBarChartHighlight();
+    }
+
+    function updateBarChartHighlight() {
+        if (!barChart) return;
+
+        // Update bar styling based on view mode and current year
+        const years = barChart.data.labels;
+        
+        if (showSingleYear) {
+            // Single year mode: only selected year is highlighted
+            const borderWidths = years.map(year => year === currentYear ? 3 : 1);
+            const backgroundColors = years.map(year => {
+                const baseColor = yearColors[year];
+                return year === currentYear ? baseColor : baseColor + '30'; // Dim all except selected
+            });
+            barChart.data.datasets[0].backgroundColor = backgroundColors;
+            barChart.data.datasets[0].borderWidth = borderWidths;
+        } else {
+            // Cumulative mode: all years up to current are highlighted
+            const borderWidths = years.map(year => year === currentYear ? 3 : 1);
+            const backgroundColors = years.map(year => {
+                const baseColor = yearColors[year];
+                return year <= currentYear ? baseColor : baseColor + '30'; // Dim future years
+            });
+            barChart.data.datasets[0].backgroundColor = backgroundColors;
+            barChart.data.datasets[0].borderWidth = borderWidths;
+        }
+
+        barChart.update('none'); // Update without animation
     }
 
     function createLegend() {
         const legendContainer = document.getElementById('historyLegend');
+        if (!legendContainer) {
+            console.error('Legend container not found');
+            return;
+        }
+        
         legendContainer.innerHTML = '';
 
         const years = Object.keys(yearColors).map(Number).filter(y => y >= minYear && y <= maxYear);
@@ -345,10 +542,17 @@
             item.appendChild(label);
             legendContainer.appendChild(item);
         });
+        
+        console.log('Created legend with', years.length, 'years');
     }
 
     function createYearMarkers() {
         const markerContainer = document.getElementById('yearMarkers');
+        if (!markerContainer) {
+            console.error('Year markers container not found');
+            return;
+        }
+        
         markerContainer.innerHTML = '';
 
         const years = [];
@@ -362,6 +566,8 @@
             marker.textContent = year;
             markerContainer.appendChild(marker);
         });
+        
+        console.log('Created year markers from', minYear, 'to', maxYear);
     }
 
     function togglePlayPause() {
@@ -374,6 +580,7 @@
 
     function startAnimation() {
         isPlaying = true;
+        showSingleYear = false; // Return to cumulative view when playing
         document.getElementById('playIcon').textContent = '⏸️';
         
         playInterval = setInterval(() => {
@@ -381,6 +588,7 @@
                 currentYear++;
                 document.getElementById('yearSlider').value = currentYear;
                 updateVisualization();
+                updateBarChartHighlight();
             } else {
                 stopAnimation();
             }
@@ -399,8 +607,10 @@
     function resetVisualization() {
         stopAnimation();
         currentYear = minYear;
+        showSingleYear = false; // Return to cumulative view when resetting
         document.getElementById('yearSlider').value = minYear;
         updateVisualization();
+        updateBarChartHighlight();
     }
 
     // Initialize when DOM is ready

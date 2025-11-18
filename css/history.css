@@ -1,0 +1,441 @@
+/* Historical Basins Visualization Page Styles */
+
+/* Navigation Button */
+.nav-button {
+    background: rgba(59, 130, 246, 0.15);
+    color: #ffffff;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    padding: var(--space-8) var(--space-16);
+    border-radius: var(--radius-base);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    transition: all 0.2s ease;
+    min-width: 110px;
+}
+
+.nav-button:hover {
+    background: rgba(59, 130, 246, 0.25);
+    border-color: rgba(59, 130, 246, 0.5);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.nav-icon {
+    font-size: 14px;
+}
+
+.nav-text {
+    font-size: var(--font-size-sm);
+    color: #ffffff;
+}
+
+.history-main {
+    padding: var(--space-16) var(--space-24);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+    height: calc(100vh - 160px);
+    background: #faf9f7;
+    overflow: hidden;
+}
+
+/* Stats Panel */
+.history-stats-panel {
+    display: flex;
+    gap: var(--space-16);
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+}
+
+.history-stat-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: var(--space-16) var(--space-20);
+    border-radius: var(--radius-lg);
+    min-width: 180px;
+    text-align: center;
+    border: 1px solid rgba(203, 213, 225, 0.5);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--duration-fast) var(--ease-standard);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.history-stat-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.history-stat-label {
+    font-size: 0.75rem;
+    color: #86868b;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.history-stat-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1d1d1f;
+}
+
+/* Content Grid for Visualization + Chart */
+.history-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: var(--space-16);
+    flex: 1;
+    min-height: 0;
+}
+
+/* Visualization Section */
+.history-visualization-section {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: var(--space-20);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(203, 213, 225, 0.5);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.history-visualization-container {
+    display: flex;
+    gap: var(--space-20);
+    align-items: center;
+    height: 100%;
+    flex: 1;
+    min-height: 0;
+}
+
+.history-controls {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+    min-width: 60px;
+}
+
+.history-control-btn {
+    padding: 12px;
+    background: #007aff;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+}
+
+.history-control-btn:hover {
+    background: #0051d5;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+}
+
+.history-control-btn:active {
+    transform: translateY(0);
+}
+
+.history-svg {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #e5e5e7;
+    border-radius: 12px;
+    background: #fafafa;
+}
+
+.history-legend {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    padding: var(--space-12);
+    background: #f5f5f7;
+    border-radius: 12px;
+    min-width: 100px;
+    max-width: 120px;
+    flex-shrink: 0;
+}
+
+.history-legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+}
+
+.history-legend-symbol {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.history-legend-label {
+    font-size: 0.75rem;
+    color: #1d1d1f;
+    font-weight: 500;
+}
+
+/* Bar Chart Section */
+.history-chart-section {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: var(--space-20);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(203, 213, 225, 0.5);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.history-chart-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1d1d1f;
+    margin: 0 0 var(--space-12) 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.history-chart-container {
+    flex: 1;
+    position: relative;
+    min-height: 0;
+}
+
+.history-chart-container canvas {
+    max-height: 100%;
+}
+
+/* Timeline Section */
+.history-timeline-section {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: var(--space-12) var(--space-20);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(203, 213, 225, 0.5);
+    box-shadow: var(--shadow-sm);
+    flex-shrink: 0;
+}
+
+.history-slider-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.history-slider-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #1d1d1f;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.history-slider {
+    width: 100%;
+    height: 8px;
+    background: #e5e5e7;
+    border-radius: 4px;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.history-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #007aff;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.4);
+    transition: all 0.2s ease;
+}
+
+.history-slider::-webkit-slider-thumb:hover {
+    background: #0051d5;
+    transform: scale(1.15);
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.5);
+}
+
+.history-slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #007aff;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.4);
+    transition: all 0.2s ease;
+}
+
+.history-slider::-moz-range-thumb:hover {
+    background: #0051d5;
+    transform: scale(1.15);
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.5);
+}
+
+.history-year-markers {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 12px;
+    margin-top: var(--space-4);
+}
+
+.history-year-marker {
+    font-size: 0.75rem;
+    color: #86868b;
+    font-weight: 600;
+}
+
+/* Grid styling */
+.grid line {
+    opacity: 0.5;
+}
+
+/* Axis labels styling */
+svg text {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+/* Basin points in SVG */
+.basin-point {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.basin-point:hover {
+    opacity: 0.8;
+}
+
+.basin-point-new {
+    animation: fadeIn 0.5s ease;
+}
+
+.basin-point-disappear {
+    animation: fadeOut 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .history-main {
+        padding: var(--space-20);
+        gap: var(--space-20);
+    }
+    
+    .history-content-grid {
+        grid-template-columns: 1fr 280px;
+    }
+    
+    .history-visualization-container {
+        min-height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .history-main {
+        padding: var(--space-16);
+        gap: var(--space-16);
+    }
+    
+    .history-content-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr auto;
+    }
+    
+    .history-chart-section {
+        min-height: 250px;
+    }
+    
+    .history-stats-panel {
+        flex-direction: column;
+        gap: var(--space-12);
+    }
+    
+    .history-stat-card {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    .history-visualization-section {
+        padding: var(--space-16);
+    }
+    
+    .history-visualization-container {
+        flex-direction: column;
+        min-height: auto;
+        gap: var(--space-16);
+    }
+    
+    .history-controls {
+        flex-direction: row;
+        min-width: auto;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .history-svg {
+        min-height: 300px;
+        width: 100%;
+    }
+    
+    .history-legend {
+        flex-direction: row;
+        flex-wrap: wrap;
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    .history-timeline-section {
+        padding: var(--space-16) var(--space-20);
+    }
+}
+

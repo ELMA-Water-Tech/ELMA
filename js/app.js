@@ -8,7 +8,6 @@ const appData = {
     boundary: null, // Will be loaded from GeoJSON
     segmentationData: null, // Will hold the full GeoJSON data
     area: "Variable",
-    population: "N/A",
     color: "#8b5cf6" // Purple
   },
   nappe_berrechid: {
@@ -17,7 +16,6 @@ const appData = {
     boundary: null, // Will be loaded from CSV
     nappePoints: [], // Will hold coordinate points
     area: "~2,500 km²",
-    population: "N/A",
     color: "#ef4444" // Red
   },
   currentRegion: "all_regions", // Default to show all regions
@@ -178,18 +176,19 @@ function initializeApp() {
     });
 }
 
-// Update date and time display
+// Update last update date display
 function updateDateTime() {
-    const now = new Date();
+    // Set the last update date (when the data was last refreshed)
+    const lastUpdate = new Date('2025-11-18'); // Change this date when you update the data
     const options = {
-        weekday: 'long',
         year: 'numeric',
         month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
+        day: 'numeric'
     };
-    document.getElementById('currentDate').textContent = now.toLocaleDateString('fr-FR', options);
+    const lastUpdateElement = document.getElementById('lastUpdateDate');
+    if (lastUpdateElement) {
+        lastUpdateElement.textContent = 'Dernière mise à jour: ' + lastUpdate.toLocaleDateString('fr-FR', options);
+    }
 }
 
 // Update layer counts in the UI
@@ -518,14 +517,6 @@ function createRegionPopup(regionKey, regionData) {
                     <span class=\"value\">${regionData.area}</span>
                 </div>
                 <div class=\"popup-detail\">
-                    <span class=\"label\">Population :</span>
-                    <span class=\"value\">${regionData.population}</span>
-                </div>
-                <div class=\"popup-detail\">
-                    <span class=\"label\">Puits :</span>
-                    <span class=\"value\">${appData.analytics.region_summary.total_wells}</span>
-                </div>
-                <div class=\"popup-detail\">
                     <span class=\"label\">Type :</span>
                     <span class=\"value\">${regionKey === 'nappe_berrechid' ? 'Nappe souterraine' : 'Zone d\'analyse'}</span>
                 </div>
@@ -614,10 +605,6 @@ function addSegmentationData() {
             }
             
             popupContent += `
-                        <div class="popup-detail">
-                            <span class="label">Fichier :</span>
-                            <span class="value">${props.json_file || 'N/A'}</span>
-                </div>
             </div>
         </div>
     `;
@@ -826,10 +813,6 @@ function updateVisibleStats() {
     if (visibleBasins > 0 || visiblePolygons > 0) {
         document.getElementById('kpiBasinCount').textContent = visibleBasins;
         document.getElementById('kpiPlotArea').textContent = visibleArea.toFixed(3); // Show 3 decimal places for precision
-        
-        // Update basin evolution based on visible basins (points)
-        const basinEvolution = calculateBasinEvolution(visibleBasins);
-        document.getElementById('kpiBasinEvolution').textContent = basinEvolution >= 0 ? `+${basinEvolution}%` : `${basinEvolution}%`;
     }
     
     console.log(`Visible in bounds: ${visibleBasins} basins (points), ${visiblePolygons} polygons, ${visibleArea.toFixed(3)} ha`);
@@ -918,6 +901,14 @@ function initializeEventListeners() {
     document.getElementById('documentationButton').addEventListener('click', function() {
         window.location.href = 'documentation.html';
     });
+    
+    // History navigation
+    const historyButton = document.getElementById('historyButton');
+    if (historyButton) {
+        historyButton.addEventListener('click', function() {
+            window.location.href = 'history.html';
+        });
+    }
     
     // Logout functionality
     const logoutModal = document.getElementById('logoutModal');
@@ -1018,28 +1009,9 @@ function updateAnalytics() {
         areaHectares = 12000; // Default area
     }
     
-    // Calculate basin evolution (simulated growth rate)
-    const basinEvolution = calculateBasinEvolution(totalBasins);
-    
     // Update KPI values
     document.getElementById('kpiPlotArea').textContent = formatNumber(Math.round(areaHectares));
     document.getElementById('kpiBasinCount').textContent = totalBasins;
-    document.getElementById('kpiBasinEvolution').textContent = basinEvolution >= 0 ? `+${basinEvolution}%` : `${basinEvolution}%`;
-    document.getElementById('kpiAvgLevel').textContent = `${Math.round(appData.analytics.detection_stats.avg_confidence * 100)}%`;
-    
-    // Update evolution status class
-    const evolutionCard = document.getElementById('kpiBasinEvolution').parentElement;
-    const evolutionChange = evolutionCard.querySelector('.kpi-change');
-    if (basinEvolution > 0) {
-        evolutionChange.className = 'kpi-change positive';
-        evolutionChange.textContent = 'Croissance annuelle';
-    } else if (basinEvolution < 0) {
-        evolutionChange.className = 'kpi-change negative';
-        evolutionChange.textContent = 'Décroissance annuelle';
-    } else {
-        evolutionChange.className = 'kpi-change neutral';
-        evolutionChange.textContent = 'Stable';
-    }
     
     // Update region information
     updateRegionInfo();
@@ -1070,13 +1042,6 @@ function updateAnalytics() {
 //     
 //     return area * degreesToHectares;
 // }
-
-// Calculate basin evolution
-function calculateBasinEvolution(currentBasins) {
-    // Simulate historical growth - in real scenario would use actual historical data
-    // Assume 5% annual growth based on detection improvements
-    return 5;
-}
 
 // Switch between regions
 function switchRegion(regionKey) {

@@ -1688,6 +1688,45 @@ select.form-control {
     color: var(--color-text-secondary);
 }
 
+/* History Button in Sidebar */
+.history-button-sidebar {
+    width: 100%;
+    margin-top: var(--space-16);
+    padding: var(--space-16);
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-8);
+    transition: all var(--duration-fast) var(--ease-standard);
+    box-shadow: var(--shadow-sm);
+}
+
+.history-button-sidebar:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+}
+
+.history-button-sidebar:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+}
+
+.history-button-sidebar .history-icon {
+    font-size: var(--font-size-xl);
+}
+
+.history-button-sidebar .history-text {
+    font-size: var(--font-size-sm);
+}
+
 /* Chart Containers */
 .chart-container {
     background: rgba(255, 255, 255, 0.9);

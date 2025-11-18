@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AquaDetect - Gestion des Ressources en Eau</title>
+    <title>ELMA AquaDetect - Gestion des Ressources en Eau</title>
     
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -22,7 +22,6 @@
     
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/onboarding.css">
-    <link rel="stylesheet" href="css/history-viz.css">
 </head>
 <body>
     <div class="app-container">
@@ -30,17 +29,16 @@
         <header class="app-header">
             <div class="header-content">
                 <div class="logo-section">
-                    <h1 class="app-title">AquaDetect</h1>
+                    <h1 class="app-title">ELMA AquaDetect</h1>
                     <p class="app-subtitle">Suivi des nappes et prélèvements par satellite</p>
                 </div>
                 <div class="header-info">
-                    <span class="date-display" id="currentDate"></span>
                     <button class="help-button" id="helpButton" title="Aide - Revoir le guide" onclick="window.restartOnboarding()">
                         <span class="help-icon">❓</span>
                     </button>
                     <button class="analytics-button" id="analyticsButton" title="Analytics Avancés">
                         <span class="analytics-icon">📊</span>
-                        <span class="analytics-text">Analyses</span>
+                        <span class="analytics-text">Analyses avancées</span>
                     </button>
                     <button class="documentation-button" id="documentationButton" title="Documentation">
                         <span class="documentation-icon">📚</span>
@@ -86,17 +84,17 @@
                     <h3>Couches</h3>
                     <div class="layer-controls">
                         <label class="toggle-control">
-                            <input type="checkbox" id="showBasinPolygons" checked>
-                            <span class="toggle-label">
-                                <span class="toggle-icon basins-icon"></span>
-                                Afficher les bassins d’irrigation délimités (<span id="polygonCount">0</span>)
-                            </span>
-                        </label>
-                        <label class="toggle-control">
                             <input type="checkbox" id="showAnalysisPoints" checked>
                             <span class="toggle-label">
                                 <span class="toggle-icon points-icon"></span>
                                 Afficher les Bassins d’irrigation détectés (<span id="pointCount">0</span>)
+                            </span>
+                        </label>
+                        <label class="toggle-control">
+                            <input type="checkbox" id="showBasinPolygons" checked>
+                            <span class="toggle-label">
+                                <span class="toggle-icon basins-icon"></span>
+                                Afficher les bassins d’irrigation dont bassins délimités (<span id="polygonCount">0</span>)
                             </span>
                         </label>
                     </div>
@@ -114,10 +112,6 @@
                         Zone : Toutes les régions
                     </div>
                     <div class="map-controls">
-                        <button class="btn btn--sm btn--outline" id="historyButton" title="Historique des Bassins">
-                            <span class="history-icon">⏱️</span>
-                            <span>&nbsp; Historique</span>
-                        </button>
                         <button class="btn btn--sm btn--outline" id="toggleLegend">Légende</button>
                     </div>
                 </div>
@@ -156,17 +150,12 @@
                             <div class="kpi-label">Nombre de bassins associés</div>
                             <div class="kpi-change positive">Bassin détecté</div>
                         </div>
-                        <div class="kpi-card">
-                            <div class="kpi-value" id="kpiBasinEvolution">0%</div>
-                            <div class="kpi-label">Évolution du nombre de bassins</div>
-                            <div class="kpi-change neutral">Stable</div>
-                        </div>
-                        <div class="kpi-card">
-                            <div class="kpi-value" id="kpiAvgLevel">88%</div>
-                            <div class="kpi-label">Confiance moyenne</div>
-                            <div class="kpi-change positive">Très fiable</div>
-                        </div>
                     </div>
+                    
+                    <button class="history-button-sidebar" id="historyButton" title="Historique des Bassins">
+                        <span class="history-icon">📊</span>
+                        <span class="history-text">Explorer les données historiques</span>
+                    </button>
                 </div>
             </aside>
         </main>
@@ -176,7 +165,7 @@
     <footer class="app-footer">
         <div class="footer-content">
             <p class="footer-text">© 2025 AquaDetect · Plateforme de gestion des ressources en eau</p>
-            <p class="footer-version">Version 0.2.1</p>
+            <p class="footer-version">Version 0.2.1 · <span id="lastUpdateDate">Dernière mise à jour: ...</span></p>
         </div>
     </footer>
 
@@ -193,56 +182,7 @@
         </div>
     </div>
 
-    <!-- Historical Basins Visualization Modal -->
-    <div id="historyModal" class="history-modal hidden">
-        <div class="history-modal-content">
-            <div class="history-modal-header">
-                <div class="history-modal-title-container">
-                    <h2 class="history-modal-title">Évolution Historique des Bassins</h2>
-                    <p class="history-modal-zone" id="historyZoneName">Chargement...</p>
-                </div>
-                <button class="history-modal-close" id="closeHistoryModal">&times;</button>
-            </div>
-            <div class="history-modal-body">
-                    <div class="history-stats">
-                        <div class="history-stat-item">
-                            <span class="history-stat-label">Année:</span>
-                            <span class="history-stat-value" id="currentYearDisplay">2017</span>
-                        </div>
-                    <div class="history-stat-item">
-                        <span class="history-stat-label">Bassins visibles:</span>
-                        <span class="history-stat-value" id="visibleBasinsCount">0</span>
-                    </div>
-                    <div class="history-stat-item">
-                        <span class="history-stat-label">Nouveaux:</span>
-                        <span class="history-stat-value history-stat-new" id="newBasinsCount">0</span>
-                    </div>
-                </div>
-                <div class="history-visualization-container">
-                    <div class="history-controls">
-                        <button class="history-control-btn" id="playPauseBtn">
-                            <span id="playIcon">▶️</span>
-                        </button>
-                        <button class="history-control-btn" id="resetBtn">
-                            🔄
-                        </button>
-                    </div>
-                    <svg id="historyVisualization" class="history-svg"></svg>
-                    <div class="history-legend" id="historyLegend"></div>
-                </div>
-            </div>
-            <div class="history-modal-footer">
-                    <div class="history-slider-container">
-                        <label for="yearSlider" class="history-slider-label">Chronologie</label>
-                        <input type="range" id="yearSlider" class="history-slider" min="2017" max="2025" value="2017" step="1">
-                        <div class="history-year-markers" id="yearMarkers"></div>
-                    </div>
-            </div>
-        </div>
-    </div>
-
     <script src="js/app.js"></script>
     <script src="js/onboarding.js"></script>
-    <script src="js/history-viz.js"></script>
 </body>
 </html>

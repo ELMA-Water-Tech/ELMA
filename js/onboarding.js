@@ -26,7 +26,7 @@ class OnboardingGuide {
             {
                 element: '.data-layers',
                 title: 'Couches de données',
-                content: 'Activez ou désactivez l\'affichage des segmentations (polygones) et des bassins (points) selon vos besoins.',
+                content: 'Activez ou désactivez l’affichage de la délimitation des bassins, et de l’emplacement des bassins d’irrigation selon vos besoins.',
                 position: 'right'
             },
             {
@@ -89,7 +89,7 @@ class OnboardingGuide {
         const welcome = document.createElement('div');
         welcome.className = 'onboarding-welcome';
         welcome.innerHTML = `
-            <h2 class="onboarding-welcome-title">Bienvenue sur AquaDetect</h2>
+            <h2 class="onboarding-welcome-title">Bienvenue sur ELMA AquaDetect</h2>
             <p class="onboarding-welcome-subtitle">
                 Découvrez comment utiliser la plateforme de gestion des ressources en eau en quelques étapes simples.
             </p>

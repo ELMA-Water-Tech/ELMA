@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELMA AquaDetect - Historique des Bassins</title>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/history.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <h1 class="app-title">ELMA AquaDetect - Évolution Historique</h1>
+                    <p class="app-subtitle" id="historyZoneName">Chargement...</p>
+                </div>
+                <div class="header-info">
+                    <button class="nav-button" id="backToMap" title="Retour à la carte">
+                        <span class="nav-icon">🗺️</span>
+                        <span class="nav-text">Carte</span>
+                    </button>
+                    <button class="logout-button" id="logoutButton" title="Déconnexion">
+                        <span class="logout-icon">🔓</span>
+                        <span class="logout-text">Déconnexion</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="history-main">
+            <!-- Stats Panel -->
+            <div class="history-stats-panel">
+                <div class="history-stat-card">
+                    <span class="history-stat-label">Année</span>
+                    <span class="history-stat-value" id="currentYearDisplay">2017</span>
+                </div>
+                <div class="history-stat-card">
+                    <span class="history-stat-label">Bassins visibles</span>
+                    <span class="history-stat-value" id="visibleBasinsCount">0</span>
+                </div>
+            </div>
+
+            <!-- Content Grid: Visualization + Chart -->
+            <div class="history-content-grid">
+                <!-- Visualization Container -->
+                <div class="history-visualization-section">
+                    <div class="history-visualization-container">
+                        <div class="history-controls">
+                            <button class="history-control-btn" id="playPauseBtn" title="Lecture/Pause">
+                                <span id="playIcon">▶️</span>
+                            </button>
+                            <button class="history-control-btn" id="resetBtn" title="Réinitialiser">
+                                🔄
+                            </button>
+                        </div>
+                        <svg id="historyVisualization" class="history-svg"></svg>
+                        <div class="history-legend" id="historyLegend"></div>
+                    </div>
+                </div>
+
+                <!-- Bar Chart Section -->
+                <div class="history-chart-section">
+                    <h3 class="history-chart-title">Évolution des bassins</h3>
+                    <div class="history-chart-container">
+                        <canvas id="basinsBarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Slider -->
+            <div class="history-timeline-section">
+                <div class="history-slider-container">
+                    <label for="yearSlider" class="history-slider-label">Chronologie</label>
+                    <input type="range" id="yearSlider" class="history-slider" min="2017" max="2025" value="2017" step="1">
+                    <div class="history-year-markers" id="yearMarkers"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <p class="footer-text">© 2025 AquaDetect · Plateforme de gestion des ressources en eau</p>
+            <p class="footer-version">Version 0.2.1 · <span id="lastUpdateDate">Dernière mise à jour: ...</span></p>
+        </div>
+    </footer>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="modal-overlay hidden">
+        <div class="modal-container">
+            <div class="modal-body">
+                <p class="modal-text">Êtes-vous sûr de vouloir vous déconnecter?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelLogout" class="btn btn--secondary btn--sm">Annuler</button>
+                <button id="confirmLogout" class="btn btn--primary btn--sm">Se déconnecter</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/history-viz.js"></script>
+</body>
+</html>
+

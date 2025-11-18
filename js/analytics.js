@@ -121,7 +121,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initializeApp() {
     updateDateTime();
-    setInterval(updateDateTime, 60000);
     
     // Set default end date to today
     document.getElementById('endDate').value = currentPeriod.end;
@@ -132,15 +131,17 @@ function initializeApp() {
 }
 
 function updateDateTime() {
-    const now = new Date();
+    // Set the last update date (when the data was last refreshed)
+    const lastUpdate = new Date('2025-11-18'); // Change this date when you update the data
     const options = {
         year: 'numeric',
         month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
+        day: 'numeric'
     };
-    document.getElementById('currentDate').textContent = now.toLocaleDateString('fr-FR', options);
+    const lastUpdateElement = document.getElementById('lastUpdateDate');
+    if (lastUpdateElement) {
+        lastUpdateElement.textContent = 'Dernière mise à jour: ' + lastUpdate.toLocaleDateString('fr-FR', options);
+    }
 }
 
 function initializeEventListeners() {
