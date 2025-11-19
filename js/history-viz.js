@@ -581,7 +581,11 @@
     function startAnimation() {
         isPlaying = true;
         showSingleYear = false; // Return to cumulative view when playing
-        document.getElementById('playIcon').textContent = '⏸️';
+        
+        // Change to pause icon
+        const playIcon = document.getElementById('playIcon');
+        playIcon.innerHTML = '<path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>';
+        playIcon.style.marginLeft = '0'; // Center pause icon
         
         playInterval = setInterval(() => {
             if (currentYear < maxYear) {
@@ -597,7 +601,12 @@
 
     function stopAnimation() {
         isPlaying = false;
-        document.getElementById('playIcon').textContent = '▶️';
+        
+        // Change to play icon
+        const playIcon = document.getElementById('playIcon');
+        playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+        playIcon.style.marginLeft = '1px'; // Optical alignment for play triangle
+        
         if (playInterval) {
             clearInterval(playInterval);
             playInterval = null;

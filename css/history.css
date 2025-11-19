@@ -123,17 +123,18 @@
 .history-controls {
     display: flex;
     flex-direction: column;
-    gap: var(--space-12);
+    gap: var(--space-10);
     min-width: 60px;
 }
 
 .history-control-btn {
-    padding: 12px;
-    background: #007aff;
-    color: #ffffff;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.25rem;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.95);
+    color: #007aff;
+    border: 1.5px solid rgba(0, 122, 255, 0.2);
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
@@ -141,16 +142,50 @@
     justify-content: center;
     width: 50px;
     height: 50px;
+    position: relative;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .history-control-btn:hover {
-    background: #0051d5;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+    background: #007aff;
+    color: #ffffff;
+    border-color: #007aff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.25);
 }
 
 .history-control-btn:active {
     transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 122, 255, 0.2);
+}
+
+/* Icon styling for buttons */
+.history-control-btn svg {
+    width: 20px;
+    height: 20px;
+    transition: fill 0.2s ease;
+}
+
+.history-control-btn:hover svg {
+    fill: #ffffff;
+}
+
+/* Specific styling for play button */
+#playPauseBtn svg {
+    margin-left: 1px; /* Optical alignment for play triangle */
+}
+
+/* Button states */
+.history-control-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.history-control-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
 }
 
 .history-svg {

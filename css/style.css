@@ -1296,7 +1296,7 @@ select.form-control {
 }
 
 .basins-icon {
-    background-color: #8b5cf6;
+    background-color: #1800ad;
     border: 2px solid #fff;
 }
 
@@ -1581,7 +1581,7 @@ select.form-control {
     padding: 0.5rem;
     background-color: rgba(139, 92, 246, 0.05);
     border-radius: var(--radius-md);
-    border-left: 3px solid #8b5cf6;
+    border-left: 3px solid #1800ad;
 }
 
 /* Selected point details */
@@ -1610,7 +1610,7 @@ select.form-control {
 
 .selected-point-details .value {
     font-weight: var(--font-weight-semibold);
-    color: #8b5cf6;
+    color: #1800ad;
     font-size: var(--font-size-base);
 }
 
@@ -1631,7 +1631,7 @@ select.form-control {
 }
 
 .segmentation-symbol {
-    border: 2px solid rgba(139, 92, 246, 0.6);
+    border: 2px solid #1800ad99;
 }
 
 /* KPI Cards */

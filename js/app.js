@@ -8,7 +8,7 @@ const appData = {
     boundary: null, // Will be loaded from GeoJSON
     segmentationData: null, // Will hold the full GeoJSON data
     area: "Variable",
-    color: "#8b5cf6" // Purple
+    color: "#1800ad" // Purple
   },
   nappe_berrechid: {
     name: "Nappe de Berrechid",
@@ -16,7 +16,7 @@ const appData = {
     boundary: null, // Will be loaded from CSV
     nappePoints: [], // Will hold coordinate points
     area: "~2,500 km²",
-    color: "#ef4444" // Red
+    color: "#ffde21" // Yellow
   },
   currentRegion: "all_regions", // Default to show all regions
   wells: {
@@ -623,10 +623,10 @@ function addSegmentationData() {
             const coordinates = feature.geometry.coordinates[0].map(coord => [coord[1], coord[0]]);
             
             const polygon = L.polygon(coordinates, {
-                color: '#8b5cf6',
+                color: '#1800ad',
                 weight: 2,
                 opacity: 0.8,
-                fillColor: '#8b5cf6',
+                fillColor: '#1800ad',
                 fillOpacity: 0.3
             });
             
@@ -747,7 +747,7 @@ function showPointCoordinates(latLngCoords, pointIndex) {
     console.log('Updated coordinates display');
     
     // Highlight the field temporarily
-    coordsElement.style.color = '#8b5cf6';
+    coordsElement.style.color = '#1800ad';
     coordsElement.style.fontWeight = '600';
     coordsElement.style.transition = 'all 0.3s ease';
     

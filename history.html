@@ -54,10 +54,14 @@
                     <div class="history-visualization-container">
                         <div class="history-controls">
                             <button class="history-control-btn" id="playPauseBtn" title="Lecture/Pause">
-                                <span id="playIcon">▶️</span>
+                                <svg id="playIcon" viewBox="0 0 24 24" fill="#007aff">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
                             </button>
                             <button class="history-control-btn" id="resetBtn" title="Réinitialiser">
-                                🔄
+                                <svg viewBox="0 0 24 24" fill="#007aff">
+                                    <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+                                </svg>
                             </button>
                         </div>
                         <svg id="historyVisualization" class="history-svg"></svg>
@@ -88,7 +92,7 @@
     <!-- Footer -->
     <footer class="app-footer">
         <div class="footer-content">
-            <p class="footer-text">© 2025 AquaDetect · Plateforme de gestion des ressources en eau</p>
+            <p class="footer-text">© 2025 ELMA AquaDetect · Plateforme de gestion des ressources en eau</p>
             <p class="footer-version">Version 0.2.1 · <span id="lastUpdateDate">Dernière mise à jour: ...</span></p>
         </div>
     </footer>
