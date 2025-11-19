@@ -143,6 +143,8 @@ let map;
 let regionBoundaryLayer;
 let basinPolygonsLayer;
 let analysisPointsLayer;
+let pointsWithSegmentationLayer;
+let pointsWithoutSegmentationLayer;
 let charts = {};
 
 // Initialize the application
@@ -526,9 +528,13 @@ function createRegionPopup(regionKey, regionData) {
 }
 
 function addSegmentationData() {
-    // Create separate layers for basins and points
+    // Create separate layers for polygons and different types of points
     basinPolygonsLayer = L.featureGroup().addTo(map);
-    analysisPointsLayer = L.featureGroup().addTo(map);
+    pointsWithSegmentationLayer = L.featureGroup().addTo(map);
+    pointsWithoutSegmentationLayer = L.featureGroup().addTo(map);
+    
+    // For backwards compatibility, keep analysisPointsLayer as a reference to all points
+    analysisPointsLayer = L.featureGroup([pointsWithSegmentationLayer, pointsWithoutSegmentationLayer]).addTo(map);
     
     const segmentationData = appData.segmentation_area.segmentationData;
     
@@ -617,7 +623,12 @@ function addSegmentationData() {
                 showPointCoordinates(coords, props.point_index);
             });
             
-            analysisPointsLayer.addLayer(marker);
+            // Add to appropriate layer based on segmentation status
+            if (props.has_segmentation) {
+                pointsWithSegmentationLayer.addLayer(marker);
+            } else {
+                pointsWithoutSegmentationLayer.addLayer(marker);
+            }
             
         } else if (feature.geometry.type === 'Polygon') {
             const coordinates = feature.geometry.coordinates[0].map(coord => [coord[1], coord[0]]);
@@ -683,7 +694,8 @@ function addSegmentationData() {
         }
     });
     
-    console.log(`Loaded ${basinPolygonsLayer.getLayers().length} basins and ${analysisPointsLayer.getLayers().length} points`);
+    const totalPoints = pointsWithSegmentationLayer.getLayers().length + pointsWithoutSegmentationLayer.getLayers().length;
+    console.log(`Loaded ${basinPolygonsLayer.getLayers().length} polygons, ${pointsWithSegmentationLayer.getLayers().length} points with segmentation, ${pointsWithoutSegmentationLayer.getLayers().length} points without segmentation (${totalPoints} total points)`);
 }
 
 // Define coordinate systems using Proj4js
@@ -865,20 +877,53 @@ function initializeEventListeners() {
     
     // Layer toggles for basins and points
     document.getElementById('showBasinPolygons').addEventListener('change', function() {
-        if (this.checked) {
-            if (basinPolygonsLayer) map.addLayer(basinPolygonsLayer);
-        } else {
-            if (basinPolygonsLayer) map.removeLayer(basinPolygonsLayer);
-        }
+        updateLayerVisibility();
     });
     
     document.getElementById('showAnalysisPoints').addEventListener('change', function() {
-        if (this.checked) {
-            if (analysisPointsLayer) map.addLayer(analysisPointsLayer);
-            } else {
-            if (analysisPointsLayer) map.removeLayer(analysisPointsLayer);
-        }
+        updateLayerVisibility();
     });
+    
+    // Function to update layer visibility based on checkbox states
+    function updateLayerVisibility() {
+        const showPolygons = document.getElementById('showBasinPolygons').checked;
+        const showPoints = document.getElementById('showAnalysisPoints').checked;
+        
+        // Handle polygon layer
+        if (showPolygons) {
+            if (basinPolygonsLayer && !map.hasLayer(basinPolygonsLayer)) {
+                map.addLayer(basinPolygonsLayer);
+            }
+        } else {
+            if (basinPolygonsLayer && map.hasLayer(basinPolygonsLayer)) {
+                map.removeLayer(basinPolygonsLayer);
+            }
+        }
+        
+        // Handle points with segmentation
+        // Show when: polygons are checked OR points are checked
+        if (showPolygons || showPoints) {
+            if (pointsWithSegmentationLayer && !map.hasLayer(pointsWithSegmentationLayer)) {
+                map.addLayer(pointsWithSegmentationLayer);
+            }
+        } else {
+            if (pointsWithSegmentationLayer && map.hasLayer(pointsWithSegmentationLayer)) {
+                map.removeLayer(pointsWithSegmentationLayer);
+            }
+        }
+        
+        // Handle points without segmentation
+        // Show only when: points checkbox is checked
+        if (showPoints) {
+            if (pointsWithoutSegmentationLayer && !map.hasLayer(pointsWithoutSegmentationLayer)) {
+                map.addLayer(pointsWithoutSegmentationLayer);
+            }
+        } else {
+            if (pointsWithoutSegmentationLayer && map.hasLayer(pointsWithoutSegmentationLayer)) {
+                map.removeLayer(pointsWithoutSegmentationLayer);
+            }
+        }
+    }
     
     // Map controls
     // Reset map view button removed - functionality replaced by History button
@@ -1055,6 +1100,12 @@ function switchRegion(regionKey) {
     // Remove and re-add segmentation layers
     if (basinPolygonsLayer) {
         map.removeLayer(basinPolygonsLayer);
+    }
+    if (pointsWithSegmentationLayer) {
+        map.removeLayer(pointsWithSegmentationLayer);
+    }
+    if (pointsWithoutSegmentationLayer) {
+        map.removeLayer(pointsWithoutSegmentationLayer);
     }
     if (analysisPointsLayer) {
         map.removeLayer(analysisPointsLayer);
