@@ -255,9 +255,12 @@
 
         console.log('Visible basins:', visibleBasins.length, 'Mode:', showSingleYear ? 'Single Year' : 'Cumulative');
 
+        // Count basins for the current year only (not cumulative)
+        const currentYearBasinCount = basinData.filter(b => b.year === currentYear).length;
+
         // Update stats
         document.getElementById('currentYearDisplay').textContent = currentYear;
-        document.getElementById('visibleBasinsCount').textContent = visibleBasins.length;
+        document.getElementById('visibleBasinsCount').textContent = currentYearBasinCount;
 
         if (visibleBasins.length === 0) {
             // Show empty state

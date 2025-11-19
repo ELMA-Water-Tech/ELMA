@@ -17,6 +17,9 @@
     <!-- Turf.js for geodesic calculations -->
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
     
+    <!-- SheetJS for Excel generation -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
@@ -97,6 +100,28 @@
                                 Afficher la délimitation des bassins (<span id="polygonCount">0</span>)
                             </span>
                         </label>
+                    </div>
+                </div>
+
+                <div class="sidebar-section download-section">
+                    <h3>Export des données</h3>
+                    <div class="download-controls">
+                        <label for="exportYear" class="form-label">Sélectionner une année</label>
+                        <select id="exportYear" class="form-control">
+                            <option value="2017">2017</option>
+                            <option value="2018">2018</option>
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025" selected>2025</option>
+                        </select>
+                        <button class="btn btn--primary btn--sm btn--download" id="downloadCoordsBtn">
+                            <span class="download-icon">⬇️</span>
+                            <span>Télécharger les coordonnées</span>
+                        </button>
                     </div>
                 </div>
             </aside>

@@ -1188,6 +1188,34 @@ select.form-control {
     letter-spacing: -0.01em;
 }
 
+/* Download Section */
+.download-section {
+    padding-top: var(--space-8);
+}
+
+.download-controls {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+}
+
+.download-controls .form-label {
+    margin-bottom: var(--space-4);
+    font-size: var(--font-size-sm);
+}
+
+.btn--download {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-6);
+    width: 100%;
+}
+
+.download-icon {
+    font-size: 1rem;
+}
+
 /* Region Information */
 .region-info {
     display: flex;

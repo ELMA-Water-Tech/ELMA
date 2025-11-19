@@ -275,6 +275,43 @@
             font-size: 0.9375rem;
         }
         
+        .doc-section table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #e5e5e7;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+        
+        .doc-section table thead tr {
+            background: #f5f5f7;
+        }
+        
+        .doc-section table th {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid #e5e5e7;
+            font-weight: 600;
+            color: #1d1d1f;
+            font-size: 0.9375rem;
+        }
+        
+        .doc-section table td {
+            padding: 0.75rem;
+            border: 1px solid #e5e5e7;
+            color: #515154;
+            font-size: 0.9375rem;
+        }
+        
+        .doc-section table tbody tr:nth-child(even) {
+            background: #fafafa;
+        }
+        
+        .doc-section table tbody tr:hover {
+            background: #f5f5f7;
+        }
+        
         .doc-footer {
             text-align: center;
             padding: 3rem;
@@ -302,56 +339,62 @@
                 <ul class="doc-nav">
                     <li class="doc-nav-item">
                         <a href="#overview" class="doc-nav-link active">
-                            <span class="doc-nav-icon">🌍</span>
-                            <span>Vue d'ensemble</span>
+                            <span>1. Vue d'ensemble</span>
                         </a>
                     </li>
                     <li class="doc-nav-item">
-                        <a href="#features" class="doc-nav-link">
-                            <span class="doc-nav-icon">✨</span>
-                            <span>Fonctionnalités</span>
+                        <a href="#perimeter" class="doc-nav-link">
+                            <span>2. Périmètre du PoC</span>
                         </a>
                     </li>
                     <li class="doc-nav-item">
-                        <a href="#guide" class="doc-nav-link">
-                            <span class="doc-nav-icon">🚀</span>
-                            <span>Guide d'utilisation</span>
+                        <a href="#data" class="doc-nav-link">
+                            <span>3. Données utilisées</span>
                         </a>
                     </li>
                     <li class="doc-nav-item">
-                        <a href="#kpis" class="doc-nav-link">
-                            <span class="doc-nav-icon">📊</span>
-                            <span>Indicateurs clés</span>
+                        <a href="#method" class="doc-nav-link">
+                            <span>4. Méthode</span>
                         </a>
                     </li>
                     <li class="doc-nav-item">
-                        <a href="#coordinates" class="doc-nav-link">
-                            <span class="doc-nav-icon">🔧</span>
-                            <span>Système de coordonnées</span>
+                        <a href="#indices" class="doc-nav-link">
+                            <span>5. Indices utilisés</span>
                         </a>
                     </li>
                     <li class="doc-nav-item">
-                        <a href="#basin-data" class="doc-nav-link">
-                            <span class="doc-nav-icon">💾</span>
-                            <span>Données des bassins</span>
+                        <a href="#hypotheses" class="doc-nav-link">
+                            <span>6. Hypothèses & paramètres</span>
                         </a>
                     </li>
                     <li class="doc-nav-item">
-                        <a href="#analytics" class="doc-nav-link">
-                            <span class="doc-nav-icon">📈</span>
-                            <span>Page Analytics</span>
+                        <a href="#limitations" class="doc-nav-link">
+                            <span>7. Limitations connues</span>
                         </a>
                     </li>
                     <li class="doc-nav-item">
-                        <a href="#security" class="doc-nav-link">
-                            <span class="doc-nav-icon">🔐</span>
-                            <span>Sécurité</span>
+                        <a href="#indicators" class="doc-nav-link">
+                            <span>8. Indicateurs affichés</span>
                         </a>
                     </li>
                     <li class="doc-nav-item">
-                        <a href="#support" class="doc-nav-link">
-                            <span class="doc-nav-icon">📞</span>
-                            <span>Support & Contact</span>
+                        <a href="#validation" class="doc-nav-link">
+                            <span>9. Validation</span>
+                        </a>
+                    </li>
+                    <li class="doc-nav-item">
+                        <a href="#improvements" class="doc-nav-link">
+                            <span>10. Améliorations prévues</span>
+                        </a>
+                    </li>
+                    <li class="doc-nav-item">
+                        <a href="#glossary" class="doc-nav-link">
+                            <span>11. Glossaire</span>
+                        </a>
+                    </li>
+                    <li class="doc-nav-item">
+                        <a href="#contact" class="doc-nav-link">
+                            <span>12. Mentions & contacts</span>
                         </a>
                     </li>
                 </ul>
@@ -366,184 +409,316 @@
         
             <div class="doc-header">
                 <h1 class="doc-title">Documentation</h1>
-                <p class="doc-subtitle">ELMA AquaDetect - Gestion des Ressources en Eau</p>
+                <p class="doc-subtitle">ELMA – Gestion des eaux souterraines (PoC Berrechid)</p>
+                <p style="color: #86868b; font-size: 0.875rem; margin-top: 0.5rem;">Version : 0.2.1 — Dernière mise à jour : 18/11/2025</p>
             </div>
             
             <div class="doc-section" id="overview">
-                <h2>Vue d'ensemble</h2>
+                <h2>1) Vue d'ensemble</h2>
                 <p>
-                    <strong>AquaDetect</strong> est un système avancé de détection et de gestion des ressources en eau 
-                    basé sur l'imagerie satellite. Elle permet de surveiller, analyser et gérer les bassins de rétention d'eau 
-                    et les nappes souterraines dans la région de Berrechid, Maroc.
+                    La Plateforme ELMA est un démonstrateur (PoC) qui rend visibles les bassins
+                    d'irrigation de la Nappe de Berrechid et fournit des indicateurs agrégés pour
+                    appuyer le suivi de l'ABH.
                 </p>
                 <p>
-                    Le système utilise des technologies de pointe incluant l'intelligence artificielle, l'apprentissage automatique, 
-                    et la cartographie SIG pour fournir des données précises et en temps réel.
+                    Deux niveaux de résultat sont affichés : <strong>bassins repérés (points)</strong> et <strong>bassins
+                    délimités (polygones avec volume estimé)</strong>.
                 </p>
             </div>
             
-            <div class="doc-section" id="features">
-                <h2>Fonctionnalités principales</h2>
+            <div class="doc-section" id="perimeter">
+                <h2>2) Périmètre du PoC</h2>
                 
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <h4>🗺️ Cartographie Interactive</h4>
-                        <p>Visualisation des bassins et nappes sur une carte interactive avec imagerie satellite.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h4>📊 Indicateurs en Temps Réel</h4>
-                        <p>Suivi dynamique de la superficie, du nombre de bassins et de leur évolution.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h4>🔍 Sélection de Régions</h4>
-                        <p>Navigation entre différentes zones d'étude : Périmètre du pilote et Nappe de Berrechid.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h4>📈 Analyses Avancées</h4>
-                        <p>Graphiques détaillés sur les précipitations, la piézométrie et les tendances.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h4>📍 Coordonnées Lambert</h4>
-                        <p>Système de projection conforme conique du Maroc (EPSG:26191).</p>
-                    </div>
-                    <div class="feature-card">
-                        <h4>👁️ Contrôle des Couches</h4>
-                        <p>Affichage sélectif des bassins et délimitation.</p>
-                    </div>
+                <h3>Inclus</h3>
+                <ul>
+                    <li>Localisation des bassins d'irrigation</li>
+                    <li>Estimation de surfaces/volumes pour les bassins délimités</li>
+                    <li>Indicateurs agrégés par zone/période</li>
+                    <li>Séries pluie et niveau piézométrique</li>
+                </ul>
+                
+                <h3>Exclus</h3>
+                <ul>
+                    <li>Identification nominative</li>
+                    <li>Conformité individuelle</li>
+                    <li>Calcul du pompage à partir de l'ET</li>
+                    <li>Alertes d'infraction en temps réel</li>
+                </ul>
+                
+                <p>
+                    <strong>Usage</strong> : résultats indicatifs nécessitant vérification terrain avant toute action
+                    coercitive.
+                </p>
+            </div>
+            
+            <div class="doc-section" id="data">
+                <h2>3) Données utilisées et mise à jour</h2>
+                
+                <ul>
+                    <li><strong>Imagerie Sentinel-2 (10 m)</strong> pour repérage/délimitation.</li>
+                    <li><strong>MNT (relief)</strong> pour contexte de pente.</li>
+                    <li><strong>Pluviométrie</strong> (source ouverte agrégée) pour cumuls mensuels.</li>
+                    <li><strong>Piézométrie ABH (m/sol)</strong> pour séries de niveau.</li>
+                    <li><strong>Référentiels</strong> : limites de nappe et communes.</li>
+                </ul>
+                
+                <p>
+                    <strong>Fréquence d'actualisation</strong> : mensuelle (imagerie et agrégats), selon
+                    disponibilité des données.
+                </p>
+                
+                <p>
+                    <strong>Système de coordonnées</strong> : Lambert Maroc (EPSG:26191) ; exports
+                    possibles en WGS84.
+                </p>
+            </div>
+            
+            <div class="doc-section" id="method">
+                <h2>4) Méthode (résumé)</h2>
+                
+                <ol>
+                    <li>
+                        <strong>Repérer (points)</strong> : détection multi-dates d'objets par indices spectraux et
+                        deeplearning
+                    </li>
+                    <li>
+                        <strong>Délimiter (polygones)</strong> : lorsque l'image est nette et le contraste suffisant,
+                        on trace le contour pour calculer la surface (A) sinon la détection
+                        s'effectue sans estimation du volume du bassin.
+                    </li>
+                    <li>
+                        <strong>Estimer le volume (V)</strong> des bassins délimités via : <span class="highlight">V = κ × A × h_eff</span>, avec des
+                        paramètres par défaut définis ci-dessous.
+                    </li>
+                    <li>
+                        <strong>Agrégations temporelles</strong> : indicateurs au mois (ou année) selon la période
+                        choisie.
+                    </li>
+                    <li>
+                        <strong>Qualité</strong> : échantillonnages visuels + retours terrain ABH ; les objets
+                        incertains restent au statut repéré.
+                    </li>
+                </ol>
+            </div>
+            
+            <div class="doc-section" id="indices">
+                <h2>5) Indices utilisés (explications simples)</h2>
+                
+                <ol>
+                    <li>
+                        <strong>NDWI</strong> met en évidence l'eau : il compare la lumière verte et le proche
+                        infrarouge. Une valeur NDWI élevée indique généralement une surface d'eau stable.
+                    </li>
+                    <li>
+                        <strong>MNDWI</strong> remplace le proche infrarouge par l'infrarouge moyen pour mieux
+                        écarter les sols sombres. En pratique, nous combinons NDWI et MNDWI pour réduire les faux positifs.
+                    </li>
+                    <li>
+                        <strong>NDVI</strong> mesure la végétation : valeurs hautes = végétation dense, valeurs
+                        basses = peu ou pas de végétation. Un NDVI bas nous aide à distinguer un bassin d'eau d'un champ vert.
+                    </li>
+                    <li>
+                        <strong>Albédo</strong> = part de lumière réfléchie par une surface : l'eau a un albédo
+                        faible. Les bâches plastiques peuvent avoir un albédo variable ; on croise donc albédo et
+                        NDWI/MNDWI.
+                    </li>
+                    <li>
+                        Nous analysons ces indices sur plusieurs dates pour éliminer les flaques
+                        temporaires après pluie.
+                    </li>
+                    <li>
+                        Les nuages et ombres sont écartés avant calcul des indices.
+                    </li>
+                    <li>
+                        Les objets trop petits (moins de quelques pixels) sont ignorés pour éviter
+                        les erreurs.
+                    </li>
+                    <li>
+                        Si les indices restent ambigus, l'objet est classé repéré (point), pas délimité.
+                    </li>
+                </ol>
+            </div>
+            
+            <div class="doc-section" id="hypotheses">
+                <h2>6) Hypothèses et paramètres (PoC)</h2>
+                
+                <p>
+                    <strong>Résolution spatiale</strong> : 10 m. Les petits bassins (&lt; ~100–150 m²) peuvent
+                    échapper à la détection.
+                </p>
+                
+                <h3>Hypothèses de profondeur et calcul de volume</h3>
+                
+                <p><strong>Ce que nous mesurons :</strong></p>
+                <ul>
+                    <li><strong>Aire (A)</strong> = surface du bassin au bord supérieur (contour/bâche) issue de la délimitation.</li>
+                    <li><strong>Profondeur utile (H)</strong> = hauteur d'eau réellement stockable (on garde un franc-bord de sécurité en haut).</li>
+                    <li><strong>Volume (V)</strong> = V ≈ A × H × 0,85. Le 0,85 résume la forme trapézoïdale, les talus et le franc-bord.</li>
+                </ul>
+                
+                <h3>Hypothèses de forme (Berrechid)</h3>
+                <ul>
+                    <li><strong>Type dominant</strong> : bassin excavé bâché.</li>
+                    <li><strong>Talus</strong> (pente des parois) : 1,5:1 (horizontal:vertical).</li>
+                    <li><strong>Franc-bord</strong> (marge non stockable en haut) : 0,40 m pour prévenir débordements (vent/pluie).</li>
+                </ul>
+                
+                <h3>Profondeurs utiles par classe d'aire (règle simple et défendable)</h3>
+                
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Classe</th>
+                                <th>Aire segmentée</th>
+                                <th>H (profondeur utile)</th>
+                                <th>Justification terrain</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>P1 – petit</strong></td>
+                                <td>A &lt; 800 m²</td>
+                                <td>4,0 m</td>
+                                <td>Terrassement simple, sécurité, coût contenu</td>
+                            </tr>
+                            <tr>
+                                <td><strong>P2 – moyen</strong></td>
+                                <td>800–2 500 m²</td>
+                                <td>5,0 m</td>
+                                <td>Cas le plus courant, bon compromis m³/dirham</td>
+                            </tr>
+                            <tr>
+                                <td><strong>P3 – grand</strong></td>
+                                <td>A &gt; 2 500 m²</td>
+                                <td>6,0 m</td>
+                                <td>Exploitations capitalisées, autonomie recherchée</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-            
-            <div class="doc-section" id="guide">
-                <h2>Guide d'utilisation</h2>
                 
-                <h3>0. Guide de démarrage interactif</h3>
-                <p>
-                    Lors de votre première visite, un guide interactif s'affiche automatiquement pour vous présenter 
-                    les principales fonctionnalités de la plateforme. Ce guide met en évidence chaque élément important 
-                    avec des explications détaillées.
-                </p>
-                <p>
-                    Si vous souhaitez revoir le guide à tout moment, vous pouvez le redémarrer en cliquant sur le bouton ci-dessous :
-                </p>
-                <button 
-                    onclick="window.open('index.html', '_self'); localStorage.removeItem('elma_hasSeenGuide');" 
-                    style="padding: 12px 24px; background: #0066cc; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 500; cursor: pointer; margin: 16px 0;">
-                    🔄 Redémarrer le guide interactif
-                </button>
-                
-                <h3>1. Navigation de la carte</h3>
+                <p><strong>Rappel limitations :</strong></p>
                 <ul>
-                    <li><strong>Zoom</strong> : Utilisez la molette de la souris ou les boutons +/- sur la carte</li>
-                    <li><strong>Déplacement</strong> : Cliquez et glissez pour déplacer la vue</li>
-                    <li><strong>Plein écran</strong> : Cliquez sur l'icône plein écran en haut à droite</li>
-                </ul>
-                
-                <h3>2. Sélection de région</h3>
-                <p>
-                    Utilisez le menu déroulant dans la barre latérale gauche pour changer la zone affichée. 
-                    Le nom de la région s'affiche au centre de la carte.
-                </p>
-                
-                <h3>3. Contrôle des couches</h3>
-                <ul>
-                    <li><strong>Afficher les segmentations</strong> : Active/désactive les polygones de segmentation</li>
-                    <li><strong>Afficher les bassins</strong> : Active/désactive les points de bassin</li>
-                </ul>
-                
-                <h3>4. Statistiques dynamiques</h3>
-                <p>
-                    Les indicateurs clés se mettent à jour automatiquement lorsque vous zoomez ou déplacez la carte, 
-                    affichant uniquement les données de la zone visible.
-                </p>
-                
-                <h3>5. Interaction avec les points</h3>
-                <ul>
-                    <li>Cliquez sur un point de bassin pour voir ses détails</li>
-                    <li>Les coordonnées X,Y (Lambert Maroc) s'affichent dans la barre latérale gauche</li>
-                    <li>Une popup s'ouvre avec les détails du bassin : superficie, profondeur, volume, etc.</li>
+                    <li>La profondeur n'est pas observée directement par satellite : ces valeurs sont des hypothèses par classe à confirmer par mesures terrain.</li>
+                    <li><strong>Facteur de forme (κ)</strong> : 0,55 (talus moyens, bâches fréquentes).</li>
+                    <li><strong>Référence piézométrique</strong> : m/sol (NGF si fourni par l'ABH).</li>
+                    <li><strong>Période d'analyse</strong> : selon couverture exploitable.</li>
                 </ul>
             </div>
             
-            <div class="doc-section" id="kpis">
-                <h2>Indicateurs clés (KPIs)</h2>
-                <p>Les indicateurs sont mis à jour dynamiquement selon la zone visible sur la carte :</p>
+            <div class="doc-section" id="limitations">
+                <h2>7) Limitations connues</h2>
                 
                 <ul>
-                    <li><strong>Superficie de la parcelle (ha)</strong> : Surface totale des segmentations visibles</li>
-                    <li><strong>Nombre de bassins associés</strong> : Nombre de points de bassin visibles dans la zone</li>
-                    <li><strong>Évolution du nombre de bassins</strong> : Taux de croissance annuel (+5%)</li>
-                    <li><strong>Confiance moyenne</strong> : Niveau de fiabilité de détection (88%)</li>
+                    <li>
+                        <strong>Sous-détection possible</strong> : objets très petits, couverts, sous ombre ou
+                        confondus avec structures non agricoles.
+                    </li>
+                    <li>
+                        <strong>Nuages/saisonnalité</strong> : certaines périodes d'image sont inutilisables, créant
+                        des trous temporels.
+                    </li>
+                    <li>
+                        <strong>Contours</strong> : bords flous ou brillants (bâches) → incertitude de surface (±1–2
+                        pixels).
+                    </li>
+                    <li>
+                        <strong>Volumes</strong> : dépendent de h_eff et κ ; tant qu'ils ne sont pas étalonnés
+                        localement, l'incertitude reste systématique.
+                    </li>
+                    <li>
+                        <strong>Séries externes</strong> (pluie/piézométrie) : qualité variable selon station/source.
+                    </li>
                 </ul>
             </div>
             
-            <div class="doc-section" id="coordinates">
-                <h2>Système de coordonnées</h2>
+            <div class="doc-section" id="indicators">
+                <h2>8) Indicateurs affichés dans l'interface</h2>
+                
+                <ul>
+                    <li>
+                        <strong>Bassins d'irrigation</strong> : repérés — dont délimités (volume estimé).
+                    </li>
+                    <li>
+                        <strong>Surface affichée à l'écran (ha)</strong> — somme des surfaces des polygones visibles.
+                    </li>
+                    <li>
+                        <strong>Nombre de bassins associés</strong> — nombre de points visibles dans la zone affichée.
+                    </li>
+                    <li>
+                        <strong>Historique 2D – Résumé</strong> — évolution annuelle du nombre de délimités.
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="doc-section" id="validation">
+                <h2>9) Validation et traçabilité</h2>
+                
+                <ul>
+                    <li>Contrôles visuels réguliers sur échantillons.</li>
+                    <li>Contre-vérifications terrain ponctuelles avec l'ABH.</li>
+                    <li>Chaque version indique sa date d'ingestion et sa version de modèle.</li>
+                </ul>
+            </div>
+            
+            <div class="doc-section" id="improvements">
+                <h2>10) Améliorations prévues</h2>
+                
+                <ol>
+                    <li>Imagerie plus fine (≤1 m) sur zones prioritaires pour capter les petits bassins.</li>
+                    <li>Segmentation renforcée (apprentissage multi-saison, corrections ABH).</li>
+                    <li>Étalonnage local de h_eff et κ par mesures de profondeur.</li>
+                    <li>Ajout de la chaîne ET → pompage (phase suivante).</li>
+                    <li>Intégration InSAR (subsidence) et GRACE (tendances de masse) au niveau bassin.</li>
+                    <li>API/exports normalisés et liens partageables de vues.</li>
+                </ol>
+            </div>
+            
+            <div class="doc-section" id="glossary">
+                <h2>11) Glossaire</h2>
+                
+                <ul>
+                    <li>
+                        <strong>Bassin d'irrigation repéré</strong> : présence localisée (point), pas de volume.
+                    </li>
+                    <li>
+                        <strong>Bassin d'irrigation délimité</strong> : polygone avec surface et volume estimé.
+                    </li>
+                    <li>
+                        <strong>Niveau piézométrique (m/sol)</strong> : profondeur de la nappe sous le terrain naturel.
+                    </li>
+                    <li>
+                        <strong>Δ% total</strong> : variation relative entre la première et la dernière année affichées.
+                    </li>
+                    <li>
+                        <strong>Albédo</strong> : part de lumière réfléchie par une surface (0 = noir, 1 = très clair).
+                    </li>
+                    <li>
+                        <strong>NDWI</strong> : Normalized Difference Water Index — indice de détection d'eau.
+                    </li>
+                    <li>
+                        <strong>MNDWI</strong> : Modified Normalized Difference Water Index — version modifiée de NDWI.
+                    </li>
+                    <li>
+                        <strong>NDVI</strong> : Normalized Difference Vegetation Index — indice de végétation.
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="doc-section" id="contact">
+                <h2>12) Mentions & contacts</h2>
+                
                 <p>
-                    La plateforme utilise le <strong>système Lambert Conformal Conic du Maroc (EPSG:26191)</strong> 
-                    pour les coordonnées projetées :
+                    <strong>Responsable</strong> : ELMA Water Technologies — Usage PoC, résultats indicatifs.
                 </p>
-                
-                <ul>
-                    <li><strong>Projection</strong> : Lambert Conformal Conic</li>
-                    <li><strong>Datum</strong> : Merchich</li>
-                    <li><strong>Unités</strong> : Mètres</li>
-                    <li><strong>Zone</strong> : Maroc</li>
-                </ul>
-                
-                <p>Les coordonnées sont affichées en mètres (m) dans le format : <span class="highlight">X: 305,432, Y: 302,156</span></p>
-            </div>
-            
-            <div class="doc-section" id="basin-data">
-                <h2>Données des bassins</h2>
-                <p>Chaque bassin détecté contient les informations suivantes :</p>
-                
-                <ul>
-                    <li><strong>Point Index</strong> : Identifiant unique du bassin</li>
-                    <li><strong>Année</strong> : Année de détection (2020-2024)</li>
-                    <li><strong>Superficie</strong> : Surface en m² (area_m2)</li>
-                    <li><strong>Catégorie</strong> : Classification de taille (area_category)</li>
-                    <li><strong>Profondeur max</strong> : Profondeur maximale en mètres (hmax_m)</li>
-                    <li><strong>Volume</strong> : Capacité en m³ (volume_m3)</li>
-                </ul>
-            </div>
-            
-            <div class="doc-section" id="analytics">
-                <h2>Page Analytics</h2>
                 <p>
-                    La page Analytics fournit des analyses avancées sur plusieurs paramètres environnementaux :
+                    <strong>Contact support</strong> : contact@elmawatertech.com
                 </p>
-                
-                <ul>
-                    <li><strong>Précipitations</strong> : Analyse des données pluviométriques mensuelles</li>
-                    <li><strong>Piézométrie</strong> : Évolution des niveaux d'eau souterrains (axe Y inversé)</li>
-                    <li><strong>Analyses de tendances</strong> : Corrélations entre précipitations et piézométrie</li>
-                </ul>
-                
-                <p>Les données sont filtrables par zone et période d'analyse.</p>
-            </div>
-            
-            <div class="doc-section" id="security">
-                <h2>Sécurité & Authentification</h2>
                 <p>
-                    L'accès à la plateforme nécessite une authentification par licence :
+                    <strong>Crédits données</strong> : Copernicus Sentinel-2, pluviométrie sources ouvertes,
+                    piézométrie ABH.
                 </p>
-                
-                <ul>
-                    <li><strong>Licence utilisateur</strong> : Clé unique fournie par ELMA</li>
-                    <li><strong>Déconnexion automatique</strong> : Après expiration de la session</li>
-                    <li><strong>Protection des données</strong> : Toutes les données sont sécurisées</li>
-                </ul>
-            </div>
-            
-            <div class="doc-section" id="support">
-                <h2>Support & Contact</h2>
-                <p>
-                    Pour toute question ou problème technique, veuillez contacter l'équipe ELMA :
-                </p>
-                
-                <ul>
-                    <li><strong>Email</strong> : contact@elmawatertech.com</li>
-                </ul>
             </div>
             
             <div class="doc-footer">

@@ -556,7 +556,7 @@ function addSegmentationData() {
         
         const marker = L.circleMarker(coords, {
                 radius: 4,
-                fillColor: props.has_segmentation ? '#8b5cf6' : '#6b7280',
+                fillColor: props.has_segmentation ? '#6EADFF' : '#6b7280',
             color: '#ffffff',
                 weight: 1,
                 opacity: 0.8,
@@ -936,6 +936,107 @@ function initializeEventListeners() {
         const legend = document.getElementById('mapLegend');
         legend.classList.toggle('hidden');
     });
+    
+    // Download coordinates functionality
+    document.getElementById('downloadCoordsBtn').addEventListener('click', async function() {
+        const year = document.getElementById('exportYear').value;
+        await downloadCoordinatesForYear(year);
+    });
+    
+    // Function to download coordinates as Excel
+    async function downloadCoordinatesForYear(year) {
+        try {
+            const downloadBtn = document.getElementById('downloadCoordsBtn');
+            const originalText = downloadBtn.innerHTML;
+            
+            // Show loading state
+            downloadBtn.disabled = true;
+            downloadBtn.innerHTML = '<span class="download-icon">⏳</span><span>Chargement...</span>';
+            
+            // Load the GeoJSON file for the selected year
+            const response = await fetch(`data/geojson/demo_berrechid_by_years/demo_berrechid_${year}.geojson`);
+            if (!response.ok) {
+                throw new Error(`Failed to load data for year ${year}`);
+            }
+            
+            const geojsonData = await response.json();
+            
+            // Filter only Point features
+            const points = geojsonData.features.filter(f => f.geometry.type === 'Point');
+            
+            if (points.length === 0) {
+                alert(`Aucun point trouvé pour l'année ${year}`);
+                downloadBtn.disabled = false;
+                downloadBtn.innerHTML = originalText;
+                return;
+            }
+            
+            // Prepare data for Excel
+            const excelData = points.map((feature, index) => {
+                const coords = feature.geometry.coordinates;
+                const props = feature.properties || {};
+                
+                // Transform coordinates to X,Y using proj4 if needed
+                // Note: The coordinates in the file might already be in X,Y format
+                // Adjust transformation if needed based on your data format
+                const x = coords[0];
+                const y = coords[1];
+                
+                return {
+                    'ID': props.point_index || index + 1,
+                    'X': x.toFixed(6),
+                    'Y': y.toFixed(6),
+                    'Année': year,
+                    'Année détection': props.year || year,
+                    'Superficie (m²)': props.area_m2 ? Math.round(props.area_m2) : '',
+                    'Profondeur max (m)': props.hmax_m ? props.hmax_m.toFixed(2) : '',
+                    'Volume (m³)': props.volume_m3 ? Math.round(props.volume_m3) : '',
+                    'Catégorie': props.area_category || ''
+                };
+            });
+            
+            // Create Excel workbook
+            const ws = XLSX.utils.json_to_sheet(excelData);
+            
+            // Set column widths
+            const colWidths = [
+                { wch: 8 },   // ID
+                { wch: 15 },  // X
+                { wch: 15 },  // Y
+                { wch: 8 },   // Année
+                { wch: 12 },  // Année détection
+                { wch: 15 },  // Superficie
+                { wch: 15 },  // Profondeur
+                { wch: 15 },  // Volume
+                { wch: 15 }   // Catégorie
+            ];
+            ws['!cols'] = colWidths;
+            
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, `Coordonnées ${year}`);
+            
+            // Generate filename
+            const filename = `coordonnees_bassins_${year}.xlsx`;
+            
+            // Write and download
+            XLSX.writeFile(wb, filename);
+            
+            // Reset button state
+            downloadBtn.disabled = false;
+            downloadBtn.innerHTML = originalText;
+            
+            console.log(`Downloaded ${points.length} coordinates for year ${year}`);
+            
+        } catch (error) {
+            console.error('Error downloading coordinates:', error);
+            alert(`Erreur lors du téléchargement: ${error.message}`);
+            
+            // Reset button state
+            const downloadBtn = document.getElementById('downloadCoordsBtn');
+            downloadBtn.disabled = false;
+            downloadBtn.innerHTML = '<span class="download-icon">⬇️</span><span>Télécharger les coordonnées</span>';
+        }
+    }
     
     // Analytics navigation
     document.getElementById('analyticsButton').addEventListener('click', function() {
