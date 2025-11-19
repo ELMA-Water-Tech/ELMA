@@ -451,6 +451,27 @@ function initializeMap() {
     
     // Add map event listeners for dynamic stats
     addMapEventListeners();
+    
+    // Update visible stats after map is fully loaded and rendered
+    map.whenReady(function() {
+        // Wait for map to be fully rendered with valid size
+        setTimeout(function() {
+            const mapContainer = map.getContainer();
+            if (mapContainer && mapContainer.offsetWidth > 0 && mapContainer.offsetHeight > 0) {
+                map.invalidateSize(); // Ensure map has correct size
+                setTimeout(function() {
+                    updateVisibleStats();
+                }, 50);
+            }
+        }, 150);
+    });
+    
+    // Also update on first load event
+    map.once('load', function() {
+        setTimeout(function() {
+            updateVisibleStats();
+        }, 100);
+    });
 }
 
 function addRegionBoundary() {
@@ -780,12 +801,63 @@ function addMapEventListeners() {
 
 // Update statistics based on visible map bounds
 function updateVisibleStats() {
+    // Check if map is initialized and has valid bounds
+    if (!map || !map.getBounds) {
+        return;
+    }
+    
     const bounds = map.getBounds();
+    
+    // Validate bounds are reasonable
+    if (!bounds || !bounds.isValid || !bounds.isValid()) {
+        return;
+    }
+    
     const currentRegion = appData.currentRegion;
     
     let visibleBasins = 0;
     let visiblePolygons = 0;
-    let visibleArea = 0;
+    
+    // Calculate the area of the visible map bounds (viewport) using geodesic calculation
+    let mapBoundsArea = 0;
+    
+    // Validate bounds values
+    const north = bounds.getNorth();
+    const south = bounds.getSouth();
+    const east = bounds.getEast();
+    const west = bounds.getWest();
+    
+    if (isNaN(north) || isNaN(south) || isNaN(east) || isNaN(west) || 
+        north === south || east === west) {
+        // Invalid bounds, don't update
+        return;
+    }
+    
+    try {
+        // Create a polygon from the map bounds corners
+        const boundsPolygon = turf.polygon([[
+            [west, south],  // Southwest
+            [east, south],  // Southeast
+            [east, north],  // Northeast
+            [west, north],  // Northwest
+            [west, south]   // Close the polygon
+        ]]);
+        
+        // Calculate geodesic area in square meters, then convert to hectares
+        const areaInSquareMeters = turf.area(boundsPolygon);
+        mapBoundsArea = areaInSquareMeters / 10000; // Convert m² to hectares
+    } catch (e) {
+        console.warn('Error calculating map bounds area:', e);
+        // Fallback: approximate calculation using simple rectangle
+        const latDiff = north - south;
+        const lngDiff = east - west;
+        const centerLat = bounds.getCenter().lat;
+        // Approximate meters per degree (rough calculation)
+        const metersPerDegreeLat = 111320; // meters per degree of latitude
+        const metersPerDegreeLng = 111320 * Math.cos(centerLat * Math.PI / 180); // meters per degree of longitude at this latitude
+        const areaInSquareMeters = (latDiff * metersPerDegreeLat) * (lngDiff * metersPerDegreeLng);
+        mapBoundsArea = areaInSquareMeters / 10000;
+    }
     
     // Count visible features from segmentation data
     if (currentRegion === 'segmentation_area' || currentRegion === 'all_regions') {
@@ -797,18 +869,6 @@ function updateVisibleStats() {
                     // Check if polygon is visible in bounds
                     if (isPolygonVisible(feature.geometry.coordinates[0], bounds)) {
                         visiblePolygons++;
-                        // Calculate precise geodesic area using Turf.js
-                        try {
-                            const polygon = turf.polygon(feature.geometry.coordinates);
-                            const areaInSquareMeters = turf.area(polygon); // Geodesic area in m²
-                            visibleArea += areaInSquareMeters / 10000; // Convert m² to hectares
-                        } catch (e) {
-                            console.warn('Error calculating area for polygon:', e);
-                            // Fallback to property value if Turf fails
-                            if (feature.properties && feature.properties.area_m2) {
-                                visibleArea += feature.properties.area_m2 / 10000;
-                            }
-                        }
                     }
                 } else if (feature.geometry.type === 'Point') {
                     // Check if point is visible in bounds - points represent basins
@@ -822,12 +882,11 @@ function updateVisibleStats() {
     }
     
     // Update the KPIs in right sidebar
-    if (visibleBasins > 0 || visiblePolygons > 0) {
-        document.getElementById('kpiBasinCount').textContent = visibleBasins;
-        document.getElementById('kpiPlotArea').textContent = visibleArea.toFixed(3); // Show 3 decimal places for precision
-    }
+    // Always update the area (map bounds area) and basin count
+    document.getElementById('kpiBasinCount').textContent = visibleBasins;
+    document.getElementById('kpiPlotArea').textContent = mapBoundsArea.toFixed(2); // Show 2 decimal places
     
-    console.log(`Visible in bounds: ${visibleBasins} basins (points), ${visiblePolygons} polygons, ${visibleArea.toFixed(3)} ha`);
+    console.log(`Visible in bounds: ${visibleBasins} basins (points), ${visiblePolygons} polygons, map bounds area: ${mapBoundsArea.toFixed(2)} ha`);
 }
 
 // Check if a polygon is visible within the map bounds
