@@ -13,9 +13,9 @@ const appData = {
   nappe_berrechid: {
     name: "Nappe de Berrechid",
     center: [33.15, -7.75], // Will be calculated from data
-    boundary: null, // Will be loaded from CSV
+    boundary: null, // Will be loaded from GeoJSON
     nappePoints: [], // Will hold coordinate points
-    area: "~2,500 km²",
+    area: "~2,500 km²", // Will be calculated from GeoJSON
     color: "#ffde21" // Yellow
   },
   currentRegion: "all_regions", // Default to show all regions
@@ -386,46 +386,58 @@ async function loadWaterPoints() {
     }
 }
 
-// Load Nappe de Berrechid from CSV file
+// Load Nappe de Berrechid from GeoJSON file
 async function loadNappeBerrechid() {
     try {
-        const response = await fetch('data/csv/nappeber.csv');
-        const csvText = await response.text();
-        
-        // Parse CSV
-        const lines = csvText.trim().split('\n');
-        const points = [];
-        
-        // Skip header, parse data lines
-        for (let i = 1; i < lines.length; i++) {
-            const [fid, lat, lng] = lines[i].split(',');
-            if (lat && lng) {
-                points.push([parseFloat(lng), parseFloat(lat)]);
-            }
+        const response = await fetch('data/geojson/polygon_nappe_berrechid.geojson');
+        if (!response.ok) {
+            throw new Error(`Failed to load Nappe de Berrechid GeoJSON: ${response.statusText}`);
         }
         
-        if (points.length > 0) {
-            // Close the polygon by adding the first point at the end
-            points.push(points[0]);
+        const geojsonData = await response.json();
+        
+        // Find the polygon feature
+        const polygonFeature = geojsonData.features.find(f => f.geometry.type === 'Polygon');
+        
+        if (polygonFeature && polygonFeature.geometry.coordinates) {
+            // Get coordinates from the polygon (already in [lng, lat] format)
+            const coordinates = polygonFeature.geometry.coordinates[0]; // First ring of polygon
             
             // Store points and create boundary
-            appData.nappe_berrechid.nappePoints = points;
+            appData.nappe_berrechid.nappePoints = coordinates;
             appData.nappe_berrechid.boundary = {
                 type: "Polygon",
-                coordinates: [points]
+                coordinates: [coordinates]
             };
             
-            // Calculate center
+            // Calculate center from polygon coordinates
             let sumLat = 0, sumLng = 0;
-            for (let i = 0; i < points.length - 1; i++) {
-                sumLng += points[i][0];
-                sumLat += points[i][1];
+            const numPoints = coordinates.length - 1; // Exclude closing point
+            
+            for (let i = 0; i < numPoints; i++) {
+                const [lng, lat] = coordinates[i];
+                sumLng += lng;
+                sumLat += lat;
             }
-            const centerLng = sumLng / (points.length - 1);
-            const centerLat = sumLat / (points.length - 1);
+            
+            const centerLng = sumLng / numPoints;
+            const centerLat = sumLat / numPoints;
             appData.nappe_berrechid.center = [centerLat, centerLng];
             
-            console.log(`Loaded Nappe de Berrechid with ${points.length - 1} points`);
+            // Calculate area using Turf.js for accurate geodesic area
+            try {
+                const polygon = turf.polygon([coordinates]);
+                const areaInSquareMeters = turf.area(polygon);
+                const areaInSquareKm = areaInSquareMeters / 1000000; // Convert m² to km²
+                appData.nappe_berrechid.area = `~${areaInSquareKm.toFixed(0)} km²`;
+            } catch (e) {
+                console.warn('Error calculating area for Nappe de Berrechid:', e);
+                // Keep default area if calculation fails
+            }
+            
+            console.log(`Loaded Nappe de Berrechid with ${numPoints} points`);
+        } else {
+            console.error('No polygon feature found in Nappe de Berrechid GeoJSON');
         }
     } catch (error) {
         console.error('Error loading Nappe de Berrechid:', error);
@@ -1402,9 +1414,11 @@ function updateRegionInfo() {
         // Update region information in the sidebar
         document.getElementById('regionArea').textContent = currentRegionData.area;
         
-        // Update coordinates display (center of region)
+        // Update coordinates display (center of region) in X, Y format
         const center = currentRegionData.center;
-        const coordText = `${center[0].toFixed(2)}°N, ${Math.abs(center[1]).toFixed(2)}°W`;
+        // center is [lat, lng], convert to [lng, lat] for transformation
+        const xyCoords = latLngToXY(center[1], center[0]);
+        const coordText = `X: ${xyCoords.x.toLocaleString()}, Y: ${xyCoords.y.toLocaleString()}`;
         document.getElementById('regionCoords').textContent = coordText;
     }
 }
