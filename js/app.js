@@ -586,6 +586,8 @@ function addSegmentationData() {
         
         if (feature.geometry.type === 'Point') {
             const coords = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]];
+            // Convert to X, Y coordinates (Lambert Maroc)
+            const xyCoords = latLngToXY(feature.geometry.coordinates[0], feature.geometry.coordinates[1]);
         
         const marker = L.circleMarker(coords, {
                 radius: 4,
@@ -604,6 +606,10 @@ function addSegmentationData() {
                 <div class="popup-detail">
                             <span class="label">Année :</span>
                             <span class="value">${props.year || 'N/A'}</span>
+                </div>
+                <div class="popup-detail">
+                            <span class="label">Coordonnées (X, Y) :</span>
+                            <span class="value">X: ${xyCoords.x.toLocaleString()}, Y: ${xyCoords.y.toLocaleString()}</span>
                 </div>
                 <div class="popup-detail">
                             <span class="label">Segmentation :</span>
