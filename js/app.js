@@ -586,8 +586,13 @@ function addSegmentationData() {
         
         if (feature.geometry.type === 'Point') {
             const coords = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]];
+            // Extract lat/lng for Google Maps link
+            const lat = feature.geometry.coordinates[1];
+            const lng = feature.geometry.coordinates[0];
             // Convert to X, Y coordinates (Lambert Maroc)
             const xyCoords = latLngToXY(feature.geometry.coordinates[0], feature.geometry.coordinates[1]);
+            // Create Google Maps link
+            const googleMapsLink = `https://www.google.com/maps?q=${lat},${lng}`;
         
         const marker = L.circleMarker(coords, {
                 radius: 4,
@@ -609,7 +614,11 @@ function addSegmentationData() {
                 </div>
                 <div class="popup-detail">
                             <span class="label">Coordonnées (X, Y) :</span>
-                            <span class="value">X: ${xyCoords.x.toLocaleString()}, Y: ${xyCoords.y.toLocaleString()}</span>
+                            <span class="value">
+                                <a href="${googleMapsLink}" target="_blank" rel="noopener noreferrer" title="Ouvrir dans Google Maps">
+                                    X: ${xyCoords.x.toLocaleString()}, Y: ${xyCoords.y.toLocaleString()}
+                                </a>
+                            </span>
                 </div>
                 <div class="popup-detail">
                             <span class="label">Segmentation :</span>

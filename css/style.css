@@ -1900,6 +1900,18 @@ select.form-control {
     font-family: var(--font-family-mono);
 }
 
+.popup-detail .value a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-standard);
+    cursor: pointer;
+}
+
+.popup-detail .value a:hover {
+    color: var(--color-primary-hover);
+    text-decoration: underline;
+}
+
 .status-badge {
     display: inline-block;
     padding: var(--space-2) var(--space-8);
